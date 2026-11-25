@@ -3,117 +3,95 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Osteo-Intel - Forensic Anthropology Analysis Bench</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Serif+Thai:wght@500;600;700&display=swap" rel="stylesheet">
+<title>Osteo-Intel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Serif+Thai:wght@500;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 <style>
-:root{--bg:#f4f1ea;--sf:#fcfaf5;--tx:#1d1b18;--mt:#6e685d;--ln:#e2dcce;--ac:#8c3232;--br:#8a6d2b;--hl:#2d6a4f;--bg-sub:#eae4d7;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e0d0c;--sf:#161514;--tx:#e4dfd3;--mt:#8f897c;--ln:#2a2825;--ac:#b4524a;--br:#b69a64;--hl:#40916c;--bg-sub:#1c1a18;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0e0d0c;--sf:#161514;--tx:#e4dfd3;--mt:#8f897c;--ln:#2a2825;--ac:#b4524a;--br:#b69a64;--hl:#40916c;--bg-sub:#1c1a18;color-scheme:dark}
-:root[data-theme="light"]{--bg:#f4f1ea;--sf:#fcfaf5;--tx:#1d1b18;--mt:#6e685d;--ln:#e2dcce;--ac:#8c3232;--br:#8a6d2b;--hl:#2d6a4f;--bg-sub:#eae4d7;color-scheme:light}
-
-*,*::before,*::after{box-sizing:border-box}
+:root{--bg:#f2efe8;--sf:#fbf9f4;--tx:#1d1b18;--mt:#6e685d;--ln:#d9d3c5;--ac:#7c2b2b;--br:#7d6428;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e0d0c;--sf:#161514;--tx:#e4dfd3;--mt:#8f897c;--ln:#2a2825;--ac:#b4524a;--br:#b69a64;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e0d0c;--sf:#161514;--tx:#e4dfd3;--mt:#8f897c;--ln:#2a2825;--ac:#b4524a;--br:#b69a64;color-scheme:dark}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
 body{margin:0;background:var(--bg);color:var(--tx);font:400 15px/1.7 'IBM Plex Sans Thai','Sarabun','Noto Sans Thai',system-ui,sans-serif;-webkit-text-size-adjust:100%}
-h1,h2,h3{font-family:'Noto Serif Thai','Noto Serif',Georgia,serif;font-weight:600;margin:0;letter-spacing:.01em}
-h2{font-size:19px;margin-bottom:6px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px}
+h1,h2,h3{font-family:'Noto Serif Thai','Noto Serif',Georgia,serif;font-weight:500;margin:0;letter-spacing:.01em}
+h2{font-size:19px;margin-bottom:4px}
+h3{font-size:15px;margin:10px 0 6px}
 .n,b.n,.mono{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:13px}
-
-header{padding:20px 16px 12px;max-width:920px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-header h1{font-size:24px;color:var(--tx)}
-header p{margin:2px 0 0;color:var(--mt);font-size:13px}
-.ctl{display:flex;gap:6px;align-items:center}
+header{padding:20px 16px 8px;max-width:880px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+header h1{font-size:22px}header p{margin:2px 0 0;color:var(--mt);font-size:13px}
+.ctl{display:flex;gap:6px;flex-wrap:wrap}
 button,select,input,textarea{font:inherit;color:inherit}
-.btn{background:var(--sf);border:1px solid var(--ln);border-radius:4px;padding:6px 12px;cursor:pointer;font-size:13px;transition:all .15s ease}
-.btn:hover,.btn.on{border-color:var(--br);color:var(--br);background:var(--bg-sub)}
-.btn-sm{padding:3px 8px;font-size:12px}
-
-nav{max-width:920px;margin:0 auto;padding:0 16px;display:flex;gap:16px;overflow-x:auto;border-bottom:1px solid var(--ln);-webkit-overflow-scrolling:touch;scrollbar-width:none}
-nav::-webkit-scrollbar{display:none}
-nav button{background:none;border:0;border-bottom:2px solid transparent;padding:12px 4px;color:var(--mt);cursor:pointer;white-space:nowrap;font-weight:500;transition:color .15s}
-nav button.on{color:var(--tx);border-color:var(--ac);font-weight:600}
-
-main{max-width:920px;margin:0 auto;padding:16px}
+.btn{background:none;border:1px solid var(--ln);border-radius:4px;padding:5px 10px;cursor:pointer;font-size:13px}
+.btn:hover,.btn.on{border-color:var(--br);color:var(--br)}
+nav{max-width:880px;margin:0 auto;padding:0 16px;display:flex;gap:20px;overflow-x:auto;border-bottom:1px solid var(--ln)}
+nav button{background:none;border:0;border-bottom:2px solid transparent;padding:10px 0;color:var(--mt);cursor:pointer;white-space:nowrap}
+nav button.on{color:var(--tx);border-color:var(--ac)}
+main{max-width:880px;margin:0 auto;padding:16px}
 .tab{display:none}.tab.on{display:block}
-.card{background:var(--sf);border:1px solid var(--ln);border-radius:8px;padding:18px;margin-bottom:18px;box-shadow:0 1px 3px rgba(0,0,0,.03)}
-.sub{color:var(--mt);font-size:13px;margin:0 0 12px;line-height:1.6}
-
-.tr{margin:14px 0;padding-bottom:10px;border-bottom:1px stroke var(--ln)}
-.trh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:14px}
-.trh b{font-weight:500;color:var(--br)}
-.trh .trait-tag{font-size:11px;padding:1px 6px;border-radius:3px;background:var(--bg-sub);color:var(--mt);margin-left:6px}
-input[type=range]{width:100%;accent-color:var(--ac);height:26px;cursor:pointer;margin:4px 0}
-select,input[type=number],input[type=text],textarea{width:100%;background:var(--bg);border:1px solid var(--ln);border-radius:4px;padding:8px 10px;font-size:14px;color:var(--tx);transition:border-color .15s}
-select:focus,input:focus,textarea:focus{outline:none;border-color:var(--br)}
-label{display:block;font-size:13px;color:var(--mt);margin:12px 0 4px;font-weight:500}
-
-.bar{height:7px;background:var(--ln);border-radius:4px;margin:6px 0 12px;position:relative;overflow:hidden}
-.bar i{position:absolute;top:0;height:100%;background:var(--ac);transition:width .25s ease, left .25s ease}
-.bl{display:flex;justify-content:space-between;color:var(--mt);font-size:12px}
-
-.res{border-left:3px solid var(--ac);padding:8px 0 8px 14px;margin-top:16px;background:var(--bg-sub);border-radius:0 6px 6px 0}
-.res .big{font-family:'Noto Serif Thai',serif;font-size:20px;font-weight:600;color:var(--tx)}
-.warn{color:var(--br);font-size:13px;margin-top:6px;line-height:1.5}
-.info-box{background:var(--bg);border:1px solid var(--ln);border-radius:6px;padding:12px;margin-top:12px;font-size:13px;line-height:1.6}
-
-.ph{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:12px 0}
-.ph .btn{padding:10px 0;text-align:center;font-weight:600}
-.c{color:var(--br);font-size:11px;vertical-align:super;cursor:pointer;margin-left:2px;text-decoration:none;font-weight:bold}
-.c:hover{text-decoration:underline}
-
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:6px;padding:16px;margin-bottom:16px}
+.sub{color:var(--mt);font-size:13px;margin:0 0 12px}
+.tr{margin:14px 0;padding-bottom:10px;border-bottom:1px solid var(--ln)}
+.trh{display:flex;justify-content:space-between;gap:8px;font-size:14px}
+.trh b{font-weight:400;color:var(--br)}
+input[type=range]{width:100%;accent-color:var(--ac);height:28px}
+select,input[type=number],input[type=text],textarea{width:100%;background:var(--bg);border:1px solid var(--ln);border-radius:4px;padding:8px;font-size:14px}
+label{display:block;font-size:13px;color:var(--mt);margin:10px 0 4px}
+.res{border-left:2px solid var(--ac);padding:4px 0 4px 12px;margin-top:14px}
+.res .big{font-family:'Noto Serif Thai',serif;font-size:20px}
+.warn{color:var(--br);font-size:13px;margin-top:6px;line-height:1.55}
+.warning-panel{border:1px solid var(--br);background:var(--bg);border-radius:6px;padding:12px;margin-top:12px}
+.info-box{background:var(--bg);border:1px solid var(--ln);border-radius:6px;padding:12px;margin-top:10px;font-size:13px;line-height:1.6}
+.ph{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:8px 0}
+.ph .btn{padding:8px 0;text-align:center}
+.c{color:var(--br);font-size:11px;vertical-align:super;cursor:pointer;margin-left:2px;text-decoration:none}
 ol{padding-left:20px}ol li{margin-bottom:10px;font-size:14px}
-.row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--ln);padding:9px 0;font-size:14px}
-.row span:first-child{color:var(--mt)}.row span:last-child{text-align:right;font-weight:500}
-.disc{font-size:12px;color:var(--mt);border-top:1px solid var(--ln);padding-top:12px;margin-top:14px;line-height:1.6}
-
-#cv{width:100%;height:min(65vh,500px);display:block;touch-action:none;cursor:grab;background:radial-gradient(circle at 50% 40%,var(--sf),var(--bg) 80%);border-radius:6px;border:1px solid var(--ln)}
-.vb{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
-
-.sb-diagram{display:flex;align-items:center;justify-content:center;padding:16px;background:var(--bg);border-radius:6px;margin:12px 0;border:1px solid var(--ln)}
-.sb-diagram svg{max-width:140px;height:auto}
-.sb-matrix{width:100%;border-collapse:collapse;font-size:12px;margin-top:12px}
-.sb-matrix th,.sb-matrix td{border:1px solid var(--ln);padding:6px 8px;text-align:center}
-.sb-matrix th{background:var(--bg-sub);color:var(--mt);font-weight:500}
-.sb-matrix tr.active-phase{background:rgba(180,82,74,0.12);font-weight:bold}
-
-@media print{
- header.np,.np,nav{display:none!important}
- body{background:#fff!important;color:#000!important}
- .card{background:#fff!important;border-color:#ccc!important;box-shadow:none!important;page-break-inside:avoid}
- .tab{display:none!important}#t-report{display:block!important}
- .row span:first-child,.sub{color:#444!important}
- .res{border-left-color:#000!important;background:#f9f9f9!important}
-}
+.row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--ln);padding:7px 0;font-size:14px}
+.row span:first-child{color:var(--mt)}.row span:last-child{text-align:right}
+.disc{font-size:12px;color:var(--mt);border-top:1px solid var(--ln);padding-top:12px;margin-top:8px}
+#cv{width:100%;height:min(68vh,540px);display:block;touch-action:none;cursor:grab;background:radial-gradient(circle at 50% 40%,var(--sf),var(--bg) 75%);border-radius:4px}.vb{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+@media print{body{background:#fff!important;color:#000!important}.np{display:none!important}.card{background:#fff!important;border-color:#bbb!important}.tab{display:none!important}#t-report{display:block!important}.row span:first-child,.sub{color:#444!important}}
 </style>
 </head>
 <body>
 <header class="np">
-<div>
-  <h1>Osteo-Intel</h1>
-  <p id="tag"></p>
-</div>
+<div><h1>Osteo-Intel</h1><p id="tag"></p></div>
 <div class="ctl">
-  <button class="btn btn-sm" onclick="resetAll()" title="รีเซ็ตข้อมูลทั้งหมด">↺ Reset</button>
+  <button class="btn" onclick="resetAll()">↺ Reset</button>
   <button class="btn" id="bth" onclick="setLang('th')">ไทย</button>
   <button class="btn" id="ben" onclick="setLang('en')">EN</button>
   <button class="btn" onclick="toggleTheme()" id="bt">◐</button>
 </div>
 </header>
-
 <nav class="np" id="nav"></nav>
 <main id="v"></main>
-
 <script>
 var lang='th';
 var S={
-  t:{}, fem:0, age:0, tg:'TM', sbSex:'m', sbPh:3,
-  mech:'bft', wx:0, preservation:'complete', an:'', op:'', out:{}
+  t:{},
+  fem:0,
+  age:0,
+  tg:'TM',
+  sbSex:'m',
+  sbPh:3,
+  mech:'bft',
+  wx:0,
+  preservation:'complete',
+  an:'',
+  op:'',
+  out:{}
 };
-
 var T=function(a,b){return lang==='th'?a:b};
 var $=function(i){return document.getElementById(i)};
-
+function esc(v){
+  return String(v==null?'':v)
+    .replace(/&/g,'&amp;')
+    .replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;')
+    .replace(/'/g,'&#39;');
+}
 var TR=[
   ['sci','p',5,'Greater sciatic notch','รอยเว้าไซอาติกใหญ่','Walker 2005'],
   ['ven','p',2,'Ventral arc','ventral arc','Phenice 1969'],
@@ -125,12 +103,10 @@ var TR=[
   ['gla','c',5,'Glabella','กลางหน้าผาก','Buikstra 1994'],
   ['men','c',5,'Mental eminence','ปุ่มคาง','Buikstra 1994']
 ];
-
 var SB={
   m:[[18.5,2.1,15,23],[23.4,3.6,19,34],[28.7,6.5,21,46],[35.2,9.4,23,57],[45.6,10.4,27,66],[61.2,12.2,34,86]],
   f:[[19.4,2.6,15,24],[25.0,4.9,19,40],[30.7,8.1,21,53],[38.2,10.9,26,70],[48.1,14.6,25,83],[60.0,12.4,42,87]]
 };
-
 var SBF=[
   ['สันและร่องชัด ยังไม่มีขอบ','Billowing ridges and furrows; no rim'],
   ['สันยังอยู่ เริ่มมีปุ่มกระดูกและขอบบน','Ridges persist; ossific nodules; rim begins'],
@@ -139,24 +115,21 @@ var SBF=[
   ['ขอบสมบูรณ์ ผิวเริ่มเว้า เริ่มสึก','Rim complete; face slightly depressed; early breakdown'],
   ['ผิวกร่อน มีรูพรุนและงอกผิดรูป','Erosion, porosity and irregular outgrowths']
 ];
-
 var TG={
-  TM:[2.47,54.99,3.88,'Mahakkanukrauh et al. 2011 · Thai Male','ชายไทย (Mahakkanukrauh 2011)','Mahakkanukrauh P, et al. (2011) Forensic Sci Int 210:279.'],
-  TF:[2.41,56.40,3.75,'Mahakkanukrauh et al. 2011 · Thai Female','หญิงไทย (Mahakkanukrauh 2011)','Mahakkanukrauh P, et al. (2011) Forensic Sci Int 210:279.'],
+  TM:[2.47,54.99,3.88,'Mahakkanukrauh et al. 2011 · Thai Male','ชายไทย (Mahakkanukrauh 2011)','Mahakkanukrauh P, et al. (2011) Forensic Sci Int 210:279.e1–7.'],
+  TF:[2.41,56.40,3.75,'Mahakkanukrauh et al. 2011 · Thai Female','หญิงไทย (Mahakkanukrauh 2011)','Mahakkanukrauh P, et al. (2011) Forensic Sci Int 210:279.e1–7.'],
   AM:[2.15,72.57,3.80,'Trotter 1970 · Asian Male','ชาย Asian (Trotter 1970)','Trotter M (1970) Personal Identification in Mass Disasters.'],
   WM:[2.38,61.41,3.27,'Trotter 1970 · White Male','ชายกลุ่ม “White” (Trotter 1970)','Trotter M (1970) Personal Identification in Mass Disasters.'],
-  WF:[2.47,54.10,3.72,'T&G 1952 · White Female','หญิงกลุ่ม “White” (T&G 1952)','Trotter M, Gleser GC (1952) Am J Phys Anthropol 10:463.'],
-  BM:[2.11,70.35,3.94,'T&G 1952 · Black Male','ชายกลุ่ม “Black” (T&G 1952)','Trotter M, Gleser GC (1952) Am J Phys Anthropol 10:463.'],
-  BF:[2.28,59.76,3.41,'T&G 1952 · Black Female','หญิงกลุ่ม “Black” (T&G 1952)','Trotter M, Gleser GC (1952) Am J Phys Anthropol 10:463.']
+  WF:[2.47,54.10,3.72,'T&G 1952 · White Female','หญิงกลุ่ม “White” (T&G 1952)','Trotter M, Gleser GC (1952) Am J Phys Anthropol 10:463–514.'],
+  BM:[2.11,70.35,3.94,'T&G 1952 · Black Male','ชายกลุ่ม “Black” (T&G 1952)','Trotter M, Gleser GC (1952) Am J Phys Anthropol 10:463–514.'],
+  BF:[2.28,59.76,3.41,'T&G 1952 · Black Female','หญิงกลุ่ม “Black” (T&G 1952)','Trotter M, Gleser GC (1952) Am J Phys Anthropol 10:463–514.']
 };
-
 var MECH={
-  bft:[['แรงกระแทกทู่ (blunt force)','Blunt force'],['รอยแตกแนวรัศมีและวงซ้อน; ตามกฎ Puppe รอยแตกใหม่จะหยุดที่รอยเดิม','Radiating and concentric fractures; by Puppe’s rule newer fractures terminate at older ones.']],
-  sft:[['วัตถุมีคม (sharp force)','Sharp force'],['ผนัง kerf เรียบ รอยขูด (striae) พื้นแบน; แยกการฟัน/การกรีดจากรูปร่าง kerf','Smooth kerf walls, striae, flat floor; separate chop from incision by kerf shape.']],
-  gsw:[['กระสุนปืน (ballistic)','Ballistic trauma'],['ทางเข้าเป็นรูปปากแตรด้านใน ทางออกปากแตรด้านนอก','Entrance beveled internally, exit beveled externally.']],
-  tap:[['ทาโฟโนมี (หลังตาย)','Taphonomic modification'],['รอยรากไม้ รอยแทะสัตว์ฟันแทะ (ร่องคู่) รอยเขี้ยว คราบดิน การผุกร่อนจากอากาศ','Root etching, rodent gnawing (paired grooves), carnivore punctures, soil staining, weathering.']]
+  bft:[['แรงกระแทกทู่ (blunt)','Blunt force'],['รอยแตกแนวรัศมีและวงซ้อน; ตามกฎ Puppe รอยแตกใหม่จะหยุดที่รอยเดิม','Radiating and concentric fractures; by Puppe’s rule newer fractures terminate at older ones']],
+  sft:[['วัตถุมีคม (sharp)','Sharp force'],['ผนัง kerf เรียบ รอยขูด (striae) พื้นแบน; แยกการฟัน/การกรีดจากรูปร่าง kerf','Smooth kerf walls, striae, flat floor; separate chop from incision by kerf shape']],
+  gsw:[['กระสุน (ballistic)','Ballistic'],['ทางเข้าเป็นรูปปากแตรด้านใน ทางออกปากแตรด้านนอก','Entrance beveled internally, exit beveled externally']],
+  tap:[['ทาโฟโนมี (หลังตาย)','Taphonomic'],['รอยรากไม้ รอยแทะสัตว์ฟันแทะ (ร่องคู่) รอยเขี้ยว คราบดิน การผุกร่อนจากอากาศ','Root etching, rodent gnawing (paired grooves), carnivore punctures, soil staining, weathering']]
 };
-
 var WX=[
   ['ไม่ผุกร่อน ยังมีไขมันที่ผิว','Unweathered; greasy surface'],
   ['รอยร้าวเล็กขนานเส้นใย','Fine cracking parallel to fibers'],
@@ -165,7 +138,6 @@ var WX=[
   ['ผิวหยาบมาก เสี้ยนหลุดง่าย','Coarse surface; splinters loosen'],
   ['กระดูกแตกสลายอยู่กับที่','Bone disintegrating in place']
 ];
-
 var REFS=[
   'Buikstra JE, Ubelaker DH (1994) Standards for Data Collection from Human Skeletal Remains. Arkansas Archeological Survey Research Series 44.',
   'Phenice TW (1969) A newly developed visual method of sexing the os pubis. Am J Phys Anthropol 30:297–301.',
@@ -174,13 +146,13 @@ var REFS=[
   'Brooks S, Suchey JM (1990) Skeletal age determination based on the os pubis. Human Evolution 5:227–238.',
   'Mahakkanukrauh P, et al. (2011) Stature estimation from long bone lengths in a Thai population. Forensic Sci Int 210:279.e1–7.',
   'Behrensmeyer AK (1978) Taphonomic and ecologic information from bone weathering. Paleobiology 4:150–162.',
-  'Sauer NJ (1998) The timing of injuries and manipulation of the body. In: Reichs KJ (ed) Forensic Osteology, 2nd ed.',
+  'Sauer NJ (1998) The timing of injuries and manipulation of the body. In: Reichs KJ (ed) Forensic Osteology, 2nd ed. Charles C Thomas.',
   'Walker PL (2005) Greater sciatic notch morphology: sex, age, and population differences. Am J Phys Anthropol 127:385–391.',
   'İşcan MY, Loth SR, Wright RK (1984) Age estimation from the rib by phase analysis: white males. J Forensic Sci 29:1094–1104.'
 ];
-
-function c(n){return '<a class="c" onclick="go(\'refs\')">['+n+']</a>'}
-
+function c(n){
+  return '<a class="c" href="#ref-'+n+'" onclick="go(\'refs\');setTimeout(function(){var e=document.getElementById(\'ref-'+n+'\');if(e)e.scrollIntoView({behavior:\'smooth\',block:\'center\'});},100);return false;">['+n+']</a>';
+}
 function go(t){
   document.querySelectorAll('.tab').forEach(function(e){e.classList.toggle('on',e.id==='t-'+t)});
   document.querySelectorAll('#nav button').forEach(function(e){e.classList.toggle('on',e.dataset.t===t)});
@@ -188,396 +160,503 @@ function go(t){
   if(t==='atlas')initAtlas();
   window.scrollTo(0,0);
 }
-
-function setLang(l){ lang=l; document.documentElement.lang=l; build(); }
-function toggleTheme(){ var h=document.documentElement; h.dataset.theme=h.dataset.theme==='dark'?'light':'dark'; }
-
+function setLang(l){lang=l;document.documentElement.lang=l;build()}
+function toggleTheme(){var h=document.documentElement;var cur=h.dataset.theme;h.dataset.theme=cur==='dark'?'light':'dark'}
 function resetAll(){
-  if(confirm(T('คุณต้องการรีเซ็ตค่าการวิเคราะห์ทั้งหมดหรือไม่?','Reset all analytical data?'))){
-    S.t={}; S.fem=0; S.age=0; S.sbPh=3; S.op=''; build(); calc(); tc();
+  if(confirm(T(
+    'คุณต้องการรีเซ็ตข้อมูลการวิเคราะห์ทั้งหมดหรือไม่?',
+    'Reset all analytical data?'
+  ))){
+    S={
+      t:{},
+      fem:0,
+      age:0,
+      tg:'TM',
+      sbSex:'m',
+      sbPh:3,
+      mech:'bft',
+      wx:0,
+      preservation:'complete',
+      an:'',
+      op:'',
+      out:{}
+    };
+    build();
+    calc();
+    tc();
   }
 }
-
-function getPubicSVG(phase){
-  var contours = [
-    '<path d="M25,10 C45,12 45,88 25,90 C5,88 5,12 25,10 Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10,25 Q25,30 40,25 M10,45 Q25,50 40,45 M10,65 Q25,70 40,65" stroke="currentColor" stroke-width="1.5" stroke-dasharray="2,2"/>',
-    '<path d="M25,10 C45,12 45,88 25,90 C5,88 5,12 25,10 Z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="35" cy="22" r="3" fill="currentColor"/><path d="M12,40 Q25,44 38,40 M12,60 Q25,64 38,60" stroke="currentColor" stroke-width="1.5"/>',
-    '<path d="M25,10 C48,12 45,88 25,90 C5,88 5,12 25,10 Z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M25,10 Q45,50 25,90" stroke="currentColor" stroke-width="2" fill="none"/>',
-    '<path d="M25,8 C48,10 48,90 25,92 C2,90 2,10 25,8 Z" fill="none" stroke="currentColor" stroke-width="2.5"/>',
-    '<path d="M25,8 C48,10 48,90 25,92 C2,90 2,10 25,8 Z" fill="none" stroke="currentColor" stroke-width="2"/><ellipse cx="25" cy="50" rx="14" ry="32" fill="none" stroke="currentColor" stroke-width="1" stroke-dasharray="3,3"/>',
-    '<path d="M25,8 C52,5 45,95 25,92 C0,95 2,5 25,8 Z" fill="none" stroke="currentColor" stroke-width="2" stroke-dasharray="4,2"/><circle cx="20" cy="30" r="1.5" fill="currentColor"/><circle cx="30" cy="65" r="2" fill="currentColor"/><circle cx="18" cy="75" r="1.5" fill="currentColor"/>'
-  ];
-  return '<svg viewBox="0 0 50 100" width="60" height="120" style="color:var(--br)">'+(contours[phase-1]||contours[0])+'</svg>';
-}
-
 function build(){
   $('tag').textContent=T('โต๊ะฝึกวิเคราะห์โครงกระดูกทางนิติมานุษยวิทยา','Forensic anthropology training bench');
-  $('bth').classList.toggle('on',lang==='th'); $('ben').classList.toggle('on',lang==='en');
-
-  var tabs=[
-    ['profile',T('โปรไฟล์ชีวภาพ','Biological profile')],
-    ['atlas',T('แบบจำลอง 3 มิติ','3D atlas')],
-    ['trauma',T('บาดแผลและทาโฟโนมี','Trauma & taphonomy')],
-    ['report',T('รายงาน','Report')],
-    ['refs',T('อ้างอิง','References')]
-  ];
-
+  $('bth').classList.toggle('on',lang==='th');$('ben').classList.toggle('on',lang==='en');
+  var tabs=[['profile',T('โปรไฟล์ชีวภาพ','Biological profile')],['atlas',T('แบบจำลอง 3 มิติ','3D atlas')],['trauma',T('บาดแผลและทาโฟโนมี','Trauma & taphonomy')],['report',T('รายงาน','Report')],['refs',T('อ้างอิง','References')]];
   var cur=(document.querySelector('.tab.on')||{id:'t-profile'}).id.slice(2);
   $('nav').innerHTML=tabs.map(function(x){return '<button data-t="'+x[0]+'" onclick="go(\''+x[0]+'\')">'+x[1]+'</button>'}).join('');
-
-  var tr=function(g){
-    return TR.filter(function(x){return x[1]===g}).map(function(x){
-      var k=x[0]; var v=S.t[k]||0;
-      var traitMethod = '<span class="trait-tag">'+x[5]+'</span>';
-      return '<div class="tr"><div class="trh"><span>'+x[3]+(x[4]&&lang==='th'?' <span style="color:var(--mt)">'+x[4]+'</span>':'')+traitMethod+'</span><b class="n" id="v_'+k+'"></b></div><input type="range" min="0" max="'+x[2]+'" value="'+v+'" aria-label="'+x[3]+'" oninput="S.t.'+k+'=+this.value;calc()"></div>';
-    }).join('');
-  };
-
-  var tgo=Object.keys(TG).map(function(k){ return '<option value="'+k+'"'+(S.tg===k?' selected':'')+'>'+T(TG[k][4],TG[k][3])+'</option>'; }).join('');
-  var ph=[1,2,3,4,5,6].map(function(i){ return '<button class="btn n'+(S.sbPh===i?' on':'')+'" onclick="S.sbPh='+i+';build();calc()">'+['I','II','III','IV','V','VI'][i-1]+'</button>'; }).join('');
-  var mo=Object.keys(MECH).map(function(k){ return '<option value="'+k+'"'+(S.mech===k?' selected':'')+'>'+T(MECH[k][0][0],MECH[k][0][1])+'</option>'; }).join('');
-  var wo=WX.map(function(w,i){ return '<option value="'+i+'"'+(S.wx==i?' selected':'')+'>'+T('ระยะ ','Stage ')+i+' · '+T(w[0],w[1])+'</option>'; }).join('');
-
+  var tr=function(g){return TR.filter(function(x){return x[1]===g}).map(function(x){
+    var k=x[0];var v=S.t[k]||0;
+    return '<div class="tr"><div class="trh"><span>'+esc(x[3])+(x[4]&&lang==='th'?' <span style="color:var(--mt)">'+esc(x[4])+'</span>':'')+' <span style="color:var(--mt);font-size:12px">['+esc(x[5])+']</span></span><b class="n" id="v_'+k+'"></b></div><input type="range" min="0" max="'+x[2]+'" value="'+v+'" aria-label="'+esc(x[3])+'" oninput="S.t.'+k+'=+this.value;calc()"></div>';
+  }).join('')};
+  var tgo=Object.keys(TG).map(function(k){return '<option value="'+k+'"'+(S.tg===k?' selected':'')+'>'+esc(T(TG[k][4],TG[k][3]))+'</option>'}).join('');
+  var ph=[1,2,3,4,5,6].map(function(i){return '<button class="btn n'+(S.sbPh===i?' on':'')+'" onclick="S.sbPh='+i+';build();calc()">'+['I','II','III','IV','V','VI'][i-1]+'</button>'}).join('');
+  var mo=Object.keys(MECH).map(function(k){return '<option value="'+k+'"'+(S.mech===k?' selected':'')+'>'+esc(T(MECH[k][0][0],MECH[k][0][1]))+'</option>'}).join('');
+  var wo=WX.map(function(w,i){return '<option value="'+i+'"'+(S.wx==i?' selected':'')+'>'+esc(T('ระยะ ','Stage ')+i+' · '+T(w[0],w[1]))+'</option>'}).join('');
   $('v').innerHTML=
   '<section class="tab" id="t-profile">'+
-    '<div class="card">'+
-      '<h2><span>'+T('1. ประเมินเพศ (Sex Estimation)','1. Sex estimation')+c(1)+c(2)+c(7)+'</span></h2>'+
-      '<p class="sub">'+T('เลื่อนเป็น 0 หากไม่พบกระดูก · Phenice traits: 1=หญิง, 2=ชาย; Walker/Buikstra: 1 (หญิง) ถึง 5 (ชาย)','Set to 0 if missing. Phenice traits: 1=female, 2=male; Walker/Buikstra: 1 (female) to 5 (male).')+'</p>'+
-      '<label>'+T('สภาพการอนุรักษ์กระดูก (Preservation status)','Preservation status')+'</label>'+
-      '<select onchange="S.preservation=this.value;calc()">'+
-        '<option value="complete"'+(S.preservation==='complete'?' selected':'')+'>'+T('สมบูรณ์ประเมินได้ครบ (Complete)','Complete')+'</option>'+
-        '<option value="partial"'+(S.preservation==='partial'?' selected':'')+'>'+T('สมบูรณ์บางส่วน (Partial / Fragmentary)','Partial / Fragmentary')+'</option>'+
-        '<option value="poor"'+(S.preservation==='poor'?' selected':'')+'>'+T('ผุกร่อนมาก (Severely weathered)','Severely weathered')+'</option>'+
-      '</select>'+
-      '<br><b>'+T('กระดูกเชิงกราน (Pelvis)','Pelvis')+'</b> '+c(2)+c(7)+tr('p')+
-      '<div style="height:10px"></div><b>'+T('กะโหลกศีรษะ (Cranium)','Cranium')+'</b> '+c(1)+tr('c')+
-      '<div class="res">'+
-        '<div class="bl"><span>'+T('เชิงกราน (Pelvis score)','Pelvis score')+'</span><span class="n" id="mp"></span></div>'+
-        '<div class="bar"><i id="bp"></i></div>'+
-        '<div class="bl"><span>'+T('กะโหลก (Cranium score)','Cranium score')+'</span><span class="n" id="mc"></span></div>'+
-        '<div class="bar"><i id="bc"></i></div>'+
-        '<div class="big" id="sx"></div>'+
-        '<div class="warn" id="sw"></div>'+
-        '<div class="info-box" id="sdetail"></div>'+
-      '</div>'+
-    '</div>'+
-
-    '<div class="card">'+
-      '<h2><span>'+T('2. ประมาณส่วนสูงขณะมีชีวิต (Stature)','2. Stature estimation')+c(3)+c(8)+'</span></h2>'+
-      '<p class="sub">'+T('คำนวณจากความยาวสูงสุดของกระดูกต้นขา (maximum femur length ในหน่วย มม.)','Calculated from maximum femur length (mm).')+'</p>'+
-      '<label>'+T('สมการกลุ่มตัวอย่างอ้างอิง (Reference Model)','Reference Model')+'</label>'+
-      '<select onchange="S.tg=this.value;calc()">'+tgo+'</select>'+
-      '<label>'+T('ความยาวสูงสุดของ femur (มม.)','Maximum femur length (mm)')+'</label>'+
-      '<input type="number" inputmode="decimal" placeholder="เช่น 455" value="'+(S.fem||'')+'" oninput="S.fem=+this.value;calc()">'+
-      '<label>'+T('อายุขณะเสียชีวิต (ปี) — สำหรับปรับแก้การลดลงของส่วนสูงเมื่ออายุเกิน 30 ปี','Age at death (yrs) — for age-related height loss (>30 yrs)')+'</label>'+
-      '<input type="number" inputmode="numeric" placeholder="เช่น 35" value="'+(S.age||'')+'" oninput="S.age=+this.value;calc()">'+
-      '<div class="res">'+
-        '<div class="big" id="st">—</div>'+
-        '<div class="sub" id="st2"></div>'+
-        '<div class="info-box" id="st_eq"></div>'+
-      '</div>'+
-    '</div>'+
-
-    '<div class="card">'+
-      '<h2><span>'+T('3. ประมาณอายุขณะเสียชีวิต (Age at Death)','3. Age at death')+c(4)+'</span></h2>'+
-      '<p class="sub">Suchey-Brooks Pubic Symphysis Method '+T('(จำแนกตามเพศ)','(sex-specific tables)')+'</p>'+
-      '<select onchange="S.sbSex=this.value;calc()">'+
-        '<option value="m"'+(S.sbSex==='m'?' selected':'')+'>'+T('ตารางอ้างอิงชาย (Male table)','Male table')+'</option>'+
-        '<option value="f"'+(S.sbSex==='f'?' selected':'')+'>'+T('ตารางอ้างอิงหญิง (Female table)','Female table')+'</option>'+
-      '</select>'+
-      '<div class="ph">'+ph+'</div>'+
-      '<div class="sb-diagram" id="sb_svg"></div>'+
-      '<div class="res">'+
-        '<div class="big n" id="ag"></div>'+
-        '<div class="sub" id="ag2"></div>'+
-      '</div>'+
-      '<div id="sb_matrix_box"></div>'+
-    '</div>'+
+  '<div class="card"><h2>'+T('1. ประเมินเพศ (Sex Estimation)','1. Sex estimation')+c(1)+c(2)+c(9)+'</h2>'+
+  '<p class="sub">'+T(
+  'บันทึกลักษณะทางสัณฐานวิทยาตามวิธีที่เลือก โดยคะแนนแต่ละลักษณะเป็น ordinal observation ไม่ใช่ค่าความน่าจะเป็นของเพศ · 0 = ไม่ได้ให้คะแนน/ไม่นำมาคิด · Phenice ใช้ 1 = หญิง, 2 = ชาย; ลักษณะเกณฑ์ 1–5 ใช้ 1 = ลักษณะแบบหญิง, 5 = ลักษณะแบบชาย',
+  'Record morphological traits using the selected method. Trait scores are ordinal observations, not probabilities. 0 = not scored/excluded · Phenice traits: 1 = female, 2 = male; 1–5 traits: 1 = female-typical, 5 = male-typical.'
+  )+'</p>'+
+  '<label>'+T('สภาพการอนุรักษ์กระดูก (Preservation status)','Preservation status')+'</label>'+
+  '<select onchange="S.preservation=this.value;calc()">'+
+    '<option value="complete"'+(S.preservation==='complete'?' selected':'')+'>'+T('สมบูรณ์ (Complete)','Complete')+'</option>'+
+    '<option value="partial"'+(S.preservation==='partial'?' selected':'')+'>'+T('สมบูรณ์บางส่วน (Partial)','Partial')+'</option>'+
+    '<option value="poor"'+(S.preservation==='poor'?' selected':'')+'>'+T('ผุกร่อนมาก (Poor / severely weathered)','Poor / severely weathered')+'</option>'+
+  '</select>'+
+  '<div style="margin-top:10px"><b>'+T('กระดูกเชิงกราน','Pelvis')+'</b> '+c(2)+c(9)+tr('p')+'</div>'+
+  '<div style="height:8px"></div><b>'+T('กะโหลกศีรษะ','Cranium')+'</b> '+c(1)+tr('c')+
+  '<div class="res">'+
+    '<div class="big" id="sx"></div>'+
+    '<div class="warn" id="sw"></div>'+
+    '<div class="info-box" id="sdetail"></div>'+
+    '<div class="info-box" id="sinterpret"></div>'+
+  '</div></div>'+
+  '<div class="card"><h2>'+T('2. ส่วนสูง','2. Stature')+c(3)+c(4)+c(6)+'</h2><p class="sub">'+T('คำนวณค่าประมาณส่วนสูงจากความยาวสูงสุดของกระดูกต้นขา (femur) ในหน่วยมิลลิเมตร','Estimate living stature from maximum femur length in millimetres.')+'</p>'+
+  '<label>'+T('สมการ','Model')+'</label><select onchange="S.tg=this.value;calc()">'+tgo+'</select>'+
+  '<label>'+T('ความยาวสูงสุดของ femur (มม.)','Maximum femur length (mm)')+'</label><input type="number" inputmode="decimal" value="'+(S.fem||'')+'" oninput="S.fem=+this.value;calc()">'+
+  '<div class="res"><div class="big" id="st">—</div><div class="sub" id="st2"></div><div class="info-box" id="st_eq"></div></div>'+
+  '<p class="sub" style="margin-top:10px">'+T('สมการแต่ละชุดมาจากกลุ่มตัวอย่างอ้างอิงเฉพาะ ควรตรวจสอบความเหมาะสมกับประชากรและบริบทของคดีก่อนนำไปใช้','Equations derive from specific reference samples; verify suitability for the population and case context before use.')+c(6)+'</p></div>'+
+  '<div class="card"><h2>'+T('3. อายุขณะเสียชีวิต','3. Age at death')+c(5)+'</h2><p class="sub">Suchey-Brooks '+T('(ใช้ตารางแยกเพศ)','(sex-specific tables)')+'</p>'+
+  '<select onchange="S.sbSex=this.value;calc()"><option value="m"'+(S.sbSex==='m'?' selected':'')+'>'+T('ตารางชาย','Male table')+'</option><option value="f"'+(S.sbSex==='f'?' selected':'')+'>'+T('ตารางหญิง','Female table')+'</option></select>'+
+  '<div class="ph">'+ph+'</div><div class="res"><div class="big n" id="ag"></div><div class="sub" id="ag2"></div></div></div>'+
   '</section>'+
-
-  '<section class="tab" id="t-atlas">'+
-    '<div class="card">'+
-      '<h2>'+T('แบบจำลองโครงกระดูก 3 มิติ (3D Skeleton Atlas)','3D skeleton atlas')+'</h2>'+
-      '<p class="sub">'+T('ลากเพื่อหมุน เลื่อนล้อเมาส์เพื่อซูม แตะกระดูกเพื่อดูตำแหน่งทางกายวิภาคและการประเมิน','Drag to rotate, scroll to zoom, tap a bone to inspect anatomical landmarks.')+'</p>'+
-      '<canvas id="cv"></canvas>'+
-      '<div class="vb">'+
-        '<button class="btn" onclick="AV(0)">'+T('ด้านหน้า','Front')+'</button>'+
-        '<button class="btn" onclick="AV(1.5708)">'+T('ด้านข้าง','Side')+'</button>'+
-        '<button class="btn" onclick="AV(3.1416)">'+T('ด้านหลัง','Back')+'</button>'+
-        '<button class="btn" onclick="AT.auto=!AT.auto">'+T('หมุนอัตโนมัติ','Auto-rotate')+'</button>'+
-      '</div>'+
-      '<div class="res" id="ai">'+
-        '<div class="sub" style="margin:0">'+T('ยังไม่ได้เลือกกระดูก','No bone selected')+'</div>'+
-      '</div>'+
-    '</div>'+
-  '</section>'+
-
+  '<section class="tab" id="t-atlas"><div class="card"><h2>'+T('แบบจำลองโครงกระดูก 3 มิติ','3D skeleton atlas')+'</h2><p class="sub">'+T(
+  'แบบจำลอง schematic สำหรับการเรียนรู้ตำแหน่งโดยประมาณ ไม่ใช่แบบจำลองทางกายวิภาคที่มีความแม่นยำสูง และไม่ใช้แทนการตรวจวัตถุพยานจริง · ลากเพื่อหมุน เลื่อนล้อเมาส์เพื่อซูม แตะกระดูกเพื่อดูข้อมูล',
+  'Schematic educational model for approximate anatomical orientation. Not anatomically validated and not a substitute for examination of actual evidence. Drag to rotate, scroll to zoom, tap a bone for details.'
+  )+'</p><canvas id="cv"></canvas><div class="vb"><button class="btn" onclick="AV(0)">'+T('หน้า','Front')+'</button><button class="btn" onclick="AV(1.5708)">'+T('ข้าง','Side')+'</button><button class="btn" onclick="AV(3.1416)">'+T('หลัง','Back')+'</button><button class="btn" onclick="AT.auto=!AT.auto">'+T('หมุนอัตโนมัติ','Auto-rotate')+'</button></div><div class="res" id="ai"><div class="sub" style="margin:0">'+T('ยังไม่ได้เลือกกระดูก','No bone selected')+'</div></div></div></section>'+
   '<section class="tab" id="t-trauma">'+
-    '<div class="card">'+
-      '<h2>'+T('กลไกการเกิดบาดแผล (Trauma Mechanism)','Trauma mechanism')+'</h2>'+
-      '<select onchange="S.mech=this.value;tc()">'+mo+'</select>'+
-      '<div class="res"><div id="mdesc" class="sub" style="margin:0"></div></div>'+
-    '</div>'+
-    '<div class="card">'+
-      '<h2><span>'+T('ช่วงเวลาการเกิดบาดแผล (Timing of Injury)','Timing of injury')+c(6)+'</span></h2>'+
-      '<label>'+T('สีของขอบรอยแตกเทียบกับผิวกระดูกรอบนอก','Edge colour vs adjacent cortex')+'</label>'+
-      '<select id="te" onchange="tc()">'+
-        '<option value="s">'+T('สีเดียวกัน (Same stain / elastic response)','Same stain')+'</option>'+
-        '<option value="l">'+T('ขอบสีอ่อนกว่า / ไม่ติดคราบ (Unstained edge)','Lighter, unstained edge')+'</option>'+
-        '<option value="r">'+T('ขอบมน / มีการซ่อมแซม (Rounded / remodelled)','Rounded / remodelled')+'</option>'+
-      '</select>'+
-      '<label>'+T('ลักษณะพื้นผิวรอยแตก','Fracture surface morphology')+'</label>'+
-      '<select id="tf" onchange="tc()">'+
-        '<option value="f">'+T('เรียบ โค้ง/เฉียง (Fresh / green bone)','Smooth, curved or oblique (fresh bone)')+'</option>'+
-        '<option value="d">'+T('หยาบ ฉากตรง เปราะ (Dry bone break)','Rough, right-angle, brittle (dry bone)')+'</option>'+
-      '</select>'+
-      '<label>'+T('การซ่อมแซมของกระดูก (Healing / Callus)','Healing response')+'</label>'+
-      '<select id="th" onchange="tc()">'+
-        '<option value="n">'+T('ไม่มี (None)','None')+'</option>'+
-        '<option value="c">'+T('พบ Callus / การสร้างกระดูกใหม่ (Callus present)','Callus / new bone formation')+'</option>'+
-      '</select>'+
-      '<label>'+T('การเสียรูปแบบพลาสติก (Plastic deformation)','Plastic deformation')+'</label>'+
-      '<select id="tp" onchange="tc()">'+
-        '<option value="n">'+T('ไม่พบ (Absent)','Absent')+'</option>'+
-        '<option value="y">'+T('พบรอยพับ/เบี้ยวงอ (Present)','Present')+'</option>'+
-      '</select>'+
-      '<div class="res">'+
-        '<div class="big" id="tt"></div>'+
-        '<ul id="tw" class="sub" style="padding-left:18px;margin:8px 0 0"></ul>'+
-      '</div>'+
-    '</div>'+
-    '<div class="card">'+
-      '<h2><span>'+T('ระยะการผุกร่อนทาโฟโนมี (Behrensmeyer Weathering)','Weathering stage')+c(5)+'</span></h2>'+
-      '<select onchange="S.wx=this.value;tc()">'+wo+'</select>'+
-    '</div>'+
+  '<div class="card"><h2>'+T('กลไกการบาดเจ็บ','Injury mechanism')+'</h2><select onchange="S.mech=this.value;tc()">'+mo+'</select><div class="res"><div id="mdesc" class="sub" style="margin:0"></div></div></div>'+
+  '<div class="card"><h2>'+T('ช่วงเวลาของบาดแผล','Timing of injury')+c(8)+'</h2><p class="sub">'+T('บันทึกลักษณะที่สังเกตได้จากรอยแตกเพื่อประกอบการพิจารณา ไม่ใช่การตัดสินช่วงเวลาอัตโนมัติ','Record fracture observations to inform evaluation; not an automatic timing rule.')+'</p>'+
+  '<label>'+T('สีขอบรอยแตกเทียบกับผิวกระดูกรอบข้าง','Edge colour vs adjacent cortex')+'</label><select id="te" onchange="tc()"><option value="s">'+T('สีเดียวกัน','Same stain')+'</option><option value="l">'+T('ขอบสีอ่อนกว่า/ไม่ติดคราบ','Lighter, unstained edge')+'</option><option value="r">'+T('ขอบมน/ปรับรูปแล้ว','Rounded / remodelled')+'</option></select>'+
+  '<label>'+T('ลักษณะผิวรอยแตก','Fracture surface')+'</label><select id="tf" onchange="tc()"><option value="f">'+T('เรียบ โค้ง/เฉียง (กระดูกสด)','Smooth, curved or oblique (fresh bone)')+'</option><option value="d">'+T('หยาบ ฉากตรง เปราะ (กระดูกแห้ง)','Rough, right-angle, brittle (dry bone)')+'</option></select>'+
+  '<label>'+T('การซ่อมแซม','Healing response')+'</label><select id="th" onchange="tc()"><option value="n">'+T('ไม่มี','None')+'</option><option value="c">'+T('มี callus / การสร้างกระดูกใหม่','Callus / new bone formation')+'</option></select>'+
+  '<label>'+T('การเสียรูปแบบพลาสติก (hinge, bending)','Plastic deformation (hinge, bending)')+'</label><select id="tp" onchange="tc()"><option value="n">'+T('ไม่พบ','Absent')+'</option><option value="y">'+T('พบ','Present')+'</option></select>'+
+  '<div class="res"><div class="big" id="tt"></div><ul id="tw" class="sub" style="padding-left:18px;margin:8px 0 0"></ul></div></div>'+
+  '<div class="card"><h2>'+T('ระยะการผุกร่อน (Behrensmeyer)','Weathering stage (Behrensmeyer)')+c(7)+'</h2><select onchange="S.wx=this.value;tc()">'+wo+'</select>'+
+  '<div class="info-box" id="wxdesc"></div>'+
+  '<p class="sub" style="margin-top:10px">'+T('ระยะการผุกร่อนของ Behrensmeyer เป็นการบรรยายสภาพการผุกร่อน ไม่ใช่เครื่องคำนวณเวลาหลังตาย (PMI) อัตราผุกร่อนขึ้นกับแดด ความชื้น ดิน และสิ่งแวดล้อม','Behrensmeyer weathering stages describe bone weathering, not a post-mortem interval (PMI) calculator; rates depend on sun, moisture, soil, and environment.')+'</p></div>'+
   '</section>'+
-
-  '<section class="tab" id="t-report">'+
-    '<div class="card">'+
-      '<h2>'+T('รายงานสรุปผลการวิเคราะห์ทางนิติมานุษยวิทยา','Forensic anthropology report summary')+'</h2>'+
-      '<p class="sub" id="rd"></p>'+
-      '<label class="np">'+T('ชื่อนักนิติมานุษยวิทยา / ผู้วิเคราะห์','Analyst Name / ID')+'</label>'+
-      '<input class="np" type="text" id="ra" placeholder="เช่น ดร. แพรวา นิติวิทยา" value="'+(S.an||'')+'" oninput="S.an=this.value;rep()">'+
-      '<div id="rb" style="margin-top:14px"></div>'+
-      '<label style="margin-top:16px">'+T('บันทึกหลักฐาน ความเห็น และข้อจำกัด (Evidence notes & limitations)','Evidence notes & limitations')+'</label>'+
-      '<textarea rows="5" oninput="S.op=this.value">'+(S.op||'')+'</textarea>'+
-      '<button class="btn np" onclick="window.print()" style="margin-top:10px;width:100%">'+T('พิมพ์ / บันทึกรายงาน PDF','Print / Save PDF Report')+'</button>'+
-    '</div>'+
-  '</section>'+
-
-  '<section class="tab" id="t-refs">'+
-    '<div class="card">'+
-      '<h2>'+T('เอกสารอ้างอิงทางวิชาการ','Academic references')+'</h2>'+
-      '<ol>'+REFS.map(function(r){return '<li>'+r+'</li>'}).join('')+'</ol>'+
-    '</div>'+
-  '</section>';
-
-  go(cur); calc(); tc();
+  '<section class="tab" id="t-report"><div class="card"><h2>'+T('รายงานสรุปการวิเคราะห์','Analysis summary')+'</h2><p class="sub" id="rd"></p>'+
+  '<label class="np">'+T('ผู้วิเคราะห์','Analyst')+'</label><input class="np" type="text" id="ra" value="'+esc(S.an||'')+'" oninput="S.an=this.value;rep()" style="width:100%;background:var(--bg);border:1px solid var(--ln);border-radius:4px;padding:8px">'+
+  '<div id="rb"></div>'+
+  '<label>'+T('ความเห็นและข้อจำกัด','Opinion and limitations')+'</label><textarea rows="5" oninput="S.op=this.value">'+esc(S.op||'')+'</textarea>'+
+  '<p class="disc">'+T('รายงานนี้เป็นสรุปเพื่อการฝึกอบรมและทบทวนวิธีมาตรฐาน ไม่ใช่รายงานทางนิติวิทยาศาสตร์สำหรับยื่นศาลหรือยืนยันตัวบุคคลโดยตรง การสรุปจริงต้องตรวจกระดูกจริงโดยนักมานุษยวิทยาที่มีคุณวุฒิ และใช้วิธีที่ผ่านการตรวจสอบกับประชากรที่เกี่ยวข้อง','This summary is for training and review of standard methods, not a forensic report for court or direct identification. Real conclusions require direct examination of remains by a qualified anthropologist using population-validated methods.')+'</p>'+
+  '<button class="btn np" onclick="go(\'report\');window.print()">'+T('พิมพ์ / บันทึก PDF','Print / save PDF')+'</button></div></section>'+
+  '<section class="tab" id="t-refs"><div class="card"><h2>'+T('เอกสารอ้างอิง','References')+'</h2><p class="sub">'+T('ตรวจตัวเลขกับต้นฉบับก่อนใช้งานจริงทุกครั้ง','Check figures against the originals before relying on them.')+'</p><ol>'+REFS.map(function(r,i){return '<li id="ref-'+(i+1)+'">'+esc(r)+'</li>'}).join('')+'</ol></div></section>';
+  go(cur);calc();tc();
 }
-
 function calc(){
-  var P=[], C=[], unassessedP=[], unassessedC=[];
+  var P=[], C=[];
+  var unassessedP=[], unassessedC=[];
+  var scoredTraits=[];
   TR.forEach(function(x){
     var v=S.t[x[0]]||0;
     var e=$('v_'+x[0]);
-    if(e) e.textContent = v ? v : T('ประเมินไม่ได้','not scored');
-    if(v > 0){
-      var norm = (v - 1) / (x[2] - 1);
-      if(x[1]==='p') P.push(norm); else C.push(norm);
-    } else {
-      if(x[1]==='p') unassessedP.push(T(x[4]||x[3], x[3])); else unassessedC.push(T(x[4]||x[3], x[3]));
+    if(e){
+      e.textContent = v
+        ? String(v)
+        : T('ประเมินไม่ได้','Not scored');
+    }
+    if(v>0){
+      scoredTraits.push({
+        key:x[0],
+        group:x[1],
+        trait:T(x[4]||x[3],x[3]),
+        score:v,
+        method:x[5]
+      });
+      if(x[1]==='p') P.push(v);
+      else C.push(v);
+    }else{
+      if(x[1]==='p')
+        unassessedP.push(T(x[4]||x[3],x[3]));
+      else
+        unassessedC.push(T(x[4]||x[3],x[3]));
     }
   });
-
-  var avg=function(arr){return arr.length ? arr.reduce(function(s,q){return s+q},0)/arr.length : null};
-  var pm=avg(P), cm=avg(C);
-
-  var setBar=function(barId, txtId, val){
-    var el=$(barId), tx=$(txtId);
-    if(el) { el.style.left='0%'; el.style.width = val===null ? '0%' : Math.round(val*100)+'%'; }
-    if(tx) { tx.textContent = val===null ? '—' : (val*100).toFixed(0)+' %'; }
-  };
-  setBar('bp','mp',pm); setBar('bc','mc',cm);
-
-  var sc = (pm!==null && cm!==null) ? (0.6*pm + 0.4*cm) : (pm!==null ? pm : cm);
-  var sexRes = T('ยังไม่มีข้อมูลพอ','Not enough data'), sexWarn = '';
-
-  if(sc!==null){
-    if(sc <= 0.35) sexRes = T('น่าจะเป็นเพศหญิง (Likely female)','Likely female');
-    else if(sc >= 0.65) sexRes = T('น่าจะเป็นเพศชาย (Likely male)','Likely male');
-    else sexRes = T('ไม่สามารถสรุปเพศได้ (Indeterminate)','Indeterminate');
-
-    sexWarn = T('คะแนนถ่วงน้ำหนักเพื่อฝึกฝน (เชิงกราน 0.6 : กะโหลก 0.4) ไม่ใช่ค่าความน่าจะเป็นทางสถิติ','Weighted composite score (pelvis 0.6 : cranium 0.4) for educational practice.');
-    if(pm!==null && cm!==null && Math.abs(pm-cm)>0.35){
-      sexWarn = T('ข้อสังเกต: เชิงกรานและกะโหลกขัดแย้งกัน ในงานจริงให้น้ำหนักเชิงกรานสูงกว่า','Caution: Pelvis and cranium scores conflict.');
-    }
+  var pelvisCount=P.length;
+  var craniumCount=C.length;
+  var totalCount=pelvisCount+craniumCount;
+  var completeness=totalCount/9*100;
+  var sexRes=T(
+    'บันทึกข้อมูลลักษณะทางสัณฐานวิทยาแล้ว',
+    'Morphological observations recorded'
+  );
+  var sexWarn=T(
+    'ผลนี้เป็นการบันทึก trait observations ไม่ใช่ผลจำแนกเพศที่ผ่านการตรวจสอบความแม่นยำทางสถิติ',
+    'This output records trait observations. It is not a statistically validated sex classification.'
+  );
+  if(S.preservation==='partial'){
+    sexWarn+=T(
+      ' กระดูกมีความสมบูรณ์บางส่วน ควรพิจารณาว่าลักษณะที่เหลือเพียงพอและเชื่อถือได้หรือไม่',
+      ' Partial preservation may limit the reliability and applicability of observed traits.'
+    );
   }
-
-  $('sx').textContent = sexRes; $('sw').textContent = sexWarn; S.out.sex = sexRes;
-
-  var unassessedAll = unassessedP.concat(unassessedC);
-  var sdetailHtml = '<div><b>'+T('สรุปความสมบูรณ์ของข้อมูล (Data completeness):','Data completeness summary:')+'</b><br>'+
-    T('ประเมินได้ pelvis ','Scored pelvis ')+P.length+'/4, cranium '+C.length+'/5</div>';
-  if(unassessedAll.length > 0){
-    sdetailHtml += '<div style="margin-top:6px;color:var(--mt)">'+T('ประเมินไม่ได้ / ไม่ได้ลงคะแนน: ','Not scored: ')+unassessedAll.join(', ')+'</div>';
-  } else {
-    sdetailHtml += '<div style="margin-top:6px;color:var(--hl)">'+T('ประเมินครบถ้วนทุกตัวแปร (100% complete)','All traits scored (100% complete)')+'</div>';
+  if(S.preservation==='poor'){
+    sexWarn+=T(
+      ' กระดูกผุกร่อนมาก อาจส่งผลต่อการประเมิน morphology และไม่ควรฝืนตีความลักษณะที่เสียหาย',
+      ' Severe weathering may compromise morphology. Do not score damaged or unreliable traits.'
+    );
   }
-  $('sdetail').innerHTML = sdetailHtml;
-
-  // Stature calculation
-  var M = TG[S.tg];
-  var st = '—', s2 = '', eqDetail = '';
-  if(M && S.fem > 0){
-    var femCm = S.fem / 10;
-    var baseH = M[0] * femCm + M[1];
-    var finalH = baseH - (S.age > 30 ? 0.06 * (S.age - 30) : 0);
-
-    st = finalH.toFixed(1) + ' cm ± ' + M[2] + ' cm';
-    var inch = finalH / 2.54;
-    s2 = Math.floor(inch/12) + ' ft ' + (inch%12).toFixed(1) + ' in (ช่วง 95% CI: ' + (finalH - 1.96*M[2]).toFixed(1) + ' – ' + (finalH + 1.96*M[2]).toFixed(1) + ' cm)';
-    eqDetail = '<b>'+T('สูตรคำนวณที่ใช้:','Formula used:')+'</b><br><span class="mono">Stature (cm) = '+M[0]+' × Femur('+(femCm.toFixed(1))+' cm) + '+M[1]+'</span><br><span class="mono">SEE = ±'+M[2]+' cm</span> | <i>'+M[5]+'</i>';
-  } else {
-    eqDetail = T('กรอกความยาวกระดูกต้นขา (Femur length) เป็นมิลลิเมตรเพื่อคำนวณส่วนสูง','Enter femur length in mm to estimate stature.');
+  $('sx').textContent=sexRes;
+  $('sw').textContent=sexWarn;
+  $('sw').className=S.preservation!=='complete'?'warning-panel warn':'warn';
+  var detail=
+    '<b>'+T('ความครบถ้วนของข้อมูล','Data completeness')+'</b><br>'+
+    T('เชิงกราน: ','Pelvis: ')+pelvisCount+'/4<br>'+
+    T('กะโหลก: ','Cranium: ')+craniumCount+'/5<br>'+
+    T('รวม: ','Total: ')+totalCount+'/9 ('+
+    completeness.toFixed(0)+'%)';
+  if(unassessedP.length){
+    detail+='<p style="margin:6px 0 0">'+T('Pelvis ที่ไม่ได้ประเมิน: ','Unscored pelvis traits: ')+
+      esc(unassessedP.join(', '))+'</p>';
   }
-  $('st').textContent = st; $('st2').textContent = s2; $('st_eq').innerHTML = eqDetail; S.out.st = st;
-
-  // Age calculation
-  var d = SB[S.sbSex][S.sbPh - 1];
-  var phaseRoman = ['I','II','III','IV','V','VI'][S.sbPh - 1];
-  $('ag').textContent = T('Phase ','Phase ') + phaseRoman + ' (' + d[2] + ' – ' + d[3] + T(' ปี)',' yrs)');
-  $('ag2').textContent = T('ค่าเฉลี่ยประชากรอ้างอิง: ','Reference Mean: ') + d[0] + ' ± ' + d[1] + T(' ปี',' yrs') + ' · ' + SBF[S.sbPh - 1][lang==='th'?0:1];
-  $('sb_svg').innerHTML = getPubicSVG(S.sbPh);
-
-  var matrixHtml = '<table class="sb-matrix"><thead><tr><th>Phase</th><th>'+T('ช่วงอายุ','Age range')+'</th><th>'+T('ลักษณะผิว pubic symphysis','Pubic symphysis surface feature')+'</th></tr></thead><tbody>';
-  for(var p=1; p<=6; p++){
-    var pData = SB[S.sbSex][p-1];
-    matrixHtml += '<tr'+(p===S.sbPh?' class="active-phase"':'')+'><td><b>'+['I','II','III','IV','V','VI'][p-1]+'</b></td><td>'+pData[2]+'–'+pData[3]+'</td><td style="text-align:left">'+SBF[p-1][lang==='th'?0:1]+'</td></tr>';
+  if(unassessedC.length){
+    detail+='<p style="margin:6px 0 0">'+T('Cranial traits ที่ไม่ได้ประเมิน: ','Unscored cranial traits: ')+
+      esc(unassessedC.join(', '))+'</p>';
   }
-  matrixHtml += '</tbody></table>';
-  $('sb_matrix_box').innerHTML = matrixHtml;
-  S.out.age = T('Suchey-Brooks Phase ','Suchey-Brooks Phase ') + phaseRoman + ' (' + d[2] + '–' + d[3] + T(' ปี)',' yrs)');
+  $('sdetail').innerHTML=detail;
+  var traitSummary=scoredTraits.length
+    ? scoredTraits.map(function(x){
+        return '<div class="row">'+
+          '<span>'+esc(x.trait)+'</span>'+
+          '<span>'+esc(x.score)+' · '+esc(x.method)+'</span>'+
+        '</div>';
+      }).join('')
+    : '<div class="sub" style="margin:6px 0 0">'+T('ยังไม่มี trait ที่บันทึก','No traits recorded yet')+'</div>';
+  $('sinterpret').innerHTML=
+    '<b>'+T('ผลการสังเกต','Recorded observations')+'</b>'+
+    traitSummary;
+  S.out.sex=sexRes;
+  S.out.sexObservations=scoredTraits;
+  S.out.sexCompleteness=completeness;
+  S.out.sexLimitations=sexWarn;
+
+  var M=TG[S.tg];
+  var st='—';
+  var s2='';
+  var eqDetail='';
+  if(M && S.fem>0){
+    var femCm=S.fem/10;
+    var finalH=M[0]*femCm+M[1];
+    st=finalH.toFixed(1)+' cm';
+    var inch=finalH/2.54;
+    s2=Math.floor(inch/12)+' ft '+
+       (inch%12).toFixed(1)+' in';
+    eqDetail=
+      '<b>'+T('สมการที่ใช้','Equation used')+'</b><br>'+
+      '<span class="mono">Stature (cm) = '+
+      M[0]+' × Femur ('+femCm.toFixed(2)+' cm) + '+
+      M[1]+'</span><br>'+
+      '<span class="mono">SEE = '+M[2]+' cm</span><br>'+
+      '<div class="warn">'+T(
+        'SEE เป็นค่าความคลาดเคลื่อนมาตรฐานของสมการ ไม่ใช่ช่วงความเชื่อมั่น 95% โดยตรง ควรตรวจสอบสมการและประชากรอ้างอิงจากเอกสารต้นฉบับ',
+        'SEE is the standard error of estimate, not automatically a 95% prediction interval. Verify the original equation and reference population.'
+      )+'</div>'+
+      '<br><b>'+T('Reference model: ','Reference model: ')+'</b>'+
+      esc(T(M[4],M[3]))+'<br>'+
+      '<b>'+T('ข้อจำกัด: ','Limitations: ')+'</b>'+
+      T(
+        'ค่าประมาณขึ้นกับ reference population, biological sex, measurement protocol และความสมบูรณ์ของกระดูก',
+        'Estimate depends on reference population, biological sex, measurement protocol and bone integrity.'
+      );
+  }else{
+    eqDetail=T(
+      'กรอกความยาวสูงสุดของ Femur เป็นมิลลิเมตรเพื่อคำนวณ',
+      'Enter maximum femur length in millimetres.'
+    );
+  }
+  $('st').textContent=st;
+  $('st2').textContent=s2;
+  $('st_eq').innerHTML=eqDetail;
+  S.out.st=st;
+  S.out.stMethod=M?T(M[4],M[3]):'';
+  S.out.stEquation=M&&S.fem>0?
+    M[0]+' × femur ('+(S.fem/10).toFixed(2)+' cm) + '+M[1]
+    :'';
+  S.out.stSEE=M&&S.fem>0?M[2]+' cm':'';
+  S.out.stFemur=S.fem>0?S.fem:null;
+
+  var d=SB[S.sbSex][S.sbPh-1];
+  $('ag').textContent=d[2]+' – '+d[3]+T(' ปี',' yrs');
+  $('ag2').textContent=T('ค่าเฉลี่ย ','Mean ')+d[0]+' ± '+d[1]+' · '+SBF[S.sbPh-1][lang==='th'?0:1];
+  S.out.age=T('ระยะ ','Phase ')+['I','II','III','IV','V','VI'][S.sbPh-1]+': '+d[2]+'–'+d[3]+T(' ปี',' yrs');
 }
-
 function tc(){
-  var m = MECH[S.mech || 'bft']; $('mdesc').textContent = T(m[1][0], m[1][1]);
-  var e=$('te').value, f=$('tf').value, h=$('th').value, p=$('tp').value, r=[], res;
-
-  if(h==='c' || e==='r'){
-    res = T('Antemortem (เกิดก่อนเสียชีวิต)','Antemortem');
-    r.push(T('พบการสร้างกระดูกใหม่ (Callus) หรือขอบรอยแตกปรับรูปมน แสดงว่าร่างกายยังมีชีวิตอยู่ระยะหนึ่งหลังบาดเจ็บ','Healing or bone remodelling indicates survival after injury.'));
-  } else if(e==='s' && f==='f'){
-    res = T('Perimortem (เกิดช่วงเวลาเสียชีวิต)','Perimortem');
-    r.push(T('สีขอบรอยแตกติดคราบเหมือนผิวกระดูกรอบนอก และผิวรอยแตกเฉียงเรียบแบบกระดูกสด (Fresh bone)','Stain match and oblique smooth fracture surface indicate fresh bone behavior.'));
-    if(p==='y') r.push(T('การพบการเสียรูปแบบพลาสติก (Plastic deformation) ช่วยยืนยันแรงกระแทกในกระดูกสด','Plastic deformation supports fresh bone impact.'));
-  } else if(e==='l' && f==='d'){
-    res = T('Postmortem (เกิดหลังเสียชีวิต)','Postmortem');
-    r.push(T('ขอบรอยแตกสีอ่อนกว่าผิวนอก และผิวรอยแตกหยาบฉากตรงแบบกระดูกแห้ง (Dry bone)','Unstained edge and right-angle brittle fracture surface indicate postmortem dry bone breakage.'));
-  } else {
-    res = T('สรุปไม่ได้ (Indeterminate)','Indeterminate');
-    r.push(T('ลักษณะรอยแตกขัดแย้งกัน ควรใช้กล้องจุลทรรศน์ตรวจกำลังขยายเพิ่มเติม','Conflicting fracture traits. Re-examine under magnification.'));
+  var m=MECH[S.mech||'bft'];
+  if($('mdesc'))
+    $('mdesc').textContent=T(m[1][0],m[1][1]);
+  if(!$('te')) return;
+  var e=$('te').value;
+  var f=$('tf').value;
+  var h=$('th').value;
+  var p=$('tp').value;
+  var observations=[];
+  var interpretation;
+  var limitation;
+  if(h==='c'){
+    interpretation=T(
+      'สนับสนุนการบาดเจ็บก่อนเสียชีวิต (Antemortem)',
+      'Findings support antemortem trauma'
+    );
+    observations.push(T(
+      'พบ Callus / bone remodeling ซึ่งสนับสนุนการมีชีวิตอยู่หลังได้รับบาดเจ็บ',
+      'Callus or bone remodeling supports survival after injury.'
+    ));
+  }else if(e==='r'){
+    interpretation=T(
+      'อาจเป็น Antemortem หากลักษณะมนเกิดจากการ remodeling',
+      'Potential antemortem injury if rounding represents remodeling'
+    );
+    observations.push(T(
+      'ลักษณะขอบมนต้องแยกจาก abrasion, erosion และ postmortem modification',
+      'Rounded edges must be distinguished from abrasion, erosion and postmortem modification.'
+    ));
+  }else{
+    interpretation=T(
+      'ยังไม่สามารถกำหนดช่วงเวลาได้อย่างน่าเชื่อถือ',
+      'Timing cannot be reliably determined'
+    );
   }
-
-  $('tt').textContent = res; $('tw').innerHTML = r.map(function(x){return '<li>'+x+'</li>'}).join('');
-  S.out.tm = res; S.out.mech = T(m[0][0], m[0][1]); S.out.wx = T('ระยะที่ ','Stage ') + (S.wx || 0);
+  if(f==='f'){
+    observations.push(T(
+      'ลักษณะ fracture surface มี morphology ที่สอดคล้องกับ fresh-bone response',
+      'Fracture morphology is consistent with fresh-bone response.'
+    ));
+  }else{
+    observations.push(T(
+      'ลักษณะ fracture surface มี morphology ที่สอดคล้องกับ dry-bone fracture',
+      'Fracture morphology is consistent with dry-bone fracture.'
+    ));
+  }
+  if(e==='s'){
+    observations.push(T(
+      'สีของขอบรอยแตกใกล้เคียงผิวกระดูกโดยรอบ',
+      'Fracture edge colour resembles the surrounding bone surface.'
+    ));
+  }else if(e==='l'){
+    observations.push(T(
+      'ขอบรอยแตกมีสีอ่อนกว่าหรือมี staining แตกต่างจากผิวรอบนอก',
+      'Fracture edge is lighter or differently stained than adjacent cortex.'
+    ));
+  }
+  if(p==='y'){
+    observations.push(T(
+      'พบ Plastic deformation ซึ่งอาจสนับสนุนพฤติกรรมของกระดูกสด แต่ไม่ใช่หลักฐานระบุเวลาการตายโดยลำพัง',
+      'Plastic deformation may support fresh-bone behavior but is not independently diagnostic of timing.'
+    ));
+  }
+  if(h==='c' && f==='d'){
+    limitation=T(
+      'พบ Healing response แต่ fracture morphology มีลักษณะ dry-bone response ควรพิจารณาว่าเป็นคนละเหตุการณ์ หรือมี postmortem damage เพิ่มเติมหรือไม่',
+      'Healing is present but fracture morphology suggests dry-bone response. Consider multiple events or additional postmortem damage.'
+    );
+  }else if(h!=='c' && e==='s' && f==='f'){
+    limitation=T(
+      'ลักษณะสอดคล้องกับ fresh-bone response แต่ไม่สามารถระบุว่าเกิดในช่วง perimortem โดยปราศจากบริบทอื่น',
+      'Fresh-bone response does not independently establish perimortem timing.'
+    );
+  }else{
+    limitation=T(
+      'ควรพิจารณาตำแหน่งรอยแตก รูปแบบการกระจาย กลไกแรง สภาพแวดล้อม และหลักฐานบริบทอื่นร่วมกัน',
+      'Interpret with fracture location, distribution, mechanism, environment and contextual evidence.'
+    );
+  }
+  $('tt').textContent=interpretation;
+  $('tw').innerHTML=
+    observations.map(function(x){
+      return '<li>'+esc(x)+'</li>';
+    }).join('')+
+    '<li class="warn">'+esc(limitation)+'</li>';
+  S.out.tm=interpretation;
+  S.out.traumaObservations=observations;
+  S.out.traumaLimitations=limitation;
+  S.out.mech=T(m[0][0],m[0][1]);
+  var wxIdx=Number(S.wx)||0;
+  var wxText=T(WX[wxIdx][0],WX[wxIdx][1]);
+  S.out.wx=T('ระยะ ','Stage ')+wxIdx+' · '+wxText;
+  if($('wxdesc')){
+    $('wxdesc').textContent=T('ระยะ ','Stage ')+wxIdx+': '+wxText;
+  }
 }
-
 function rep(){
-  $('rd').textContent = T('วันที่ออกรายงาน: ','Report Date: ') + new Date().toISOString().slice(0,10);
-  var o = S.out;
-  var R = [
-    [T('สภาพวัตถุพยาน (Preservation)','Preservation status'), S.preservation==='complete'?T('สมบูรณ์','Complete'):S.preservation==='partial'?T('สมบูรณ์บางส่วน','Partial'):T('ผุกร่อนมาก','Weathered')],
-    [T('ผลประเมินเพศ (Sex estimate)','Sex estimate'), o.sex],
-    [T('ผลประมาณส่วนสูง (Stature)','Stature estimate'), o.st],
-    [T('ประมาณอายุขณะเสียชีวิต (Age)','Age estimate'), o.age],
-    [T('กลไกบาดแผล (Trauma mechanism)','Trauma mechanism'), o.mech],
-    [T('ช่วงเวลาเกิดบาดแผล (Injury timing)','Injury timing'), o.tm],
-    [T('ระยะการผุกร่อน (Weathering)','Weathering stage'), o.wx],
-    [T('ผู้วิเคราะห์ (Analyst)','Analyst'), S.an || '—']
+  var now=new Date();
+  var date=new Intl.DateTimeFormat(
+    'en-CA',
+    {
+      timeZone:'Asia/Bangkok',
+      year:'numeric',
+      month:'2-digit',
+      day:'2-digit'
+    }
+  ).format(now);
+  $('rd').textContent=
+    T('วันที่ออกรายงาน: ','Report date: ')+date;
+  var o=S.out||{};
+  var R=[
+    [
+      T('Preservation','Preservation'),
+      S.preservation==='complete'
+        ?T('สมบูรณ์','Complete')
+        :S.preservation==='partial'
+        ?T('สมบูรณ์บางส่วน','Partial')
+        :T('ผุกร่อนมาก','Severely weathered')
+    ],
+    [
+      T('Sex estimation observations','Sex estimation observations'),
+      o.sex||'—'
+    ],
+    [
+      T('Stature estimate','Stature estimate'),
+      o.st||'—'
+    ],
+    [
+      T('Femur measurement','Femur measurement'),
+      o.stFemur?o.stFemur+' mm':'—'
+    ],
+    [
+      T('Stature reference model','Reference model'),
+      o.stMethod||'—'
+    ],
+    [
+      T('Stature equation','Equation'),
+      o.stEquation||'—'
+    ],
+    [
+      T('SEE','SEE'),
+      o.stSEE||'—'
+    ],
+    [
+      T('Age estimation','Age estimation'),
+      o.age||'—'
+    ],
+    [
+      T('Trauma mechanism','Trauma mechanism'),
+      o.mech||'—'
+    ],
+    [
+      T('Trauma timing interpretation','Trauma timing interpretation'),
+      o.tm||'—'
+    ],
+    [
+      T('Weathering','Weathering'),
+      o.wx||'—'
+    ],
+    [
+      T('Analyst','Analyst'),
+      S.an||'—'
+    ]
   ];
-  $('rb').innerHTML = R.map(function(x){ return '<div class="row"><span>'+x[0]+'</span><span>'+(x[1]||'—')+'</span></div>'; }).join('');
+  $('rb').innerHTML=R.map(function(x){
+    return '<div class="row">'+
+      '<span>'+esc(x[0])+'</span>'+
+      '<span>'+esc(x[1])+'</span>'+
+      '</div>';
+  }).join('');
+  var observations=[];
+  if(o.sexObservations){
+    observations.push(
+      '<h3>'+T('Sex traits recorded','Sex traits recorded')+'</h3>'+
+      o.sexObservations.map(function(x){
+        return '<div class="row">'+
+          '<span>'+esc(x.trait)+'</span>'+
+          '<span>'+esc(x.score)+' / '+esc(x.method)+'</span>'+
+        '</div>';
+      }).join('')
+    );
+  }
+  if(o.traumaObservations){
+    observations.push(
+      '<h3>'+T('Trauma observations','Trauma observations')+'</h3>'+
+      '<ul style="padding-left:18px;margin:6px 0">'+o.traumaObservations.map(function(x){
+        return '<li>'+esc(x)+'</li>';
+      }).join('')+'</ul>'
+    );
+  }
+  if(o.sexLimitations){
+    observations.push(
+      '<div class="warn">'+esc(o.sexLimitations)+'</div>'
+    );
+  }
+  if(o.traumaLimitations){
+    observations.push(
+      '<div class="warn">'+esc(o.traumaLimitations)+'</div>'
+    );
+  }
+  $('rb').innerHTML+=
+    '<div class="info-box">'+observations.join('')+'</div>'+
+    '<div class="info-box">'+
+      '<b>'+T('ข้อจำกัดและบันทึกผู้วิเคราะห์','Analyst notes and limitations')+'</b><br>'+
+      esc(S.op||T('ไม่มีบันทึก','No notes'))+
+    '</div>';
 }
 
-var AT={}, INFO={
-  skull:[['กะโหลกศีรษะ (Cranium)','Cranium'],['ประเมินเพศจาก 5 ลักษณะ (Walker/Buikstra): Nuchal crest, Mastoid process, Supraorbital margin, Glabella, Mental eminence.','Sex estimation via 5 cranial traits.'],[1,9],1],
-  pelvis:[['กระดูกเชิงกราน (Pelvis)','Pelvis'],['ประเมินเพศจาก Greater sciatic notch และ Phenice traits 3 ประการ ส่วน Pubic symphysis ใช้ประเมินอายุ (Suchey-Brooks).','Sex via Greater sciatic notch & Phenice traits. Pubic symphysis provides age estimation.'],[2,4,5],1],
-  femur:[['กระดูกต้นขา (Femur)','Femur'],['วัดความยาวสูงสุด (Maximum length) เพื่อประมาณส่วนสูงขณะมีชีวิต (Mahakkanukrauh 2011, Trotter 1970).','Maximum length used for stature estimation.'],[3,6],1],
-  tibia:[['กระดูกขาท่อนล่าง (Tibia & Fibula)','Tibia & Fibula'],['Tibia ใช้คำนวณส่วนสูงร่วมกับ Femur ได้.','Tibia length feeds stature equations.'],[3,6],0],
-  humerus:[['กระดูกต้นแขน (Humerus)','Humerus'],['ใช้ประมาณส่วนสูงและการเชื่อมของปลายกระดูกเพื่อประเมินอายุในวัยรุ่น.','Humerus length and epiphyseal fusion indicate age & stature.'],[1,3],0],
-  forearm:[['กระดูกปลายแขน (Radius & Ulna)','Radius & Ulna'],['Ulna มักพบรอยแตกจากการป้องกันตัว (Parry fracture).','Defensive injuries (Parry fractures) are commonly found on the ulna.'],[1,8],0],
-  spine:[['กระดูกสันหลัง (Vertebrae)','Vertebrae'],['การงอกของขอบกระดูก (Osteophytes) บ่งชี้อายุที่เพิ่มขึ้น.','Osteophytes correlate with age.'],[1],0],
-  ribs:[['กระดูกซี่โครง (Ribs & Sternum)','Ribs & Sternum'],['ปลายซี่โครงด้านอก (Sternal rib end) ใช้ประเมินอายุด้วยวิธี İşcan Phase Analysis.','Sternal rib end morphology estimates age.'],[10],0]
+var AT={},INFO={
+  skull:[['กะโหลกศีรษะ','Cranium'],['ให้คะแนน 5 ลักษณะ (1–5): nuchal crest, mastoid process, supraorbital margin, glabella, mental eminence ความแม่นยำรวมต่ำกว่าเชิงกราน และต่างกันตามประชากร','Five traits scored 1–5: nuchal crest, mastoid process, supraorbital margin, glabella, mental eminence. Overall accuracy is lower than the pelvis and varies by population.'],[1],1],
+  pelvis:[['กระดูกเชิงกราน','Pelvis'],['ใช้ประเมินเพศ: greater sciatic notch (1–5) และลักษณะ Phenice 3 อย่าง (ventral arc, subpubic concavity, ischiopubic ramus) ส่วน pubic symphysis ใช้ประเมินอายุด้วย Suchey-Brooks','Sex: greater sciatic notch (1–5) and three Phenice traits (ventral arc, subpubic concavity, ischiopubic ramus). The pubic symphysis gives age by Suchey-Brooks.'],[2,5,9],1],
+  femur:[['กระดูกต้นขา (femur)','Femur'],['วัดความยาวสูงสุดเพื่อประเมินส่วนสูงด้วยสมการจากกลุ่มตัวอย่างอ้างอิง','Maximum length feeds stature equations from reference samples.'],[3,4,6],1],
+  tibia:[['ขาท่อนล่างและเท้า','Tibia, fibula, foot'],['tibia ใช้ประเมินส่วนสูงได้เช่นกัน แต่ต้องใช้สมการของ tibia เอง (หน้านี้คำนวณจาก femur อย่างเดียว)','Tibia also estimates stature but needs its own equations (this tool uses femur only).'],[3,4,6],0],
+  humerus:[['กระดูกต้นแขนและสะบัก','Humerus and scapula'],['มีสมการส่วนสูงเฉพาะกระดูกต้นแขน และการเชื่อมของปลายกระดูกใช้ประเมินอายุในวัยเด็กถึงวัยรุ่น','Humerus has its own stature equations; epiphyseal fusion indicates age in juveniles and young adults.'],[3,4],0],
+  forearm:[['กระดูกปลายแขนและมือ','Radius, ulna, hand'],['radius และ ulna ใช้ในสมการส่วนสูงได้ และมักพบรอยป้องกันตัว (defensive injury) ที่ ulna','Radius and ulna feed stature equations; defensive injuries are often seen on the ulna.'],[3,4,8],0],
+  spine:[['กระดูกสันหลัง','Vertebral column'],['การงอกของขอบกระดูก (osteophyte) สัมพันธ์กับอายุ แต่ใช้เดี่ยว ๆ ไม่แม่นพอ','Marginal osteophytes correlate with age but are weak indicators alone.'],[],0],
+  ribs:[['ซี่โครง กระดูกอก และไหปลาร้า','Ribs, sternum, clavicle'],['รูปร่างปลายซี่โครงด้านอก (sternal rib end) ใช้ประเมินอายุได้','Morphology of the sternal rib end indicates age.'],[10],0]
 };
-
-function AV(y){ if(AT.root){ var o=AT.root.rotation, t=2*Math.PI; o.y=((o.y%t)+t)%t; if(o.y>Math.PI) o.y-=t; AT.ty=y; AT.auto=false; } }
-
+function AV(y){var o=AT.root.rotation,t=2*Math.PI;o.y=((o.y%t)+t)%t;if(o.y>Math.PI)o.y-=t;AT.ty=y;AT.auto=false}
 function initAtlas(){
-  var cv=$('cv'); if(!cv) return;
-  if(AT.cv && AT.cv!==cv){ cancelAnimationFrame(AT.raf); if(AT.r) AT.r.dispose(); AT={}; }
-  if(AT.r){ AT.fit(); return; }
-  if(typeof THREE==='undefined'){ cv.outerHTML='<p class="warn">'+T('ไม่สามารถโหลด Three.js ได้','Three.js failed to load.')+'</p>'; return; }
-
-  var K=THREE, r=new K.WebGLRenderer({canvas:cv,antialias:true,alpha:true}), sc=new K.Scene(), cam=new K.PerspectiveCamera(35,1,.1,100), root=new K.Group(), parts={}, black=new K.Color(0);
+  var cv=$('cv');
+  if(AT.cv&&AT.cv!==cv){cancelAnimationFrame(AT.raf);AT.r.dispose();AT={}}
+  if(AT.r){AT.fit();return}
+  if(typeof THREE==='undefined'){cv.outerHTML='<p class="warn">'+T('โหลด three.js ไม่ได้ ตรวจการเชื่อมต่ออินเทอร์เน็ต','three.js did not load. Check your connection.')+'</p>';return}
+  var K=THREE,r=new K.WebGLRenderer({canvas:cv,antialias:true,alpha:true}),sc=new K.Scene(),cam=new K.PerspectiveCamera(35,1,.1,100),root=new K.Group(),parts={},black=new K.Color(0);
   var acc=new K.Color(getComputedStyle(document.documentElement).getPropertyValue('--ac').trim()||'#b4524a');
-
-  AT.cv=cv; AT.root=root; AT.r=r; AT.auto=true; AT.ty=null;
-  cam.position.set(0,1.8,30); cam.lookAt(0,1.8,0);
-  sc.add(new K.AmbientLight(0xffffff,.65));
-  var dl=new K.DirectionalLight(0xffffff,.85); dl.position.set(6,10,14); sc.add(dl); sc.add(root);
-
-  function M(g,k,p,rot,s){
-    var m=new K.Mesh(g,new K.MeshStandardMaterial({color:0xd5cdb8,roughness:.8}));
-    m.position.set(p[0],p[1],p[2]); if(rot){m.rotation.order='YXZ';m.rotation.set(rot[0],rot[1],rot[2])}
-    if(s)m.scale.set(s[0],s[1],s[2]); m.userData.k=k; (parts[k]=parts[k]||[]).push(m); root.add(m); return m;
-  }
-  function L(k,x,y0,y1,rd,z){ z=z||0; M(new K.CylinderGeometry(rd*.8,rd*.8,Math.abs(y1-y0),12),k,[x,(y0+y1)/2,z]); M(new K.SphereGeometry(rd*1.4,12,10),k,[x,y0,z]); M(new K.SphereGeometry(rd*1.3,12,10),k,[x,y1,z]); }
-
+  AT.cv=cv;AT.root=root;AT.r=r;AT.auto=true;AT.ty=null;
+  cam.position.set(0,1.8,30);cam.lookAt(0,1.8,0);
+  sc.add(new K.AmbientLight(0xffffff,.6));var dl=new K.DirectionalLight(0xffffff,.85);dl.position.set(6,10,14);sc.add(dl);sc.add(root);
+  function M(g,k,p,rot,s){var m=new K.Mesh(g,new K.MeshStandardMaterial({color:0xcfc6ae,roughness:.85}));m.position.set(p[0],p[1],p[2]);if(rot){m.rotation.order='YXZ';m.rotation.set(rot[0],rot[1],rot[2])}if(s)m.scale.set(s[0],s[1],s[2]);m.userData.k=k;(parts[k]=parts[k]||[]).push(m);root.add(m);return m}
+  function L(k,x,y0,y1,rd,z){z=z||0;M(new K.CylinderGeometry(rd*.8,rd*.8,Math.abs(y1-y0),12),k,[x,(y0+y1)/2,z]);M(new K.SphereGeometry(rd*1.5,12,10),k,[x,y0,z]);M(new K.SphereGeometry(rd*1.4,12,10),k,[x,y1,z])}
   M(new K.SphereGeometry(1.5,24,18),'skull',[0,9.3,0],null,[1,1.05,1.15]);
   M(new K.BoxGeometry(1.7,1.3,1.1),'skull',[0,8.2,.95]);
   M(new K.TorusGeometry(1.0,.17,8,20,Math.PI),'skull',[0,7.65,.1],[Math.PI/2,0,0],[1,1,.9]);
-
-  [-1,1].forEach(function(s){
-    var e=new K.Mesh(new K.SphereGeometry(.36,12,10),new K.MeshStandardMaterial({color:0x1a1815}));
-    e.position.set(s*.6,8.85,1.5); root.add(e);
+  [-1,1].forEach(function(s){var e=new K.Mesh(new K.SphereGeometry(.36,12,10),new K.MeshStandardMaterial({color:0x1a1815}));e.position.set(s*.6,8.85,1.5);root.add(e);
     M(new K.SphereGeometry(.28,10,8),'skull',[s*1.42,8.6,-.1]);
     M(new K.SphereGeometry(1.25,16,12),'pelvis',[s*1.55,3.2,.05],[0,s*.6,0],[1,1.05,.32]);
     M(new K.TorusGeometry(.55,.12,8,16),'pelvis',[s*.95,1.35,.7],[0,s*.4,0]);
-    L('femur',s*1.15,2.0,-2.4,.2); M(new K.SphereGeometry(.38,12,10),'femur',[s*.85,2.2,.1]); M(new K.SphereGeometry(.25,10,8),'femur',[s*1.1,-2.55,.3]);
-    L('tibia',s*1.1,-2.7,-6.6,.17); L('tibia',s*1.45,-2.9,-6.5,.1); M(new K.BoxGeometry(.7,.3,1.5),'tibia',[s*1.1,-6.95,.5]);
-    L('humerus',s*2.7,7.3,4.4,.17); M(new K.SphereGeometry(1,12,10),'humerus',[s*1.8,6.6,-.7],null,[.9,1.1,.12]);
-    L('forearm',s*2.8,4.4,1.6,.12); L('forearm',s*3.0,4.4,1.5,.1,.1); M(new K.BoxGeometry(.5,.7,.2),'forearm',[s*2.9,1.2,.05]);
+    L('femur',s*1.15,2.0,-2.4,.2);M(new K.SphereGeometry(.38,12,10),'femur',[s*.85,2.2,.1]);M(new K.SphereGeometry(.25,10,8),'femur',[s*1.1,-2.55,.3]);
+    L('tibia',s*1.1,-2.7,-6.6,.17);L('tibia',s*1.45,-2.9,-6.5,.1);M(new K.BoxGeometry(.7,.3,1.5),'tibia',[s*1.1,-6.95,.5]);
+    L('humerus',s*2.7,7.3,4.4,.17);M(new K.SphereGeometry(1,12,10),'humerus',[s*1.8,6.6,-.7],null,[.9,1.1,.12]);
+    L('forearm',s*2.8,4.4,1.6,.12);L('forearm',s*3.0,4.4,1.5,.1,.1);M(new K.BoxGeometry(.5,.7,.2),'forearm',[s*2.9,1.2,.05]);
+    M(new K.CylinderGeometry(.07,.07,2.3,8),'ribs',[s*1.3,7.6,.8],[0,0,Math.PI/2+s*.1]);
   });
-
   M(new K.ConeGeometry(.85,2,4),'pelvis',[0,2.6,-.4],[Math.PI,0,0],[1,1,.55]);
   M(new K.BoxGeometry(.3,.5,.2),'pelvis',[0,1.2,.95]);
-  for(var i=0;i<24;i++){ var y=8-i*.25; M(new K.CylinderGeometry(.22+i*.012,.22+i*.012,.18,10),'spine',[0,y,-.35*Math.sin(i/23*5)]); }
-  for(var j=0;j<10;j++){ var R=1.15+Math.sin(j/9*Math.PI)*.5; M(new K.TorusGeometry(R,.055,6,24,Math.PI+1.2),'ribs',[0,7.2-j*.38,.3*R+.1],[Math.PI/2,.6,0],[1.15,.8,1]); }
+  for(var i=0;i<24;i++){var y=8-i*.25;M(new K.CylinderGeometry(.22+i*.012,.22+i*.012,.18,10),'spine',[0,y,-.35*Math.sin(i/23*5)])}
+  for(var j=0;j<10;j++){var R=1.15+Math.sin(j/9*Math.PI)*.5;M(new K.TorusGeometry(R,.055,6,24,Math.PI+1.2),'ribs',[0,7.2-j*.38,.3*R+.1],[Math.PI/2,.6,0],[1.15,.8,1])}
   M(new K.BoxGeometry(.35,2.6,.12),'ribs',[0,6.0,1.55]);
-
-  function sel(k){
-    for(var q in parts){ parts[q].forEach(function(m){ m.material.emissive.copy(q===k?acc:black); m.material.emissiveIntensity=.55; }); }
-    if(!k){ $('ai').innerHTML='<div class="sub" style="margin:0">'+T('ยังไม่ได้เลือกกระดูก (แตะที่ส่วนของกระดูกเพื่อดูข้อมูล)','No bone selected (tap a bone to inspect)')+'</div>'; return; }
-    var i=INFO[k];
-    $('ai').innerHTML='<div class="big">'+T(i[0][0],i[0][1])+'</div><p class="sub">'+T(i[1][0],i[1][1])+' '+i[2].map(function(n){return c(n)}).join('')+'</p>'+(i[3]?'<button class="btn" onclick="go(\'profile\')">'+T('เปิดหน้าโปรไฟล์ชีวภาพ','Open biological profile')+'</button>':'');
-  }
-
-  AT.fit=function(){ var w=cv.clientWidth, h=cv.clientHeight; if(!w||!h) return; r.setPixelRatio(Math.min(devicePixelRatio,2)); r.setSize(w,h,false); cam.aspect=w/h; cam.updateProjectionMatrix(); };
-  var ray=new K.Raycaster(), mv=new K.Vector2();
+  function sel(k){for(var q in parts)parts[q].forEach(function(m){m.material.emissive.copy(q===k?acc:black);m.material.emissiveIntensity=.55});
+    if(!k){$('ai').innerHTML='<div class="sub" style="margin:0">'+T('ยังไม่ได้เลือกกระดูก','No bone selected')+'</div>';return}
+    var i=INFO[k];$('ai').innerHTML='<div class="big">'+esc(T(i[0][0],i[0][1]))+'</div><p class="sub">'+esc(T(i[1][0],i[1][1]))+' '+i[2].map(function(n){return c(n)}).join('')+'</p>'+(i[3]?'<button class="btn" onclick="go(\'profile\')">'+T('ไปหน้าโปรไฟล์ชีวภาพ','Open biological profile')+'</button>':'')}
+  AT.fit=function(){var w=cv.clientWidth,h=cv.clientHeight;if(!w||!h)return;r.setPixelRatio(Math.min(devicePixelRatio,2));r.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix()};
+  var ray=new K.Raycaster(),mv=new K.Vector2();
   cv.addEventListener('pointerdown',function(e){AT.d={x:e.clientX,y:e.clientY};AT.moved=0;AT.ty=null;cv.setPointerCapture(e.pointerId)});
   cv.addEventListener('pointermove',function(e){if(!AT.d)return;var dx=e.clientX-AT.d.x,dy=e.clientY-AT.d.y;AT.moved+=Math.abs(dx)+Math.abs(dy);AT.d={x:e.clientX,y:e.clientY};root.rotation.y+=dx*.01;root.rotation.x=Math.max(-.6,Math.min(.6,root.rotation.x+dy*.005))});
   cv.addEventListener('pointerup',function(e){if(AT.moved<6){var b=cv.getBoundingClientRect();mv.set((e.clientX-b.left)/b.width*2-1,-(e.clientY-b.top)/b.height*2+1);ray.setFromCamera(mv,cam);var h=ray.intersectObjects(root.children.filter(function(o){return o.userData.k}))[0];sel(h?h.object.userData.k:null)}AT.d=null});
-  cv.addEventListener('wheel',function(e){e.preventDefault();cam.position.z=Math.max(14,Math.min(45,cam.position.z+e.deltaY*.02))},{passive:false});
+  cv.addEventListener('wheel',function(e){e.preventDefault();cam.position.z=Math.max(16,Math.min(42,cam.position.z+e.deltaY*.02))},{passive:false});
   window.addEventListener('resize',function(){AT.fit()});
-
   AT.fit();
-  (function loop(){
-    AT.raf=requestAnimationFrame(loop); if(!cv.offsetParent) return;
-    if(AT.ty!==null){ root.rotation.y+=(AT.ty-root.rotation.y)*.12; root.rotation.x*=.9; }
-    else if(AT.auto&&!AT.d) root.rotation.y+=.005;
-    r.render(sc,cam);
-  })();
+  (function loop(){AT.raf=requestAnimationFrame(loop);if(!cv.offsetParent)return;
+    if(AT.ty!==null){root.rotation.y+=(AT.ty-root.rotation.y)*.12;root.rotation.x*=.9}else if(AT.auto&&!AT.d)root.rotation.y+=.006;
+    r.render(sc,cam)})();
 }
-
 build();
 </script>
 </body>
