@@ -1,1346 +1,256 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="th" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OSTEO-INTEL | Forensic Intelligence & Competency Suite</title>
-    
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        cyber: {
-                            bg: '#060911',
-                            card: '#0d1527',
-                            border: 'rgba(6, 182, 212, 0.25)',
-                            cyan: '#06b6d4',
-                            emerald: '#10b981',
-                            amber: '#f59e0b',
-                            rose: '#f43f5e',
-                            purple: '#a855f7',
-                            glow: 'rgba(6, 182, 212, 0.15)'
-                        }
-                    },
-                    fontFamily: {
-                        mono: ['JetBrains Mono', 'Fira Code', 'Courier New', 'monospace'],
-                        sans: ['Inter', 'system-ui', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <!-- FontAwesome CDN -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- Chart.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
-
-    <style>
-        body {
-            background-color: #060911;
-            font-family: 'Inter', sans-serif;
-            color: #e2e8f0;
-            overflow-x: hidden;
-        }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #060911;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1e293b;
-            border-radius: 3px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #06b6d4;
-        }
-
-        /* Cyber HUD Grid & Glow Effect */
-        .hud-grid {
-            background-image: linear-gradient(to right, rgba(6, 182, 212, 0.05) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(6, 182, 212, 0.05) 1px, transparent 1px);
-            background-size: 24px 24px;
-        }
-
-        .hud-card {
-            background: rgba(13, 21, 39, 0.75);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(6, 182, 212, 0.2);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-        }
-
-        .hud-card-glow {
-            box-shadow: 0 0 15px rgba(6, 182, 212, 0.15), inset 0 0 15px rgba(6, 182, 212, 0.05);
-        }
-
-        .hud-border-amber {
-            border-color: rgba(245, 158, 11, 0.35);
-        }
-        
-        .hud-border-emerald {
-            border-color: rgba(16, 185, 129, 0.35);
-        }
-
-        .hud-border-rose {
-            border-color: rgba(244, 63, 94, 0.35);
-        }
-
-        /* Scanline Overlay */
-        .scanline {
-            position: relative;
-            overflow: hidden;
-        }
-        .scanline::before {
-            content: " ";
-            display: block;
-            position: absolute;
-            top: 0; left: 0; bottom: 0; right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
-            background-size: 100% 4px;
-            z-index: 10;
-            pointer-events: none;
-            opacity: 0.4;
-        }
-
-        /* Pulse animation */
-        @keyframes pulse-cyan {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.4; transform: scale(0.95); }
-        }
-        .animate-pulse-cyan {
-            animation: pulse-cyan 2s infinite ease-in-out;
-        }
-
-        /* Custom Range Slider Styling */
-        input[type=range] {
-            -webkit-appearance: none;
-            background: #1e293b;
-            height: 6px;
-            border-radius: 3px;
-        }
-        input[type=range]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            height: 18px;
-            width: 18px;
-            border-radius: 50%;
-            background: #06b6d4;
-            cursor: pointer;
-            box-shadow: 0 0 10px #06b6d4;
-            transition: all 0.2s ease-in-out;
-        }
-        input[type=range]::-webkit-slider-thumb:hover {
-            transform: scale(1.2);
-            background: #22d3ee;
-        }
-
-        /* Print styles for Medico-Legal Report */
-        @media print {
-            body {
-                background: #ffffff !important;
-                color: #000000 !important;
-            }
-            .no-print {
-                display: none !important;
-            }
-            .print-only {
-                display: block !important;
-            }
-            .hud-card {
-                background: #ffffff !important;
-                border: 1px solid #cccccc !important;
-                box-shadow: none !important;
-                color: #000000 !important;
-            }
-            .print-text-dark {
-                color: #000000 !important;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Osteo-Intel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai:wght@300;400;600&family=IBM+Plex+Mono:wght@400;500&family=Noto+Serif+Thai:wght@500;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+:root{--bg:#f2efe8;--sf:#fbf9f4;--tx:#1d1b18;--mt:#6e685d;--ln:#d9d3c5;--ac:#7c2b2b;--br:#7d6428;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e0d0c;--sf:#161514;--tx:#e4dfd3;--mt:#8f897c;--ln:#2a2825;--ac:#b4524a;--br:#b69a64;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e0d0c;--sf:#161514;--tx:#e4dfd3;--mt:#8f897c;--ln:#2a2825;--ac:#b4524a;--br:#b69a64;color-scheme:dark}
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--tx);font:400 15px/1.7 'IBM Plex Sans Thai','Sarabun','Noto Sans Thai',system-ui,sans-serif;-webkit-text-size-adjust:100%}
+h1,h2{font-family:'Noto Serif Thai','Noto Serif',Georgia,serif;font-weight:500;margin:0;letter-spacing:.01em}
+h2{font-size:19px;margin-bottom:4px}
+.n,b.n,.mono{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:13px}
+header{padding:20px 16px 8px;max-width:880px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+header h1{font-size:22px}header p{margin:2px 0 0;color:var(--mt);font-size:13px}
+.ctl{display:flex;gap:6px}
+button,select,input,textarea{font:inherit;color:inherit}
+.btn{background:none;border:1px solid var(--ln);border-radius:4px;padding:5px 10px;cursor:pointer;font-size:13px}
+.btn:hover,.btn.on{border-color:var(--br);color:var(--br)}
+nav{max-width:880px;margin:0 auto;padding:0 16px;display:flex;gap:20px;overflow-x:auto;border-bottom:1px solid var(--ln)}
+nav button{background:none;border:0;border-bottom:2px solid transparent;padding:10px 0;color:var(--mt);cursor:pointer;white-space:nowrap}
+nav button.on{color:var(--tx);border-color:var(--ac)}
+main{max-width:880px;margin:0 auto;padding:16px}
+.tab{display:none}.tab.on{display:block}
+.card{background:var(--sf);border:1px solid var(--ln);border-radius:6px;padding:16px;margin-bottom:16px}
+.sub{color:var(--mt);font-size:13px;margin:0 0 12px}
+.tr{margin:12px 0}.trh{display:flex;justify-content:space-between;gap:8px;font-size:14px}
+.trh b{font-weight:400;color:var(--br)}
+input[type=range]{width:100%;accent-color:var(--ac);height:28px}
+select,input[type=number],textarea{width:100%;background:var(--bg);border:1px solid var(--ln);border-radius:4px;padding:8px;font-size:14px}
+label{display:block;font-size:13px;color:var(--mt);margin:10px 0 4px}
+.bar{height:6px;background:var(--ln);border-radius:3px;margin:4px 0 10px;position:relative}
+.bar i{position:absolute;top:-4px;width:2px;height:14px;background:var(--ac);transition:left .25s}
+.bl{display:flex;justify-content:space-between;color:var(--mt);font-size:12px}
+.res{border-left:2px solid var(--ac);padding:4px 0 4px 12px;margin-top:14px}
+.res .big{font-family:'Noto Serif Thai',serif;font-size:20px}
+.warn{color:var(--br);font-size:13px}
+.ph{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin:8px 0}
+.ph .btn{padding:8px 0;text-align:center}
+.c{color:var(--br);font-size:11px;vertical-align:super;cursor:pointer;margin-left:2px;text-decoration:none}
+ol{padding-left:20px}ol li{margin-bottom:10px;font-size:14px}
+.row{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--ln);padding:7px 0;font-size:14px}
+.row span:first-child{color:var(--mt)}.row span:last-child{text-align:right}
+.disc{font-size:12px;color:var(--mt);border-top:1px solid var(--ln);padding-top:12px;margin-top:8px}
+#cv{width:100%;height:min(68vh,540px);display:block;touch-action:none;cursor:grab;background:radial-gradient(circle at 50% 40%,var(--sf),var(--bg) 75%);border-radius:4px}.vb{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0}
+@media print{body{background:#fff!important;color:#000!important}.np{display:none!important}.card{background:#fff!important;border-color:#bbb!important}.tab{display:none!important}#t-report{display:block!important}.row span:first-child,.sub{color:#444!important}}
+</style>
 </head>
-<body class="hud-grid min-h-screen text-slate-200 antialiased flex flex-col">
-
-    <!-- TOP HEADER / HUD NAVIGATION -->
-    <header class="no-print sticky top-0 z-50 bg="#060911"/90 backdrop-blur-md border-b border-cyan-500/20 px-4 lg:px-8 py-3">
-        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-            
-            <!-- Brand Logo & Status -->
-            <div class="flex items-center gap-3">
-                <div class="relative flex items-center justify-center w-10 h-10 rounded-lg bg-cyan-950/80 border border-cyan-500/40 text-cyan-400 font-mono font-bold text-xl shadow-[0_0_15px_rgba(6,182,212,0.3)]">
-                    <i class="fa-solid fa-bone"></i>
-                    <span class="absolute -top-1 -right-1 flex h-3 w-3">
-                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-cyan-400 opacity-75"></span>
-                      <span class="relative inline-flex rounded-full h-3 w-3 bg-cyan-500"></span>
-                    </span>
-                </div>
-                <div>
-                    <div class="flex items-center gap-2">
-                        <h1 class="font-mono font-extrabold text-lg tracking-wider text-slate-100 flex items-center gap-2">
-                            OSTEO-INTEL <span class="text-xs px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">SUITE v2.4</span>
-                        </h1>
-                    </div>
-                    <p class="text-xs text-slate-400 flex items-center gap-2">
-                        <span class="inline-block w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                        Forensic Anthropology & Criminology Diagnostic Engine
-                    </p>
-                </div>
-            </div>
-
-            <!-- Quick Action Stats Ticker -->
-            <div class="hidden lg:flex items-center gap-6 px-4 py-1.5 rounded-lg bg-slate-900/80 border border-slate-800 text-xs font-mono">
-                <div class="flex items-center gap-2">
-                    <span class="text-slate-500">STANDARD:</span>
-                    <span class="text-cyan-400 font-semibold">Buikstra & Ubelaker / Trotter-Gleser</span>
-                </div>
-                <div class="w-px h-4 bg-slate-800"></div>
-                <div class="flex items-center gap-2">
-                    <span class="text-slate-500">SYSTEM MODE:</span>
-                    <span class="text-emerald-400 font-semibold">Academic Competency & Medico-Legal</span>
-                </div>
-            </div>
-
-            <!-- Navigation Tabs -->
-            <nav class="flex items-center gap-1 bg-slate-900/90 p-1.5 rounded-xl border border-slate-800 text-xs font-medium w-full md:w-auto overflow-x-auto">
-                <button onclick="switchTab('profile')" id="nav-profile" class="tab-btn active px-3.5 py-2 rounded-lg transition-all flex items-center gap-2 whitespace-nowrap bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">
-                    <i class="fa-solid fa-dna text-cyan-400"></i> Biological Profile
-                </button>
-                <button onclick="switchTab('trauma')" id="nav-trauma" class="tab-btn px-3.5 py-2 rounded-lg transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800 flex items-center gap-2 whitespace-nowrap">
-                    <i class="fa-solid fa-burst text-amber-400"></i> Trauma & Taphonomy
-                </button>
-                <button onclick="switchTab('quiz')" id="nav-quiz" class="tab-btn px-3.5 py-2 rounded-lg transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800 flex items-center gap-2 whitespace-nowrap">
-                    <i class="fa-solid fa-graduation-cap text-purple-400"></i> Competency Quiz Lab
-                </button>
-                <button onclick="switchTab('report')" id="nav-report" class="tab-btn px-3.5 py-2 rounded-lg transition-all text-slate-400 hover:text-slate-200 hover:bg-slate-800 flex items-center gap-2 whitespace-nowrap">
-                    <i class="fa-solid fa-file-contract text-emerald-400"></i> Medico-Legal Report
-                </button>
-            </nav>
-        </div>
-    </header>
-
-    <!-- MAIN WORKSPACE CONTENT -->
-    <main class="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6 lg:p-8 space-y-6">
-
-        <!-- TAB 1: BIOLOGICAL PROFILE ENGINE -->
-        <section id="tab-profile" class="tab-content space-y-6">
-            
-            <!-- Section Header -->
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2 border-b border-slate-800">
-                <div>
-                    <h2 class="text-xl font-bold text-slate-100 flex items-center gap-2">
-                        <i class="fa-solid fa-microscope text-cyan-400"></i> Biological Profile Estimation Engine
-                    </h2>
-                    <p class="text-xs text-slate-400">Synthesize osteometric dimensions & cranial-pelvic traits to construct sex, stature, and age profiles.</p>
-                </div>
-                <div class="flex items-center gap-3">
-                    <button onclick="loadSampleProfileData('female')" class="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">
-                        <i class="fa-solid fa-venus text-rose-400 mr-1"></i> Load Sample Case (F)
-                    </button>
-                    <button onclick="loadSampleProfileData('male')" class="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition">
-                        <i class="fa-solid fa-mars text-cyan-400 mr-1"></i> Load Sample Case (M)
-                    </button>
-                    <button onclick="resetProfileForm()" class="px-3 py-1.5 rounded-lg text-xs font-mono bg-slate-900 hover:bg-rose-950 text-slate-400 hover:text-rose-300 border border-slate-800 transition">
-                        <i class="fa-solid fa-rotate-left mr-1"></i> Reset
-                    </button>
-                </div>
-            </div>
-
-            <!-- Grid Layout -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-
-                <!-- LEFT PANEL: Inputs (Sex Traits & Osteometry) -->
-                <div class="lg:col-span-7 space-y-6">
-
-                    <!-- Morphological Sex Estimation Card -->
-                    <div class="hud-card rounded-2xl p-5 relative overflow-hidden">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-sm font-mono font-bold uppercase tracking-wider text-cyan-400 flex items-center gap-2">
-                                <i class="fa-solid fa-sliders"></i> 1. Morphological Trait Scoring (Buikstra & Ubelaker)
-                            </h3>
-                            <span class="text-xs text-slate-400 font-mono">Scale: 1 (Gracile/Female) - 5 (Robust/Male)</span>
-                        </div>
-
-                        <div class="space-y-4">
-                            
-                            <!-- Greater Sciatic Notch -->
-                            <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80">
-                                <div class="flex justify-between items-center mb-1 text-xs">
-                                    <label class="font-medium text-slate-200">Greater Sciatic Notch (Pelvis)</label>
-                                    <span id="val-sciatic" class="font-mono text-cyan-400 font-bold">3 (Indeterminate)</span>
-                                </div>
-                                <p class="text-[11px] text-slate-400 mb-2">Phenice trait (Weight x1.5). 1=Wide/U-shaped (Female), 5=Narrow/V-shaped (Male)</p>
-                                <input type="range" min="1" max="5" value="3" step="1" id="input-sciatic" oninput="updateSexEstimation()" class="w-full">
-                            </div>
-
-                            <!-- Ventral Arc -->
-                            <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80">
-                                <div class="flex justify-between items-center mb-1 text-xs">
-                                    <label class="font-medium text-slate-200">Ventral Arc (Pubis)</label>
-                                    <span id="val-ventral" class="font-mono text-cyan-400 font-bold">2 (Intermediate)</span>
-                                </div>
-                                <p class="text-[11px] text-slate-400 mb-2">Phenice trait (Weight x1.5). 1=Prominent (Female), 2=Intermediate, 3=Absent (Male)</p>
-                                <input type="range" min="1" max="3" value="2" step="1" id="input-ventral" oninput="updateSexEstimation()" class="w-full">
-                            </div>
-
-                            <!-- Nuchal Crest -->
-                            <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80">
-                                <div class="flex justify-between items-center mb-1 text-xs">
-                                    <label class="font-medium text-slate-200">Nuchal Crest (Cranial)</label>
-                                    <span id="val-nuchal" class="font-mono text-cyan-400 font-bold">3 (Indeterminate)</span>
-                                </div>
-                                <p class="text-[11px] text-slate-400 mb-2">Occipital hook projection. 1=Smooth, 5=Massive hook</p>
-                                <input type="range" min="1" max="5" value="3" step="1" id="input-nuchal" oninput="updateSexEstimation()" class="w-full">
-                            </div>
-
-                            <!-- Supraorbital Margin & Ridge -->
-                            <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80">
-                                <div class="flex justify-between items-center mb-1 text-xs">
-                                    <label class="font-medium text-slate-200">Supraorbital Margin (Cranial)</label>
-                                    <span id="val-supraorbital" class="font-mono text-cyan-400 font-bold">3 (Indeterminate)</span>
-                                </div>
-                                <p class="text-[11px] text-slate-400 mb-2">Orbit rim sharpness. 1=Sharp knife-edge (Female), 5=Thick rounded (Male)</p>
-                                <input type="range" min="1" max="5" value="3" step="1" id="input-supraorbital" oninput="updateSexEstimation()" class="w-full">
-                            </div>
-
-                            <!-- Mastoid Process -->
-                            <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800/80">
-                                <div class="flex justify-between items-center mb-1 text-xs">
-                                    <label class="font-medium text-slate-200">Mastoid Process (Temporal)</label>
-                                    <span id="val-mastoid" class="font-mono text-cyan-400 font-bold">3 (Indeterminate)</span>
-                                </div>
-                                <p class="text-[11px] text-slate-400 mb-2">Volume and projection. 1=Minimal volume, 5=Massive volume</p>
-                                <input type="range" min="1" max="5" value="3" step="1" id="input-mastoid" oninput="updateSexEstimation()" class="w-full">
-                            </div>
-
-                        </div>
-                    </div>
-
-                    <!-- Stature Calculator (Trotter & Gleser) -->
-                    <div class="hud-card rounded-2xl p-5">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-sm font-mono font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-2">
-                                <i class="fa-solid fa-ruler-vertical"></i> 2. Stature Calculator (Trotter & Gleser Formulas)
-                            </h3>
-                            <span class="text-xs text-slate-400 font-mono">Long Bone Osteometry</span>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-                            <div>
-                                <label class="text-xs text-slate-300 font-medium block mb-1">Target Model Sex</label>
-                                <select id="stature-sex" onchange="calculateStature()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs font-mono text-slate-200 focus:border-emerald-500 focus:outline-none">
-                                    <option value="male">Male Formula</option>
-                                    <option value="female">Female Formula</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="text-xs text-slate-300 font-medium block mb-1">Ancestry Model</label>
-                                <select id="stature-ancestry" onchange="calculateStature()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs font-mono text-slate-200 focus:border-emerald-500 focus:outline-none">
-                                    <option value="white">European / Caucasian Standard</option>
-                                    <option value="asian">Asian Standard (Trotter 1970)</option>
-                                    <option value="black">African Standard</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="text-xs text-slate-300 font-medium block mb-1">Max Femur Length (mm)</label>
-                                <input type="number" id="femur-len" value="445" min="300" max="600" oninput="calculateStature()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs font-mono text-emerald-400 font-bold focus:border-emerald-500 focus:outline-none">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="text-xs text-slate-300 font-medium block mb-1">Max Tibia Length (mm)</label>
-                                <input type="number" id="tibia-len" value="365" min="250" max="500" oninput="calculateStature()" class="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-xs font-mono text-emerald-400 font-bold focus:border-emerald-500 focus:outline-none">
-                            </div>
-                            <div class="bg-emerald-950/40 border border-emerald-500/30 rounded-xl p-3 flex flex-col justify-center">
-                                <span class="text-[10px] font-mono uppercase text-emerald-400 tracking-wider">Calculated Living Stature</span>
-                                <div id="stature-result-text" class="text-lg font-mono font-bold text-slate-100">
-                                    167.8 cm <span class="text-xs font-normal text-emerald-400">± 3.27 cm</span>
-                                </div>
-                                <span id="stature-ft-text" class="text-xs text-slate-400 font-mono">5 ft 6.1 in</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Age-at-Death Estimator (Suchey-Brooks Pubic Symphysis) -->
-                    <div class="hud-card rounded-2xl p-5">
-                        <div class="flex items-center justify-between mb-4">
-                            <h3 class="text-sm font-mono font-bold uppercase tracking-wider text-amber-400 flex items-center gap-2">
-                                <i class="fa-solid fa-hourglass-half"></i> 3. Suchey-Brooks Pubic Symphysis Age Estimator
-                            </h3>
-                            <span class="text-xs text-slate-400 font-mono">Pelvic Aging System</span>
-                        </div>
-
-                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 mb-4">
-                            <button onclick="selectSucheyPhase(1)" id="sb-phase-1" class="sb-btn px-2 py-3 rounded-xl border text-center transition flex flex-col items-center justify-center bg-slate-900 border-slate-800 hover:border-amber-500/50">
-                                <span class="text-xs font-mono font-bold text-slate-300">Phase I</span>
-                                <span class="text-[10px] text-slate-500 font-mono">15-23 yrs</span>
-                            </button>
-                            <button onclick="selectSucheyPhase(2)" id="sb-phase-2" class="sb-btn px-2 py-3 rounded-xl border text-center transition flex flex-col items-center justify-center bg-slate-900 border-slate-800 hover:border-amber-500/50">
-                                <span class="text-xs font-mono font-bold text-slate-300">Phase II</span>
-                                <span class="text-[10px] text-slate-500 font-mono">19-35 yrs</span>
-                            </button>
-                            <button onclick="selectSucheyPhase(3)" id="sb-phase-3" class="sb-btn active px-2 py-3 rounded-xl border text-center transition flex flex-col items-center justify-center bg-amber-500/20 border-amber-500/50 text-amber-300">
-                                <span class="text-xs font-mono font-bold text-amber-300">Phase III</span>
-                                <span class="text-[10px] text-amber-400/80 font-mono">21-46 yrs</span>
-                            </button>
-                            <button onclick="selectSucheyPhase(4)" id="sb-phase-4" class="sb-btn px-2 py-3 rounded-xl border text-center transition flex flex-col items-center justify-center bg-slate-900 border-slate-800 hover:border-amber-500/50">
-                                <span class="text-xs font-mono font-bold text-slate-300">Phase IV</span>
-                                <span class="text-[10px] text-slate-500 font-mono">23-57 yrs</span>
-                            </button>
-                            <button onclick="selectSucheyPhase(5)" id="sb-phase-5" class="sb-btn px-2 py-3 rounded-xl border text-center transition flex flex-col items-center justify-center bg-slate-900 border-slate-800 hover:border-amber-500/50">
-                                <span class="text-xs font-mono font-bold text-slate-300">Phase V</span>
-                                <span class="text-[10px] text-slate-500 font-mono">27-66 yrs</span>
-                            </button>
-                            <button onclick="selectSucheyPhase(6)" id="sb-phase-6" class="sb-btn px-2 py-3 rounded-xl border text-center transition flex flex-col items-center justify-center bg-slate-900 border-slate-800 hover:border-amber-500/50">
-                                <span class="text-xs font-mono font-bold text-slate-300">Phase VI</span>
-                                <span class="text-[10px] text-slate-500 font-mono">34-86 yrs</span>
-                            </button>
-                        </div>
-
-                        <div id="suchey-detail-box" class="bg-amber-950/20 border border-amber-500/30 rounded-xl p-4 text-xs">
-                            <div class="flex items-center justify-between mb-2">
-                                <span class="font-mono font-bold text-amber-400 text-sm" id="sb-title">SUCHEY-BROOKS PHASE III</span>
-                                <span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-mono text-[11px]" id="sb-range">Mean Age: 28.8 ± 6.5 yrs (Range: 21-46)</span>
-                            </div>
-                            <p id="sb-desc" class="text-slate-300 leading-relaxed">
-                                Symphysial face shows continuous dorsal rampart formation. Ridges and furrows are actively filling in. Smooth surface with distinct rim perimeter developing along superior boundary.
-                            </p>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- RIGHT PANEL: Live HUD Analytics Gauge & Radar -->
-                <div class="lg:col-span-5 space-y-6">
-
-                    <!-- Biological Sex Assessment HUD Card -->
-                    <div class="hud-card rounded-2xl p-5 hud-card-glow relative">
-                        <h3 class="text-sm font-mono font-bold uppercase tracking-wider text-slate-200 mb-4 flex items-center justify-between">
-                            <span><i class="fa-solid fa-chart-pie text-cyan-400"></i> Biological Sex Diagnostic Gauge</span>
-                            <span id="sex-status-badge" class="px-2 py-0.5 rounded text-[11px] font-mono bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">PROBABLE FEMALE</span>
-                        </h3>
-
-                        <!-- Probability Bar -->
-                        <div class="space-y-2 mb-6">
-                            <div class="flex justify-between text-xs font-mono">
-                                <span class="text-rose-400 font-bold flex items-center gap-1"><i class="fa-solid fa-venus"></i> FEMALE: <span id="female-pct">78%</span></span>
-                                <span class="text-cyan-400 font-bold flex items-center gap-1">MALE: <span id="male-pct">22%</span> <i class="fa-solid fa-mars"></i></span>
-                            </div>
-                            <div class="w-full bg-slate-900 rounded-full h-3 p-0.5 border border-slate-800 flex overflow-hidden">
-                                <div id="female-bar" class="bg-gradient-to-r from-rose-500 to-pink-500 h-full rounded-l-full transition-all duration-500" style="width: 78%;"></div>
-                                <div id="male-bar" class="bg-gradient-to-r from-cyan-500 to-blue-500 h-full rounded-r-full transition-all duration-500" style="width: 22%;"></div>
-                            </div>
-                            <div class="flex justify-between text-[10px] font-mono text-slate-500 pt-1">
-                                <span>Confidence Rating: <strong id="confidence-rating" class="text-emerald-400">HIGH (92.4%)</strong></span>
-                                <span>Diagnostic Traits: 5/5</span>
-                            </div>
-                        </div>
-
-                        <!-- Morphological Trait Radar Chart -->
-                        <div class="relative w-full h-64 bg-slate-900/40 rounded-xl p-2 border border-slate-800/80">
-                            <canvas id="sexRadarChart"></canvas>
-                        </div>
-
-                        <div class="mt-4 p-3 rounded-xl bg-slate-900/80 border border-slate-800 text-xs text-slate-300 space-y-1 font-mono">
-                            <div class="text-cyan-400 font-bold flex items-center gap-1">
-                                <i class="fa-solid fa-circle-info"></i> Diagnostic Summary Rationale:
-                            </div>
-                            <p id="sex-rationale-text" class="text-[11px] text-slate-400 leading-normal">
-                                Greater sciatic notch exhibits wide U-shaped geometry combined with prominent ventral arc morphology, yielding high female concordance despite intermediate mastoid process scoring.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Stature & Age Summary Snapshot -->
-                    <div class="hud-card rounded-2xl p-5 border-cyan-500/20">
-                        <h3 class="text-sm font-mono font-bold uppercase tracking-wider text-slate-200 mb-3 flex items-center gap-2">
-                            <i class="fa-solid fa-id-card text-emerald-400"></i> Biological Profile Summary Card
-                        </h3>
-                        
-                        <div class="divide-y divide-slate-800 text-xs font-mono">
-                            <div class="py-2.5 flex justify-between items-center">
-                                <span class="text-slate-400">ESTIMATED SEX:</span>
-                                <span id="summary-sex" class="font-bold text-rose-400">Probable Female (78% confidence)</span>
-                            </div>
-                            <div class="py-2.5 flex justify-between items-center">
-                                <span class="text-slate-400">ESTIMATED LIVING HEIGHT:</span>
-                                <span id="summary-stature" class="font-bold text-emerald-400">167.8 cm ± 3.27 cm</span>
-                            </div>
-                            <div class="py-2.5 flex justify-between items-center">
-                                <span class="text-slate-400">ESTIMATED AGE-AT-DEATH:</span>
-                                <span id="summary-age" class="font-bold text-amber-400">21 - 46 Years (Mean: 28.8 yrs)</span>
-                            </div>
-                            <div class="py-2.5 flex justify-between items-center">
-                                <span class="text-slate-400">ASSESSED ANCESTRY MODEL:</span>
-                                <span id="summary-ancestry" class="font-bold text-purple-400">European / Caucasian Standard</span>
-                            </div>
-                        </div>
-
-                        <button onclick="syncDataToReport()" class="w-full mt-4 py-2.5 rounded-xl bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-500/40 text-cyan-300 font-mono text-xs font-bold transition flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-arrow-right"></i> Sync Profile to Medico-Legal Report
-                        </button>
-                    </div>
-
-                </div>
-
-            </div>
-        </section>
-
-        <!-- TAB 2: TRAUMA & TAPHONOMY ANALYSIS MATRIX -->
-        <section id="tab-trauma" class="tab-content hidden space-y-6">
-            
-            <!-- Section Header -->
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2 border-b border-slate-800">
-                <div>
-                    <h2 class="text-xl font-bold text-slate-100 flex items-center gap-2">
-                        <i class="fa-solid fa-burst text-amber-400"></i> Trauma Mechanics & Taphonomy Matrix
-                    </h2>
-                    <p class="text-xs text-slate-400">Differentiate Antemortem, Perimortem, and Postmortem bone alterations with biomechanical classification.</p>
-                </div>
-            </div>
-
-            <!-- Trauma Analysis Interface -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-
-                <!-- Left Column: Trauma Selectors & Features -->
-                <div class="lg:col-span-7 space-y-6">
-
-                    <!-- Wound Type Selector -->
-                    <div class="hud-card rounded-2xl p-5">
-                        <h3 class="text-sm font-mono font-bold uppercase tracking-wider text-amber-400 mb-4 flex items-center gap-2">
-                            <i class="fa-solid fa-crosshairs"></i> 1. Bone Trauma Mechanism Classifier
-                        </h3>
-
-                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
-                            <button onclick="setTraumaType('bft')" id="trauma-bft" class="trauma-type-btn active p-3 rounded-xl border bg-amber-500/20 border-amber-500/50 text-amber-300 text-left transition">
-                                <i class="fa-solid fa-hammer text-lg mb-1 block text-amber-400"></i>
-                                <div class="font-bold text-xs">Blunt Force</div>
-                                <div class="text-[10px] opacity-75">Low velocity impact</div>
-                            </button>
-                            <button onclick="setTraumaType('sft')" id="trauma-sft" class="trauma-type-btn p-3 rounded-xl border bg-slate-900 border-slate-800 text-slate-400 text-left transition hover:border-slate-700">
-                                <i class="fa-solid fa-scalpel text-lg mb-1 block text-rose-400"></i>
-                                <div class="font-bold text-xs">Sharp Force</div>
-                                <div class="text-[10px] opacity-75">Incision & chop</div>
-                            </button>
-                            <button onclick="setTraumaType('gsw')" id="trauma-gsw" class="trauma-type-btn p-3 rounded-xl border bg-slate-900 border-slate-800 text-slate-400 text-left transition hover:border-slate-700">
-                                <i class="fa-solid fa-bullseye text-lg mb-1 block text-cyan-400"></i>
-                                <div class="font-bold text-xs">Ballistic (GSW)</div>
-                                <div class="text-[10px] opacity-75">High velocity kinetic</div>
-                            </button>
-                            <button onclick="setTraumaType('tap')" id="trauma-tap" class="trauma-type-btn p-3 rounded-xl border bg-slate-900 border-slate-800 text-slate-400 text-left transition hover:border-slate-700">
-                                <i class="fa-solid fa-tree text-lg mb-1 block text-emerald-400"></i>
-                                <div class="font-bold text-xs">Taphonomic</div>
-                                <div class="text-[10px] opacity-75">Postmortem alteration</div>
-                            </button>
-                        </div>
-
-                        <!-- Fracture Mechanics Checklist -->
-                        <div class="space-y-3 bg-slate-900/60 p-4 rounded-xl border border-slate-800">
-                            <span class="text-xs font-mono font-bold text-slate-300 uppercase block mb-2">Fracture Pattern & Characteristics</span>
-                            
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                                <label class="flex items-center gap-2 cursor-pointer p-2 rounded bg-slate-900 border border-slate-800 hover:border-slate-700">
-                                    <input type="checkbox" id="chk-radiating" onchange="updateTraumaMatrix()" checked class="rounded border-slate-700 text-amber-500 focus:ring-0">
-                                    <span class="text-slate-200">Radiating Fractures Present</span>
-                                </label>
-                                <label class="flex items-center gap-2 cursor-pointer p-2 rounded bg-slate-900 border border-slate-800 hover:border-slate-700">
-                                    <input type="checkbox" id="chk-concentric" onchange="updateTraumaMatrix()" checked class="rounded border-slate-700 text-amber-500 focus:ring-0">
-                                    <span class="text-slate-200">Concentric Heave Lines</span>
-                                </label>
-                                <label class="flex items-center gap-2 cursor-pointer p-2 rounded bg-slate-900 border border-slate-800 hover:border-slate-700">
-                                    <input type="checkbox" id="chk-beveling" onchange="updateTraumaMatrix()" class="rounded border-slate-700 text-amber-500 focus:ring-0">
-                                    <span class="text-slate-200">Internal / External Beveling</span>
-                                </label>
-                                <label class="flex items-center gap-2 cursor-pointer p-2 rounded bg-slate-900 border border-slate-800 hover:border-slate-700">
-                                    <input type="checkbox" id="chk-hinge" onchange="updateTraumaMatrix()" class="rounded border-slate-700 text-amber-500 focus:ring-0">
-                                    <span class="text-slate-200">Hinge Fractures (Plastic Flex)</span>
-                                </label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Injury Timing Discriminator (Antemortem / Perimortem / Postmortem) -->
-                    <div class="hud-card rounded-2xl p-5">
-                        <h3 class="text-sm font-mono font-bold uppercase tracking-wider text-cyan-400 mb-4 flex items-center gap-2">
-                            <i class="fa-solid fa-clock-rotate-left"></i> 2. Injury Timing Discriminator Matrix
-                        </h3>
-
-                        <div class="space-y-3">
-                            
-                            <!-- Collagen Elasticity Indicator -->
-                            <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800 flex items-center justify-between">
-                                <div>
-                                    <div class="text-xs font-bold text-slate-200">Bone Moisture & Elastic Response</div>
-                                    <div class="text-[11px] text-slate-400">Presence of fresh green-bone spiral fracturing</div>
-                                </div>
-                                <select id="time-moisture" onchange="updateTraumaMatrix()" class="bg-slate-900 border border-slate-700 text-xs font-mono text-cyan-300 rounded-lg px-2.5 py-1.5 focus:outline-none">
-                                    <option value="fresh">Fresh (Fresh/Moist Bone - Perimortem)</option>
-                                    <option value="dry">Dry/Brittle (Dry Bone - Postmortem)</option>
-                                    <option value="healed">Osteogenesis/Callus (Antemortem)</option>
-                                </select>
-                            </div>
-
-                            <!-- Color Match of Fracture Margins -->
-                            <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800 flex items-center justify-between">
-                                <div>
-                                    <div class="text-xs font-bold text-slate-200">Fracture Margin Surface Color</div>
-                                    <div class="text-[11px] text-slate-400">Comparison of fracture edge staining vs outer cortical bone</div>
-                                </div>
-                                <select id="time-color" onchange="updateTraumaMatrix()" class="bg-slate-900 border border-slate-700 text-xs font-mono text-cyan-300 rounded-lg px-2.5 py-1.5 focus:outline-none">
-                                    <option value="same">Identical Staining (Perimortem)</option>
-                                    <option value="lighter">Lighter/Unstained Edge (Postmortem)</option>
-                                    <option value="remodeled">Remodeled/Rounded (Antemortem)</option>
-                                </select>
-                            </div>
-
-                            <!-- Bone Repair Activity -->
-                            <div class="bg-slate-900/60 p-3.5 rounded-xl border border-slate-800 flex items-center justify-between">
-                                <div>
-                                    <div class="text-xs font-bold text-slate-200">Osteoclastic / Osteoblastic Activity</div>
-                                    <div class="text-[11px] text-slate-400">Microscopic or macroscopic signs of cellular healing</div>
-                                </div>
-                                <select id="time-healing" onchange="updateTraumaMatrix()" class="bg-slate-900 border border-slate-700 text-xs font-mono text-cyan-300 rounded-lg px-2.5 py-1.5 focus:outline-none">
-                                    <option value="none">No Healing Response (Peri/Postmortem)</option>
-                                    <option value="active">Active Callus / Remodeling (Antemortem)</option>
-                                </select>
-                            </div>
-
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Right Column: Results & Taphonomic Simulation -->
-                <div class="lg:col-span-5 space-y-6">
-
-                    <!-- Diagnostic Matrix Output -->
-                    <div class="hud-card rounded-2xl p-5 border-amber-500/30">
-                        <h3 class="text-sm font-mono font-bold uppercase tracking-wider text-amber-400 mb-3 flex items-center justify-between">
-                            <span><i class="fa-solid fa-gavel"></i> Timing Classification Result</span>
-                            <span id="timing-badge" class="px-2.5 py-1 rounded text-xs font-mono bg-amber-500/20 text-amber-300 border border-amber-500/40 font-bold">PERIMORTEM TRAUMA</span>
-                        </h3>
-
-                        <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-3 font-mono text-xs">
-                            <div class="flex justify-between items-center text-slate-300">
-                                <span>Mechanism:</span>
-                                <span id="trauma-mech-text" class="text-amber-400 font-bold">Blunt Force Impact (BFT)</span>
-                            </div>
-                            <div class="flex justify-between items-center text-slate-300">
-                                <span>Bone State at Fracture:</span>
-                                <span id="trauma-state-text" class="text-emerald-400 font-bold">Viscoelastic / Hydrated</span>
-                            </div>
-                            <div class="flex justify-between items-center text-slate-300">
-                                <span>Legal/Forensic Impact:</span>
-                                <span id="trauma-legal-text" class="text-rose-400 font-bold">Directly Relevant to Cause of Death</span>
-                            </div>
-                        </div>
-
-                        <div class="mt-4 p-3 rounded-xl bg-amber-950/20 border border-amber-500/30 text-xs text-slate-300 space-y-1">
-                            <span class="font-mono font-bold text-amber-400 block mb-1">Medico-Legal Trajectory Rationale:</span>
-                            <p id="trauma-rationale" class="text-[11px] text-slate-300 leading-relaxed">
-                                Plastic hinge deformation combined with identical margin staining strongly indicates the bone possessed collagen elasticity at the moment of impact. Absence of osseous healing confirms the event occurred at or around the time of death.
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- Taphonomy Factor Checklist & Weathering Scale -->
-                    <div class="hud-card rounded-2xl p-5">
-                        <h3 class="text-sm font-mono font-bold uppercase tracking-wider text-emerald-400 mb-3 flex items-center gap-2">
-                            <i class="fa-solid fa-temperature-arrow-up"></i> Behrensmeyer Weathering Stage (0-5)
-                        </h3>
-
-                        <div class="space-y-3 text-xs">
-                            <select id="weathering-stage" onchange="updateWeathering()" class="w-full bg-slate-900 border border-slate-700 rounded-lg p-2.5 font-mono text-emerald-300 focus:outline-none">
-                                <option value="0">Stage 0: Unweathered (No cortical cracking)</option>
-                                <option value="1">Stage 1: Fine cracking parallel to fiber structure (&lt;1 yr)</option>
-                                <option value="2">Stage 2: Outermost concentric flaking, cracks expanding (1-3 yrs)</option>
-                                <option value="3">Stage 3: Rough fibrous compact bone exposed (4-6 yrs)</option>
-                                <option value="4">Stage 4: Coarsely fibrous surface, splinters loose (6-15 yrs)</option>
-                                <option value="5">Stage 5: Bone falling apart in situ, fragile (&gt;15 yrs)</option>
-                            </select>
-
-                            <div id="weathering-desc-box" class="p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-[11px] text-slate-400 font-mono">
-                                Surface retains grease. Bone shows no fine cracking or flaking. Estimated postmortem surface exposure: &lt; 1 year.
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-        </section>
-
-        <!-- TAB 3: COMPETENCY TRAINING & QUIZ SIMULATOR -->
-        <section id="tab-quiz" class="tab-content hidden space-y-6">
-            
-            <!-- Section Header -->
-            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2 border-b border-slate-800">
-                <div>
-                    <h2 class="text-xl font-bold text-slate-100 flex items-center gap-2">
-                        <i class="fa-solid fa-graduation-cap text-purple-400"></i> Competency Quiz & Inter-Observer Error Simulator
-                    </h2>
-                    <p class="text-xs text-slate-400">Test diagnostic proficiency, calibrate trait scoring, and measure inter-observer reliability rates.</p>
-                </div>
-                <div class="flex items-center gap-2">
-                    <span class="text-xs font-mono text-slate-400">CURRENT SCORE:</span>
-                    <span id="quiz-score" class="px-3 py-1 rounded font-mono font-bold text-sm bg-purple-500/20 text-purple-300 border border-purple-500/30">0 / 3</span>
-                </div>
-            </div>
-
-            <!-- Quiz Layout -->
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-
-                <!-- Left Column: Case Study Interactive Questions -->
-                <div class="lg:col-span-8 space-y-6">
-
-                    <!-- Active Case Header Banner -->
-                    <div class="hud-card rounded-2xl p-5 border-purple-500/30 bg-gradient-to-r from-slate-900 via-purple-950/20 to-slate-900">
-                        <div class="flex items-center justify-between mb-2">
-                            <span class="text-xs font-mono text-purple-400 font-bold uppercase tracking-wider flex items-center gap-2">
-                                <i class="fa-solid fa-folder-open"></i> SIMULATED CASE STUDY #FR-2026-088
-                            </span>
-                            <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-purple-500/20 text-purple-300">EXPERT COMPETENCY LAB</span>
-                        </div>
-                        <h3 class="text-lg font-bold text-slate-100 mb-1">Highland Ridge Forensic Recovery Case</h3>
-                        <p class="text-xs text-slate-300 leading-relaxed">
-                            Skeletal remains discovered near a remote forest trail. Femur length measured at 430 mm. Pelvis reveals a wide U-shaped Greater Sciatic Notch, but the cranial Nuchal Crest score is rated 4 (Robust).
-                        </p>
-                    </div>
-
-                    <!-- Question Cards Container -->
-                    <div id="quiz-questions-container" class="space-y-6">
-                        
-                        <!-- Question 1 -->
-                        <div class="hud-card rounded-2xl p-5 space-y-3" id="q1-card">
-                            <div class="flex justify-between items-center text-xs font-mono">
-                                <span class="text-purple-400 font-bold">QUESTION 1 OF 3: SEX ESTIMATION TRAIT WEIGHTING</span>
-                                <span class="text-slate-500">Buikstra & Ubelaker Standard</span>
-                            </div>
-                            <h4 class="text-sm font-semibold text-slate-100">
-                                In cases of conflict between Pelvic traits (e.g. Sciatic Notch = 1) and Cranial traits (e.g. Nuchal Crest = 4), how should the anthropologist weight the diagnostic features?
-                            </h4>
-
-                            <div class="space-y-2 text-xs font-mono pt-2">
-                                <button onclick="answerQuiz(1, 'A')" id="q1-opt-A" class="q-btn w-full p-3 rounded-xl border bg-slate-900 border-slate-800 text-slate-300 text-left hover:border-purple-500/50 transition">
-                                    A) Weight Cranial features heavier because the skull is less prone to childbirth remodeling.
-                                </button>
-                                <button onclick="answerQuiz(1, 'B')" id="q1-opt-B" class="q-btn w-full p-3 rounded-xl border bg-slate-900 border-slate-800 text-slate-300 text-left hover:border-purple-500/50 transition">
-                                    B) Weight Pelvic features significantly heavier due to functional adaptation for parturition and higher accuracy (&gt;90%).
-                                </button>
-                                <button onclick="answerQuiz(1, 'C')" id="q1-opt-C" class="q-btn w-full p-3 rounded-xl border bg-slate-900 border-slate-800 text-slate-300 text-left hover:border-purple-500/50 transition">
-                                    C) Average all score integers equally without applying functional trait weighting.
-                                </button>
-                            </div>
-
-                            <div id="q1-feedback" class="hidden p-3 rounded-xl text-xs font-mono space-y-1"></div>
-                        </div>
-
-                        <!-- Question 2 -->
-                        <div class="hud-card rounded-2xl p-5 space-y-3" id="q2-card">
-                            <div class="flex justify-between items-center text-xs font-mono">
-                                <span class="text-purple-400 font-bold">QUESTION 2 OF 3: TRAUMA TIMING DISCRIMINATION</span>
-                                <span class="text-slate-500">Taphonomic Analysis</span>
-                            </div>
-                            <h4 class="text-sm font-semibold text-slate-100">
-                                A femur fracture edge exhibits a lighter, unstained cortical color compared to the surrounding sun-bleached shaft. What is the most accurate timing interpretation?
-                            </h4>
-
-                            <div class="space-y-2 text-xs font-mono pt-2">
-                                <button onclick="answerQuiz(2, 'A')" id="q2-opt-A" class="q-btn w-full p-3 rounded-xl border bg-slate-900 border-slate-800 text-slate-300 text-left hover:border-purple-500/50 transition">
-                                    A) Perimortem trauma because the bone fractured while still fresh.
-                                </button>
-                                <button onclick="answerQuiz(2, 'B')" id="q2-opt-B" class="q-btn w-full p-3 rounded-xl border bg-slate-900 border-slate-800 text-slate-300 text-left hover:border-purple-500/50 transition">
-                                    B) Postmortem fracture occurring after sun-bleaching and environmental exposure.
-                                </button>
-                                <button onclick="answerQuiz(2, 'C')" id="q2-opt-C" class="q-btn w-full p-3 rounded-xl border bg-slate-900 border-slate-800 text-slate-300 text-left hover:border-purple-500/50 transition">
-                                    C) Antemortem trauma with rapid osteoclastic resorption.
-                                </button>
-                            </div>
-
-                            <div id="q2-feedback" class="hidden p-3 rounded-xl text-xs font-mono space-y-1"></div>
-                        </div>
-
-                    </div>
-
-                </div>
-
-                <!-- Right Column: Inter-Observer Calibration Stats -->
-                <div class="lg:col-span-4 space-y-6">
-
-                    <div class="hud-card rounded-2xl p-5 border-purple-500/20">
-                        <h3 class="text-sm font-mono font-bold uppercase tracking-wider text-purple-400 mb-3 flex items-center gap-2">
-                            <i class="fa-solid fa-sliders"></i> Inter-Observer Error Metric
-                        </h3>
-
-                        <div class="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-3 font-mono text-xs">
-                            <div class="flex justify-between items-center">
-                                <span class="text-slate-400">Target Error Threshold:</span>
-                                <span class="text-emerald-400 font-bold">&lt; 5.0%</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-slate-400">Your Concordance Score:</span>
-                                <span id="observer-concordance" class="text-cyan-400 font-bold">100%</span>
-                            </div>
-                            <div class="flex justify-between items-center">
-                                <span class="text-slate-400">Classroom Peer Rank:</span>
-                                <span class="text-purple-400 font-bold">Top 5%</span>
-                            </div>
-                        </div>
-
-                        <div class="mt-4 text-[11px] text-slate-400 leading-relaxed font-mono">
-                            <p class="mb-2"><strong class="text-slate-200">Academic Calibration Note:</strong> Inter-observer error occurs when different analysts rate subjective traits (e.g. Nuchal Crest 3 vs 4) differently.</p>
-                            <p>Using standardized visual atlases (Phenice 1969) minimizes courtroom challenge vulnerabilities.</p>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-        </section>
-
-        <!-- TAB 4: MEDICO-LEGAL REPORT GENERATOR -->
-        <section id="tab-report" class="tab-content hidden space-y-6">
-            
-            <!-- Section Header -->
-            <div class="no-print flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2 border-b border-slate-800">
-                <div>
-                    <h2 class="text-xl font-bold text-slate-100 flex items-center gap-2">
-                        <i class="fa-solid fa-file-contract text-emerald-400"></i> Medico-Legal Report Generator
-                    </h2>
-                    <p class="text-xs text-slate-400">Official courtroom-ready Forensic Anthropology Diagnostic Report auto-populated from active analyses.</p>
-                </div>
-                <div class="flex items-center gap-3">
-                    <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-slate-950 font-mono font-bold text-xs transition flex items-center gap-2 shadow-[0_0_15px_rgba(16,185,129,0.3)]">
-                        <i class="fa-solid fa-print"></i> Print / Export PDF
-                    </button>
-                    <button onclick="copyReportJSON()" class="px-3 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 font-mono text-xs border border-slate-700 transition flex items-center gap-2">
-                        <i class="fa-solid fa-code"></i> Copy JSON Data
-                    </button>
-                </div>
-            </div>
-
-            <!-- Report Document Preview Box -->
-            <div class="hud-card rounded-2xl p-6 md:p-10 border-slate-700 max-w-4xl mx-auto text-slate-200 space-y-8 scanline">
-                
-                <!-- Official Header -->
-                <div class="border-b-2 border-slate-700 pb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
-                    <div>
-                        <div class="text-xs font-mono font-bold uppercase tracking-widest text-cyan-400">CENTRAL FORENSIC SCIENCE LABORATORY & COMPETENCY SUITE</div>
-                        <h1 class="text-2xl font-serif font-bold text-slate-100 print-text-dark mt-1">OFFICIAL MEDICO-LEGAL FORENSIC ANTHROPOLOGY REPORT</h1>
-                        <p class="text-xs text-slate-400 font-mono">Formulation based on Buikstra & Ubelaker (1994) Standard Protocols</p>
-                    </div>
-                    <div class="text-right font-mono text-xs text-slate-400">
-                        <div>CASE REF: <span id="report-case-id" class="text-cyan-400 font-bold">FR-2026-088</span></div>
-                        <div>DATE: <span id="report-date">2026-11-25</span></div>
-                        <div>STATUS: <span class="text-emerald-400 font-bold">CERTIFIED DIAGNOSTIC</span></div>
-                    </div>
-                </div>
-
-                <!-- Case Metadata Form Fields (Editable in preview) -->
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 font-mono text-xs bg-slate-900/80 p-4 rounded-xl border border-slate-800">
-                    <div>
-                        <label class="text-slate-500 block mb-1">Lead Forensic Anthropologist:</label>
-                        <input type="text" id="report-analyst" value="Student Prae & Academic Team" oninput="updateReportText()" class="w-full bg-slate-950 border border-slate-700 rounded px-2.5 py-1 text-slate-200 font-bold focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="text-slate-500 block mb-1">Investigating Agency:</label>
-                        <input type="text" id="report-agency" value="Department of Special Investigation (DSI)" oninput="updateReportText()" class="w-full bg-slate-950 border border-slate-700 rounded px-2.5 py-1 text-slate-200 font-bold focus:outline-none">
-                    </div>
-                    <div>
-                        <label class="text-slate-500 block mb-1">Recovery Site Location:</label>
-                        <input type="text" id="report-location" value="Northern Mountain Ridge Sector 4" oninput="updateReportText()" class="w-full bg-slate-950 border border-slate-700 rounded px-2.5 py-1 text-slate-200 font-bold focus:outline-none">
-                    </div>
-                </div>
-
-                <!-- Section I: Biological Profile -->
-                <div class="space-y-4">
-                    <h3 class="text-sm font-mono font-bold uppercase tracking-wider text-cyan-400 border-b border-cyan-500/30 pb-1 flex items-center gap-2">
-                        <i class="fa-solid fa-dna"></i> SECTION I: BIOLOGICAL PROFILE ESTIMATION
-                    </h3>
-                    
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-mono">
-                        <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800">
-                            <span class="text-slate-400 block mb-1">ESTIMATED SEX:</span>
-                            <span id="rep-sex" class="text-rose-400 font-bold text-sm">Probable Female (78% confidence)</span>
-                        </div>
-                        <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800">
-                            <span class="text-slate-400 block mb-1">STRENGTH OF ANCESTRY MODEL:</span>
-                            <span id="rep-ancestry" class="text-purple-400 font-bold text-sm">European / Caucasian</span>
-                        </div>
-                        <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800">
-                            <span class="text-slate-400 block mb-1">ESTIMATED LIVING HEIGHT:</span>
-                            <span id="rep-stature" class="text-emerald-400 font-bold text-sm">167.8 cm ± 3.27 cm</span>
-                        </div>
-                    </div>
-
-                    <div class="p-3 bg-slate-900/60 rounded-xl border border-slate-800 text-xs font-mono">
-                        <span class="text-slate-400 block mb-1">AGE-AT-DEATH RANGE (Suchey-Brooks Phase III):</span>
-                        <span id="rep-age" class="text-amber-400 font-bold">21 - 46 Years (Mean: 28.8 ± 6.5 yrs)</span>
-                    </div>
-                </div>
-
-                <!-- Section II: Trauma & Taphonomic Findings -->
-                <div class="space-y-4">
-                    <h3 class="text-sm font-mono font-bold uppercase tracking-wider text-amber-400 border-b border-amber-500/30 pb-1 flex items-center gap-2">
-                        <i class="fa-solid fa-burst"></i> SECTION II: OSTEOLOGICAL TRAUMA & TAPHONOMY
-                    </h3>
-
-                    <div class="p-4 bg-slate-900/60 rounded-xl border border-slate-800 space-y-2 text-xs font-mono">
-                        <div class="flex justify-between">
-                            <span class="text-slate-400">Trauma Classification:</span>
-                            <span id="rep-trauma-type" class="text-amber-400 font-bold">Blunt Force Impact (BFT)</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-slate-400">Timing Determination:</span>
-                            <span id="rep-trauma-timing" class="text-emerald-400 font-bold">PERIMORTEM TRAUMA</span>
-                        </div>
-                        <div class="flex justify-between">
-                            <span class="text-slate-400">Behrensmeyer Weathering Stage:</span>
-                            <span id="rep-weathering" class="text-cyan-400 font-bold">Stage 0 (Unweathered, &lt;1 yr exposure)</span>
-                        </div>
-                        <p id="rep-trauma-desc" class="text-slate-300 pt-2 border-t border-slate-800 leading-relaxed font-sans text-xs">
-                            Fracture patterns show radiating lines with plastic hinge deformation, characteristic of viscoelastic bone response at impact. No osteogenesis observed.
-                        </p>
-                    </div>
-                </div>
-
-                <!-- Section III: Recommendations & Expert Signature Block -->
-                <div class="space-y-4">
-                    <h3 class="text-sm font-mono font-bold uppercase tracking-wider text-emerald-400 border-b border-emerald-500/30 pb-1 flex items-center gap-2">
-                        <i class="fa-solid fa-pen-nib"></i> SECTION III: OPINION & RECOMMENDATIONS
-                    </h3>
-
-                    <textarea id="report-opinion" oninput="updateReportText()" rows="3" class="w-full bg-slate-900 border border-slate-800 rounded-xl p-3 text-xs text-slate-300 font-sans focus:outline-none focus:border-emerald-500" placeholder="Enter expert commentary, recommended CT scan, DNA extraction targets, or courtroom summary notes..."></textarea>
-
-                    <!-- Official Signature Box -->
-                    <div class="pt-8 flex flex-col sm:flex-row items-end justify-between gap-6 font-mono text-xs">
-                        <div>
-                            <div class="text-slate-500 text-[10px] uppercase">Automated Hash Verification:</div>
-                            <div class="text-cyan-500 text-[10px] break-all">SHA256: 8f9b23a1c70e...4b92c109</div>
-                        </div>
-                        <div class="text-center border-t border-slate-600 pt-2 w-56">
-                            <div class="font-bold text-slate-200" id="sign-name">Student Prae & Team</div>
-                            <div class="text-[10px] text-slate-400">Forensic Anthropology Examiner</div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </section>
-
-    </main>
-
-    <!-- FOOTER -->
-    <footer class="no-print mt-auto border-t border-slate-800 bg="#060911" py-4 px-6 text-center text-xs font-mono text-slate-500">
-        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
-            <div>OSTEO-INTEL Suite &copy; 2026 | Built for Forensic Science & Criminology Competency Training</div>
-            <div class="flex items-center gap-4 text-[11px]">
-                <span class="text-cyan-400"><i class="fa-solid fa-circle text-[8px] mr-1"></i> Claude API Ready</span>
-                <span class="text-emerald-400"><i class="fa-solid fa-shield-halved mr-1"></i> Medico-Legal Grade</span>
-            </div>
-        </div>
-    </footer>
-
-    <!-- JAVASCRIPT LOGIC -->
-    <script>
-        // System State
-        let activeTab = 'profile';
-        let sexRadarChart = null;
-
-        // Suchey-Brooks Reference Database
-        const sucheyDatabase = {
-            1: { title: "SUCHEY-BROOKS PHASE I", range: "Mean Age: 19.4 ± 2.6 yrs (Range: 15-23)", desc: "Symphysial surface has a billowing appearance with deep ridges and furrows. No dorsal margin or pubic tubercle definition present." },
-            2: { title: "SUCHEY-BROOKS PHASE II", range: "Mean Age: 25.0 ± 4.9 yrs (Range: 19-35)", desc: "Symphysial surface shows early filling in of furrows. Beveling of superior extremity may be present. Dorsal margin begins to form." },
-            3: { title: "SUCHEY-BROOKS PHASE III", range: "Mean Age: 28.8 ± 6.5 yrs (Range: 21-46)", desc: "Continuous dorsal rampart formation. Ridges and furrows are actively filling in. Smooth surface with distinct rim perimeter developing along superior boundary." },
-            4: { title: "SUCHEY-BROOKS PHASE IV", range: "Mean Age: 35.2 ± 9.4 yrs (Range: 23-57)", desc: "Symphysial face is generally smooth. Complete oval outline formed by dorsal and ventral margins. Subtle rim breakdown may commence." },
-            5: { title: "SUCHEY-BROOKS PHASE V", range: "Mean Age: 45.6 ± 10.4 yrs (Range: 27-66)", desc: "Moderate surface erosion and rim breakdown. Slight bony outgrowths (osteophytes) present along ventral margin." },
-            6: { title: "SUCHEY-BROOKS PHASE VI", range: "Mean Age: 61.2 ± 12.2 yrs (Range: 34-86)", desc: "Severe surface breakdown and erratic porosity. Rim exhibits deep erosion and erratic osteophytic projections. Pathological aging signs." }
-        };
-
-        let activeSucheyPhase = 3;
-        let activeTraumaType = 'bft';
-
-        // Initialize App on DOM Load
-        window.onload = function() {
-            initRadarChart();
-            updateSexEstimation();
-            calculateStature();
-            updateTraumaMatrix();
-            syncDataToReport();
-        };
-
-        // Navigation Tab Switching
-        function switchTab(tabId) {
-            activeTab = tabId;
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.tab-btn').forEach(el => {
-                el.classList.remove('bg-cyan-500/20', 'text-cyan-300', 'border', 'border-cyan-500/40');
-                el.classList.add('text-slate-400');
-            });
-
-            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
-            const activeBtn = document.getElementById(`nav-${tabId}`);
-            activeBtn.classList.remove('text-slate-400');
-            activeBtn.classList.add('bg-cyan-500/20', 'text-cyan-300', 'border', 'border-cyan-500/40');
-
-            if (tabId === 'report') {
-                syncDataToReport();
-            }
-        }
-
-        // Initialize Radar Chart for Morphological Sex Estimation
-        function initRadarChart() {
-            const ctx = document.getElementById('sexRadarChart').getContext('2d');
-            sexRadarChart = new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: ['Sciatic Notch', 'Ventral Arc', 'Nuchal Crest', 'Supraorbital', 'Mastoid Process'],
-                    datasets: [{
-                        label: 'Observed Trait Score (1=F, 5=M)',
-                        data: [3, 2, 3, 3, 3],
-                        backgroundColor: 'rgba(6, 182, 212, 0.2)',
-                        borderColor: '#06b6d4',
-                        pointBackgroundColor: '#22d3ee',
-                        pointBorderColor: '#fff',
-                        pointHoverBackgroundColor: '#fff',
-                        pointHoverBorderColor: '#06b6d4'
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        r: {
-                            angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
-                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
-                            pointLabels: { color: '#94a3b8', font: { size: 10, family: 'JetBrains Mono' } },
-                            ticks: { display: false },
-                            suggestedMin: 0,
-                            suggestedMax: 5
-                        }
-                    },
-                    plugins: {
-                        legend: { display: false }
-                    }
-                }
-            });
-        }
-
-        // Update Morphological Sex Calculation (Buikstra & Ubelaker weighted scoring)
-        function updateSexEstimation() {
-            const sciatic = parseInt(document.getElementById('input-sciatic').value);
-            const ventral = parseInt(document.getElementById('input-ventral').value) * 1.66; // Scale 1-3 normalized to 1-5 equivalent
-            const nuchal = parseInt(document.getElementById('input-nuchal').value);
-            const supraorbital = parseInt(document.getElementById('input-supraorbital').value);
-            const mastoid = parseInt(document.getElementById('input-mastoid').value);
-
-            // Update Labels
-            document.getElementById('val-sciatic').innerText = `${sciatic} (${sciatic <= 2 ? 'Female' : sciatic >= 4 ? 'Male' : 'Indeterminate'})`;
-            document.getElementById('val-ventral').innerText = `${document.getElementById('input-ventral').value} (${ventral <= 2 font='Female' ? 'Female' : 'Male'})`;
-            document.getElementById('val-nuchal').innerText = `${nuchal} (${nuchal <= 2 ? 'Gracile' : nuchal >= 4 ? 'Robust' : 'Indeterminate'})`;
-            document.getElementById('val-supraorbital').innerText = `${supraorbital} (${supraorbital <= 2 ? 'Sharp/F' : supraorbital >= 4 ? 'Blunt/M' : 'Indeterminate'})`;
-            document.getElementById('val-mastoid').innerText = `${mastoid} (${mastoid <= 2 ? 'Small/F' : mastoid >= 4 ? 'Massive/M' : 'Indeterminate'})`;
-
-            // Weighted Sex Score Calculation (Phenice pelvic traits weighted 1.5x)
-            const weightedSum = (sciatic * 1.5) + (ventral * 1.5) + nuchal + supraorbital + mastoid;
-            const maxWeighted = (5 * 1.5) + (5 * 1.5) + 5 + 5 + 5; // 30
-            const maleProbability = Math.round((weightedSum / maxWeighted) * 100);
-            const femaleProbability = 100 - maleProbability;
-
-            document.getElementById('male-pct').innerText = `${maleProbability}%`;
-            document.getElementById('female-pct').innerText = `${femaleProbability}%`;
-            document.getElementById('male-bar').style.width = `${maleProbability}%`;
-            document.getElementById('female-bar').style.width = `${femaleProbability}%`;
-
-            // Status Classification Badge
-            let statusText = "INDETERMINATE";
-            let statusClass = "bg-slate-500/20 text-slate-300 border-slate-500/30";
-            if (femaleProbability >= 70) {
-                statusText = "PROBABLE FEMALE";
-                statusClass = "bg-rose-500/20 text-rose-300 border-rose-500/40";
-            } else if (femaleProbability >= 58) {
-                statusText = "POSSIBLE FEMALE";
-                statusClass = "bg-pink-500/20 text-pink-300 border-pink-500/40";
-            } else if (maleProbability >= 70) {
-                statusText = "PROBABLE MALE";
-                statusClass = "bg-cyan-500/20 text-cyan-300 border-cyan-500/40";
-            } else if (maleProbability >= 58) {
-                statusText = "POSSIBLE MALE";
-                statusClass = "bg-blue-500/20 text-blue-300 border-blue-500/40";
-            }
-
-            const badge = document.getElementById('sex-status-badge');
-            badge.innerText = statusText;
-            badge.className = `px-2 py-0.5 rounded text-[11px] font-mono border ${statusClass}`;
-
-            document.getElementById('summary-sex').innerText = `${statusText} (${Math.max(femaleProbability, maleProbability)}% confidence)`;
-
-            // Update Radar Chart Data
-            if (sexRadarChart) {
-                sexRadarChart.data.datasets[0].data = [sciatic, ventral, nuchal, supraorbital, mastoid];
-                sexRadarChart.update();
-            }
-        }
-
-        // Stature Calculator (Trotter & Gleser 1952, 1958 Formulas)
-        function calculateStature() {
-            const femur = parseFloat(document.getElementById('femur-len').value) / 10; // convert to cm
-            const tibia = parseFloat(document.getElementById('tibia-len').value) / 10; // convert to cm
-            const sex = document.getElementById('stature-sex').value;
-            const ancestry = document.getElementById('stature-ancestry').value;
-
-            let heightCm = 0;
-            let errMargin = 3.27;
-
-            // Trotter & Gleser Stature Formulas
-            if (sex === 'male') {
-                if (ancestry === 'asian') {
-                    heightCm = (2.15 * femur) + 72.57;
-                    errMargin = 3.80;
-                } else if (ancestry === 'black') {
-                    heightCm = (2.11 * femur) + 70.35;
-                    errMargin = 3.94;
-                } else { // White
-                    heightCm = (2.38 * femur) + 61.41;
-                    errMargin = 3.27;
-                }
-            } else { // Female
-                if (ancestry === 'black') {
-                    heightCm = (2.28 * femur) + 59.76;
-                    errMargin = 3.41;
-                } else { // White / Asian female default
-                    heightCm = (2.47 * femur) + 54.10;
-                    errMargin = 3.72;
-                }
-            }
-
-            const totalInches = heightCm / 2.54;
-            const feet = Math.floor(totalInches / 12);
-            const inches = (totalInches % 12).toFixed(1);
-
-            const heightStr = `${heightCm.toFixed(1)} cm`;
-            const errStr = `± ${errMargin} cm`;
-
-            document.getElementById('stature-result-text').innerHTML = `${heightStr} <span class="text-xs font-normal text-emerald-400">${errStr}</span>`;
-            document.getElementById('stature-ft-text').innerText = `${feet} ft ${inches} in`;
-            document.getElementById('summary-stature').innerText = `${heightStr} ${errStr}`;
-
-            const ancestryText = document.getElementById('stature-ancestry').options[document.getElementById('stature-ancestry').selectedIndex].text;
-            document.getElementById('summary-ancestry').innerText = ancestryText;
-        }
-
-        // Suchey-Brooks Phase Selection
-        function selectSucheyPhase(phase) {
-            activeSucheyPhase = phase;
-            document.querySelectorAll('.sb-btn').forEach(btn => {
-                btn.classList.remove('bg-amber-500/20', 'border-amber-500/50', 'text-amber-300');
-                btn.classList.add('bg-slate-900', 'border-slate-800', 'text-slate-300');
-            });
-
-            const currentBtn = document.getElementById(`sb-phase-${phase}`);
-            currentBtn.classList.remove('bg-slate-900', 'border-slate-800', 'text-slate-300');
-            currentBtn.classList.add('bg-amber-500/20', 'border-amber-500/50', 'text-amber-300');
-
-            const data = sucheyDatabase[phase];
-            document.getElementById('sb-title').innerText = data.title;
-            document.getElementById('sb-range').innerText = data.range;
-            document.getElementById('sb-desc').innerText = data.desc;
-
-            document.getElementById('summary-age').innerText = `${data.range}`;
-        }
-
-        // Set Trauma Mechanism Type
-        function setTraumaType(type) {
-            activeTraumaType = type;
-            document.querySelectorAll('.trauma-type-btn').forEach(btn => {
-                btn.classList.remove('bg-amber-500/20', 'border-amber-500/50', 'text-amber-300');
-                btn.classList.add('bg-slate-900', 'border-slate-800', 'text-slate-400');
-            });
-
-            const activeBtn = document.getElementById(`trauma-${type}`);
-            activeBtn.classList.remove('bg-slate-900', 'border-slate-800', 'text-slate-400');
-            activeBtn.classList.add('bg-amber-500/20', 'border-amber-500/50', 'text-amber-300');
-
-            updateTraumaMatrix();
-        }
-
-        // Update Trauma & Timing Discriminator Matrix
-        function updateTraumaMatrix() {
-            const moisture = document.getElementById('time-moisture').value;
-            const color = document.getElementById('time-color').value;
-            const healing = document.getElementById('time-healing').value;
-
-            let timingResult = "PERIMORTEM TRAUMA";
-            let timingClass = "bg-amber-500/20 text-amber-300 border-amber-500/40";
-            let legalImpact = "Directly Relevant to Cause of Death";
-            let boneState = "Viscoelastic / Hydrated";
-
-            if (healing === 'active') {
-                timingResult = "ANTEMORTEM TRAUMA";
-                timingClass = "bg-emerald-500/20 text-emerald-300 border-emerald-500/40";
-                legalImpact = "Pre-existing Condition (Medical History)";
-                boneState = "Living Remodeling Bone";
-            } else if (moisture === 'dry' || color === 'lighter') {
-                timingResult = "POSTMORTEM ALTERATION";
-                timingClass = "bg-rose-500/20 text-rose-300 border-rose-500/40";
-                legalImpact = "Taphonomic Scavenging / Damage";
-                boneState = "Dry / Brittle Bone";
-            }
-
-            const badge = document.getElementById('timing-badge');
-            badge.innerText = timingResult;
-            badge.className = `px-2.5 py-1 rounded text-xs font-mono border font-bold ${timingClass}`;
-
-            document.getElementById('trauma-legal-text').innerText = legalImpact;
-            document.getElementById('trauma-state-text').innerText = boneState;
-
-            let mechText = "Blunt Force Impact (BFT)";
-            if (activeTraumaType === 'sft') mechText = "Sharp Force Cut / Incision (SFT)";
-            if (activeTraumaType === 'gsw') mechText = "High Velocity Ballistic Penetration (GSW)";
-            if (activeTraumaType === 'tap') mechText = "Environmental Taphonomic Weathering";
-            document.getElementById('trauma-mech-text').innerText = mechText;
-        }
-
-        // Behrensmeyer Weathering Stage Update
-        function updateWeathering() {
-            const stage = document.getElementById('weathering-stage').value;
-            const descs = {
-                '0': 'Surface retains grease. Bone shows no fine cracking or flaking. Estimated postmortem surface exposure: < 1 year.',
-                '1': 'Fine cracking parallel to fiber structure. Soft tissue mostly absent. Exposure range: 0 - 3 years.',
-                '2': 'Outermost concentric flaking present. Cracks expanding into marrow cavity. Exposure range: 1 - 6 years.',
-                '3': 'Rough fibrous compact bone exposed. Weathering penetrates 1-1.5mm. Exposure range: 4 - 10+ years.',
-                '4': 'Coarsely fibrous surface, open cracks, splinters falling loose. Exposure range: 6 - 15+ years.',
-                '5': 'Bone falling apart in situ, extremely fragile structure. Exposure range: > 15 years.'
-            };
-            document.getElementById('weathering-desc-box').innerText = descs[stage];
-        }
-
-        // Quiz Simulator Logic
-        let quizScoreCount = 0;
-        function answerQuiz(qNum, option) {
-            const feedbackBox = document.getElementById(`q${qNum}-feedback`);
-            feedbackBox.classList.remove('hidden');
-
-            if (qNum === 1) {
-                if (option === 'B') {
-                    feedbackBox.className = 'p-3 rounded-xl text-xs font-mono bg-emerald-950/40 border border-emerald-500/40 text-emerald-300';
-                    feedbackBox.innerHTML = '<i class="fa-solid fa-check mr-1"></i> <strong>CORRECT:</strong> Pelvic traits (e.g. Sciatic Notch, Ventral Arc) have a >90% diagnostic accuracy due to functional adaptation for childbirth, overriding secondary cranial sexual dimorphism.';
-                    quizScoreCount++;
-                } else {
-                    feedbackBox.className = 'p-3 rounded-xl text-xs font-mono bg-rose-950/40 border border-rose-500/40 text-rose-300';
-                    feedbackBox.innerHTML = '<i class="fa-solid fa-xmark mr-1"></i> <strong>INCORRECT:</strong> Pelvic traits are prioritized over cranial traits in standard Buikstra & Ubelaker protocols.';
-                }
-            }
-
-            if (qNum === 2) {
-                if (option === 'B') {
-                    feedbackBox.className = 'p-3 rounded-xl text-xs font-mono bg-emerald-950/40 border border-emerald-500/40 text-emerald-300';
-                    feedbackBox.innerHTML = '<i class="fa-solid fa-check mr-1"></i> <strong>CORRECT:</strong> Unstained lighter fracture edges indicate the fracture occurred AFTER sun-bleaching had already weathered the outer cortical surface (Postmortem).';
-                    quizScoreCount++;
-                } else {
-                    feedbackBox.className = 'p-3 rounded-xl text-xs font-mono bg-rose-950/40 border border-rose-500/40 text-rose-300';
-                    feedbackBox.innerHTML = '<i class="fa-solid fa-xmark mr-1"></i> <strong>INCORRECT:</strong> Color differentials indicate post-exposure fracture timing.';
-                }
-            }
-
-            document.getElementById('quiz-score').innerText = `${quizScoreCount} / 2`;
-        }
-
-        // Sync inputs into printable Medico-Legal Report
-        function syncDataToReport() {
-            document.getElementById('rep-sex').innerText = document.getElementById('summary-sex').innerText;
-            document.getElementById('rep-stature').innerText = document.getElementById('summary-stature').innerText;
-            document.getElementById('rep-age').innerText = document.getElementById('summary-age').innerText;
-            document.getElementById('rep-ancestry').innerText = document.getElementById('summary-ancestry').innerText;
-
-            document.getElementById('rep-trauma-type').innerText = document.getElementById('trauma-mech-text').innerText;
-            document.getElementById('rep-trauma-timing').innerText = document.getElementById('timing-badge').innerText;
-            document.getElementById('rep-weathering').innerText = document.getElementById('weathering-stage').options[document.getElementById('weathering-stage').selectedIndex].text;
-            
-            updateReportText();
-        }
-
-        function updateReportText() {
-            document.getElementById('sign-name').innerText = document.getElementById('report-analyst').value;
-        }
-
-        // Sample Data Loaders
-        function loadSampleProfileData(gender) {
-            if (gender === 'female') {
-                document.getElementById('input-sciatic').value = 1;
-                document.getElementById('input-ventral').value = 1;
-                document.getElementById('input-nuchal').value = 2;
-                document.getElementById('input-supraorbital').value = 1;
-                document.getElementById('input-mastoid').value = 2;
-                document.getElementById('femur-len').value = 425;
-                document.getElementById('tibia-len').value = 345;
-                document.getElementById('stature-sex').value = 'female';
-                selectSucheyPhase(2);
-            } else {
-                document.getElementById('input-sciatic').value = 5;
-                document.getElementById('input-ventral').value = 3;
-                document.getElementById('input-nuchal').value = 5;
-                document.getElementById('input-supraorbital').value = 4;
-                document.getElementById('input-mastoid').value = 5;
-                document.getElementById('femur-len').value = 480;
-                document.getElementById('tibia-len').value = 390;
-                document.getElementById('stature-sex').value = 'male';
-                selectSucheyPhase(4);
-            }
-            updateSexEstimation();
-            calculateStature();
-        }
-
-        function resetProfileForm() {
-            document.getElementById('input-sciatic').value = 3;
-            document.getElementById('input-ventral').value = 2;
-            document.getElementById('input-nuchal').value = 3;
-            document.getElementById('input-supraorbital').value = 3;
-            document.getElementById('input-mastoid').value = 3;
-            document.getElementById('femur-len').value = 445;
-            document.getElementById('tibia-len').value = 365;
-            updateSexEstimation();
-            calculateStature();
-            selectSucheyPhase(3);
-        }
-
-        function copyReportJSON() {
-            const reportData = {
-                caseId: "FR-2026-088",
-                analyst: document.getElementById('report-analyst').value,
-                agency: document.getElementById('report-agency').value,
-                biologicalProfile: {
-                    estimatedSex: document.getElementById('summary-sex').innerText,
-                    stature: document.getElementById('summary-stature').innerText,
-                    ageRange: document.getElementById('summary-age').innerText
-                },
-                traumaAnalysis: {
-                    mechanism: document.getElementById('trauma-mech-text').innerText,
-                    timing: document.getElementById('timing-badge').innerText
-                }
-            };
-            
-            const dummy = document.createElement("textarea");
-            document.body.appendChild(dummy);
-            dummy.value = JSON.stringify(reportData, null, 2);
-            dummy.select();
-            document.execCommand("copy");
-            document.body.removeChild(dummy);
-            
-            alert("Report JSON copied to clipboard!");
-        }
-    </script>
+<body>
+<header class="np">
+<div><h1>Osteo-Intel</h1><p id="tag"></p></div>
+<div class="ctl"><button class="btn" id="bth" onclick="setLang('th')">ไทย</button><button class="btn" id="ben" onclick="setLang('en')">EN</button><button class="btn" onclick="toggleTheme()" id="bt">◐</button></div>
+</header>
+<nav class="np" id="nav"></nav>
+<main id="v"></main>
+<script>
+var lang='th',S={t:{},sbSex:'m',sbPh:3,out:{}};
+var T=function(a,b){return lang==='th'?a:b};
+var $=function(i){return document.getElementById(i)};
+var TR=[
+['sci','p',5,'Greater sciatic notch','รอยเว้าไซอาติกใหญ่'],
+['ven','p',2,'Ventral arc','ventral arc'],
+['sub','p',2,'Subpubic concavity','subpubic concavity'],
+['ram','p',2,'Medial ischiopubic ramus','ischiopubic ramus'],
+['nuc','c',5,'Nuchal crest','สันท้ายทอย'],
+['mas','c',5,'Mastoid process','ปุ่มกกหู'],
+['sup','c',5,'Supraorbital margin','ขอบเบ้าตาบน'],
+['gla','c',5,'Glabella','กลางหน้าผาก'],
+['men','c',5,'Mental eminence','ปุ่มคาง']];
+var SB={m:[[18.5,2.1,15,23],[23.4,3.6,19,34],[28.7,6.5,21,46],[35.2,9.4,23,57],[45.6,10.4,27,66],[61.2,12.2,34,86]],
+f:[[19.4,2.6,15,24],[25.0,4.9,19,40],[30.7,8.1,21,53],[38.2,10.9,26,70],[48.1,14.6,25,83],[60.0,12.4,42,87]]};
+var SBF=[['สันและร่องชัด ยังไม่มีขอบ','Billowing ridges and furrows; no rim'],
+['สันยังอยู่ เริ่มมีปุ่มกระดูกและขอบบน','Ridges persist; ossific nodules; rim begins'],
+['สันหายไป ลานด้านหลังสมบูรณ์ ขอบด้านท้องกำลังก่อตัว','Ridges gone; dorsal plateau complete; ventral rim forming'],
+['ผิวละเอียด โครงรูปไข่ครบ ขอบชัด','Fine-grained face; oval outline; rim defined'],
+['ขอบสมบูรณ์ ผิวเริ่มเว้า เริ่มสึก','Rim complete; face slightly depressed; early breakdown'],
+['ผิวกร่อน มีรูพรุนและงอกผิดรูป','Erosion, porosity and irregular outgrowths']];
+var TG={WM:[2.38,61.41,3.27,'White male','ชายกลุ่ม “White”'],WF:[2.47,54.10,3.72,'White female','หญิงกลุ่ม “White”'],BM:[2.11,70.35,3.94,'Black male','ชายกลุ่ม “Black”'],BF:[2.28,59.76,3.41,'Black female','หญิงกลุ่ม “Black”'],AM:[2.15,72.57,3.80,'Asian male (Trotter 1970)','ชาย Asian (Trotter 1970)']};
+var MECH={bft:[['แรงกระแทกทู่ (blunt)','Blunt force'],['รอยแตกแนวรัศมีและวงซ้อน; ตามกฎ Puppe รอยแตกใหม่จะหยุดที่รอยเดิม','Radiating and concentric fractures; by Puppe’s rule newer fractures terminate at older ones']],
+sft:[['วัตถุมีคม (sharp)','Sharp force'],['ผนัง kerf เรียบ รอยขูด (striae) พื้นแบน; แยกการฟัน/การกรีดจากรูปร่าง kerf','Smooth kerf walls, striae, flat floor; separate chop from incision by kerf shape']],
+gsw:[['กระสุน (ballistic)','Ballistic'],['ทางเข้าเป็นรูปปากแตรด้านใน ทางออกปากแตรด้านนอก','Entrance beveled internally, exit beveled externally']],
+tap:[['ทาโฟโนมี (หลังตาย)','Taphonomic'],['รอยรากไม้ รอยแทะสัตว์ฟันแทะ (ร่องคู่) รอยเขี้ยว คราบดิน การผุกร่อนจากอากาศ','Root etching, rodent gnawing (paired grooves), carnivore punctures, soil staining, weathering']]};
+var WX=[['ไม่ผุกร่อน ยังมีไขมันที่ผิว','Unweathered; greasy surface'],['รอยร้าวเล็กขนานเส้นใย','Fine cracking parallel to fibers'],['ผิวชั้นนอกลอกเป็นแผ่น','Outer layer flaking'],['ผิวหยาบ กระดูกแข็งเป็นเส้นใย ลึกราว 1–1.5 มม.','Rough fibrous bone; weathering to ~1–1.5 mm'],['ผิวหยาบมาก เสี้ยนหลุดง่าย','Coarse surface; splinters loosen'],['กระดูกแตกสลายอยู่กับที่','Bone disintegrating in place']];
+var REFS=['Buikstra JE, Ubelaker DH (1994) Standards for Data Collection from Human Skeletal Remains. Arkansas Archeological Survey Research Series 44.',
+'Phenice TW (1969) A newly developed visual method of sexing the os pubis. Am J Phys Anthropol 30:297–301.',
+'Trotter M, Gleser GC (1952) Estimation of stature from long bones of American Whites and Negroes. Am J Phys Anthropol 10:463–514. Revised 1958, 16:79–123 (age correction −0.06 × (age − 30) cm).',
+'Brooks S, Suchey JM (1990) Skeletal age determination based on the os pubis. Human Evolution 5:227–238.',
+'Behrensmeyer AK (1978) Taphonomic and ecologic information from bone weathering. Paleobiology 4:150–162.',
+'Sauer NJ (1998) The timing of injuries and manipulation of the body. In: Reichs KJ (ed) Forensic Osteology, 2nd ed. Charles C Thomas.',
+'Walker PL (2005) Greater sciatic notch morphology: sex, age, and population differences. Am J Phys Anthropol 127:385–391.',
+'Mahakkanukrauh P, et al. (2011) Stature estimation from long bone lengths in a Thai population. Forensic Sci Int 210:279.e1–7.',
+'İşcan MY, Loth SR, Wright RK (1984) Age estimation from the rib by phase analysis: white males. J Forensic Sci 29:1094–1104.'];
+function c(n){return '<a class="c" onclick="go(\'refs\')">['+n+']</a>'}
+function go(t){document.querySelectorAll('.tab').forEach(function(e){e.classList.toggle('on',e.id==='t-'+t)});document.querySelectorAll('#nav button').forEach(function(e){e.classList.toggle('on',e.dataset.t===t)});if(t==='report')rep();if(t==='atlas')initAtlas();window.scrollTo(0,0)}
+function setLang(l){lang=l;document.documentElement.lang=l;build()}
+function toggleTheme(){var h=document.documentElement;var cur=h.dataset.theme;h.dataset.theme=cur==='dark'?'light':'dark'}
+function build(){
+ $('tag').textContent=T('โต๊ะฝึกวิเคราะห์โครงกระดูกทางนิติมานุษยวิทยา','Forensic anthropology training bench');
+ $('bth').classList.toggle('on',lang==='th');$('ben').classList.toggle('on',lang==='en');
+ var tabs=[['profile',T('โปรไฟล์ชีวภาพ','Biological profile')],['atlas',T('แบบจำลอง 3 มิติ','3D atlas')],['trauma',T('บาดแผลและทาโฟโนมี','Trauma & taphonomy')],['report',T('รายงาน','Report')],['refs',T('อ้างอิง','References')]];
+ var cur=(document.querySelector('.tab.on')||{id:'t-profile'}).id.slice(2);
+ $('nav').innerHTML=tabs.map(function(x){return '<button data-t="'+x[0]+'" onclick="go(\''+x[0]+'\')">'+x[1]+'</button>'}).join('');
+ var tr=function(g){return TR.filter(function(x){return x[1]===g}).map(function(x){
+  var k=x[0];var v=S.t[k]||0;
+  return '<div class="tr"><div class="trh"><span>'+x[3]+(x[4]&&lang==='th'?' <span style="color:var(--mt)">'+x[4]+'</span>':'')+'</span><b class="n" id="v_'+k+'"></b></div><input type="range" min="0" max="'+x[2]+'" value="'+v+'" aria-label="'+x[3]+'" oninput="S.t.'+k+'=+this.value;calc()"></div>'}).join('')};
+ var tgo=Object.keys(TG).map(function(k){return '<option value="'+k+'"'+(S.tg===k?' selected':'')+'>'+T(TG[k][4],TG[k][3])+'</option>'}).join('');
+ var ph=[1,2,3,4,5,6].map(function(i){return '<button class="btn n'+(S.sbPh===i?' on':'')+'" onclick="S.sbPh='+i+';build();calc()">'+['I','II','III','IV','V','VI'][i-1]+'</button>'}).join('');
+ var mo=Object.keys(MECH).map(function(k){return '<option value="'+k+'"'+(S.mech===k?' selected':'')+'>'+T(MECH[k][0][0],MECH[k][0][1])+'</option>'}).join('');
+ var wo=WX.map(function(w,i){return '<option value="'+i+'"'+(S.wx==i?' selected':'')+'>'+T('ระยะ ','Stage ')+i+' · '+T(w[0],w[1])+'</option>'}).join('');
+ $('v').innerHTML=
+ '<section class="tab" id="t-profile">'+
+ '<div class="card"><h2>'+T('1. ประเมินเพศ','1. Sex estimation')+c(1)+c(2)+'</h2><p class="sub">'+T('เลื่อนไปที่ 0 หากกระดูกส่วนนั้นไม่พบหรือเสียหาย (ไม่นำมาคิด) · เกณฑ์ 1 = ลักษณะแบบหญิง, 5 = ลักษณะแบบชาย; ลักษณะของ Phenice ใช้ 1 = หญิง, 2 = ชาย','Set to 0 if the element is missing or damaged (excluded). Scale 1 = female-typical, 5 = male-typical; Phenice traits use 1 = female, 2 = male.')+'</p>'+
+ '<b>'+T('กระดูกเชิงกราน','Pelvis')+'</b> '+c(2)+c(7)+tr('p')+'<div style="height:8px"></div><b>'+T('กะโหลกศีรษะ','Cranium')+'</b> '+c(1)+tr('c')+
+ '<div class="res"><div class="bl"><span>'+T('เชิงกราน','Pelvis')+'</span><span class="n" id="mp"></span></div><div class="bar"><i id="bp"></i></div>'+
+ '<div class="bl"><span>'+T('กะโหลก','Cranium')+'</span><span class="n" id="mc"></span></div><div class="bar"><i id="bc"></i></div>'+
+ '<div class="big" id="sx"></div><div class="warn" id="sw"></div></div></div>'+
+ '<div class="card"><h2>'+T('2. ส่วนสูง','2. Stature')+c(3)+'</h2><p class="sub">'+T('จากความยาวสูงสุดของกระดูกต้นขา (femur) ผลคือส่วนสูงขณะมีชีวิต','From maximum femur length; result is living stature.')+'</p>'+
+ '<label>'+T('สมการ','Model')+'</label><select onchange="S.tg=this.value;calc()">'+tgo+'</select>'+
+ '<label>'+T('ความยาวสูงสุดของ femur (มม.)','Maximum femur length (mm)')+'</label><input type="number" inputmode="decimal" value="'+(S.fem||'')+'" oninput="S.fem=+this.value;calc()">'+
+ '<label>'+T('อายุ (ปี) สำหรับแก้ค่าเมื่อเกิน 30','Age (years) for correction above 30')+'</label><input type="number" inputmode="numeric" value="'+(S.age||'')+'" oninput="S.age=+this.value;calc()">'+
+ '<div class="res"><div class="big" id="st">—</div><div class="sub" id="st2"></div></div>'+
+ '<p class="sub">'+T('สมการเดิมสร้างจากประชากรอเมริกัน; สำหรับคดีในไทย ควรใช้สมการเฉพาะประชากรไทย','Equations derive from American samples; for Thai cases use population-specific equations')+c(8)+'</p></div>'+
+ '<div class="card"><h2>'+T('3. อายุขณะเสียชีวิต','3. Age at death')+c(4)+'</h2><p class="sub">Suchey-Brooks '+T('(ใช้ตารางแยกเพศ)','(sex-specific tables)')+'</p>'+
+ '<select onchange="S.sbSex=this.value;calc()"><option value="m"'+(S.sbSex==='m'?' selected':'')+'>'+T('ตารางชาย','Male table')+'</option><option value="f"'+(S.sbSex==='f'?' selected':'')+'>'+T('ตารางหญิง','Female table')+'</option></select>'+
+ '<div class="ph">'+ph+'</div><div class="res"><div class="big n" id="ag"></div><div class="sub" id="ag2"></div></div></div>'+
+ '</section>'+
+ '<section class="tab" id="t-atlas"><div class="card"><h2>'+T('แบบจำลองโครงกระดูก 3 มิติ','3D skeleton atlas')+'</h2><p class="sub">'+T('ลากเพื่อหมุน เลื่อนล้อเมาส์เพื่อซูม แตะกระดูกเพื่อดูว่าใช้ประเมินอะไร · เป็นแบบจำลองเชิงสัญลักษณ์ สัดส่วนไม่ตรงกายวิภาคจริง','Drag to rotate, scroll to zoom, tap a bone to see what it is used for. A schematic model: proportions are not true anatomy.')+'</p><canvas id="cv"></canvas><div class="vb"><button class="btn" onclick="AV(0)">'+T('หน้า','Front')+'</button><button class="btn" onclick="AV(1.5708)">'+T('ข้าง','Side')+'</button><button class="btn" onclick="AV(3.1416)">'+T('หลัง','Back')+'</button><button class="btn" onclick="AT.auto=!AT.auto">'+T('หมุนอัตโนมัติ','Auto-rotate')+'</button></div><div class="res" id="ai"><div class="sub" style="margin:0">'+T('ยังไม่ได้เลือกกระดูก','No bone selected')+'</div></div></div></section>'+
+ '<section class="tab" id="t-trauma">'+
+ '<div class="card"><h2>'+T('กลไกการบาดเจ็บ','Injury mechanism')+'</h2><select onchange="S.mech=this.value;tc()">'+mo+'</select><div class="res"><div id="mdesc" class="sub" style="margin:0"></div></div></div>'+
+ '<div class="card"><h2>'+T('ช่วงเวลาของบาดแผล','Timing of injury')+c(6)+'</h2><p class="sub">'+T('เลือกสิ่งที่สังเกตได้จากรอยแตก','Select what you observe at the fracture')+'</p>'+
+ '<label>'+T('สีขอบรอยแตกเทียบกับผิวกระดูกรอบข้าง','Edge colour vs adjacent cortex')+'</label><select id="te" onchange="tc()"><option value="s">'+T('สีเดียวกัน','Same stain')+'</option><option value="l">'+T('ขอบสีอ่อนกว่า/ไม่ติดคราบ','Lighter, unstained edge')+'</option><option value="r">'+T('ขอบมน/ปรับรูปแล้ว','Rounded / remodelled')+'</option></select>'+
+ '<label>'+T('ลักษณะผิวรอยแตก','Fracture surface')+'</label><select id="tf" onchange="tc()"><option value="f">'+T('เรียบ โค้ง/เฉียง (กระดูกสด)','Smooth, curved or oblique (fresh bone)')+'</option><option value="d">'+T('หยาบ ฉากตรง เปราะ (กระดูกแห้ง)','Rough, right-angle, brittle (dry bone)')+'</option></select>'+
+ '<label>'+T('การซ่อมแซม','Healing response')+'</label><select id="th" onchange="tc()"><option value="n">'+T('ไม่มี','None')+'</option><option value="c">'+T('มี callus / การสร้างกระดูกใหม่','Callus / new bone formation')+'</option></select>'+
+ '<label>'+T('การเสียรูปแบบพลาสติก (hinge, bending)','Plastic deformation (hinge, bending)')+'</label><select id="tp" onchange="tc()"><option value="n">'+T('ไม่พบ','Absent')+'</option><option value="y">'+T('พบ','Present')+'</option></select>'+
+ '<div class="res"><div class="big" id="tt"></div><ul id="tw" class="sub" style="padding-left:18px;margin:8px 0 0"></ul></div></div>'+
+ '<div class="card"><h2>'+T('ระยะการผุกร่อน (Behrensmeyer)','Weathering stage (Behrensmeyer)')+c(5)+'</h2><select onchange="S.wx=this.value;tc()">'+wo+'</select>'+
+ '<p class="sub" style="margin-top:10px">'+T('ระยะนี้ตั้งจากกระดูกสัตว์ในแอฟริกาตะวันออก อัตราต่างกันตามแดด ความชื้น และร่มเงา จึงไม่ควรใช้เป็นนาฬิกาบอกเวลาหลังตายโดยตรง','Stages were defined on East African mammal bone; rates vary with sun, humidity and shade, so do not use them as a direct post-mortem interval clock.')+'</p></div>'+
+ '</section>'+
+ '<section class="tab" id="t-report"><div class="card"><h2>'+T('รายงานสรุปการวิเคราะห์','Analysis summary')+'</h2><p class="sub" id="rd"></p>'+
+ '<label class="np">'+T('ผู้วิเคราะห์','Analyst')+'</label><input class="np" type="text" id="ra" value="'+(S.an||'')+'" oninput="S.an=this.value;rep()" style="width:100%;background:var(--bg);border:1px solid var(--ln);border-radius:4px;padding:8px">'+
+ '<div id="rb"></div>'+
+ '<label>'+T('ความเห็นและข้อจำกัด','Opinion and limitations')+'</label><textarea rows="5" oninput="S.op=this.value">'+(S.op||'')+'</textarea>'+
+ '<p class="disc">'+T('เครื่องมือนี้ใช้ฝึกและทบทวนวิธีมาตรฐาน ไม่ใช่เครื่องมือรับรองผลสำหรับคดี การสรุปจริงต้องตรวจกระดูกจริงโดยนักมานุษยวิทยาที่มีคุณวุฒิ และใช้วิธีที่ผ่านการตรวจสอบกับประชากรที่เกี่ยวข้อง','This tool is for training and review of standard methods. It is not a casework instrument. Real conclusions need direct examination by a qualified anthropologist using methods validated for the relevant population.')+'</p>'+
+ '<button class="btn np" onclick="go(\'report\');window.print()">'+T('พิมพ์ / บันทึก PDF','Print / save PDF')+'</button></div></section>'+
+ '<section class="tab" id="t-refs"><div class="card"><h2>'+T('เอกสารอ้างอิง','References')+'</h2><p class="sub">'+T('ตรวจตัวเลขกับต้นฉบับก่อนใช้งานจริงทุกครั้ง','Check figures against the originals before relying on them.')+'</p><ol>'+REFS.map(function(r){return '<li>'+r+'</li>'}).join('')+'</ol></div></section>';
+ go(cur);calc();tc();
+}
+function calc(){
+ var P=[],C=[];
+ TR.forEach(function(x){var v=S.t[x[0]]||0;var e=$('v_'+x[0]);if(e)e.textContent=v?v:T('ไม่ให้คะแนน','not scored');
+  if(v){(x[1]==='p'?P:C).push((v-1)/(x[2]-1))}});
+ var m=function(a){return a.length?a.reduce(function(s,q){return s+q},0)/a.length:null};
+ var pm=m(P),cm=m(C);
+ var set=function(b,t,v){$(b).style.left=v===null?'50%':Math.round(v*100)+'%';$(t).textContent=v===null?'—':(v*100).toFixed(0)+' %'};
+ set('bp','mp',pm);set('bc','mc',cm);
+ var sc=pm!==null&&cm!==null?0.6*pm+0.4*cm:(pm!==null?pm:cm);
+ var v=T('ยังไม่มีข้อมูลพอ','Not enough data'),w='';
+ if(sc!==null){v=sc<=0.4?T('น่าจะเป็นเพศหญิง','Likely female'):sc>=0.6?T('น่าจะเป็นเพศชาย','Likely male'):T('ไม่สามารถสรุปเพศได้','Indeterminate');
+  w=T('ค่านี้ไม่ใช่ความน่าจะเป็น เป็นเพียงคะแนนรวมแบบถ่วงน้ำหนัก (เชิงกราน 0.6 : กะโหลก 0.4) เพื่อฝึกคิด','This is not a probability; it is a weighted composite (pelvis 0.6 : cranium 0.4) for practice only.');
+  if(pm!==null&&cm!==null&&Math.abs(pm-cm)>0.4)w=T('เชิงกรานและกะโหลกขัดแย้งกัน โดยทั่วไปให้น้ำหนักเชิงกรานมากกว่า และควรบันทึกความขัดแย้งในรายงาน','Pelvis and cranium conflict. The pelvis is generally given more weight; record the conflict in the report.')}
+ $('sx').textContent=v;$('sw').textContent=w;S.out.sex=v;
+ var M=TG[S.tg];var st='—',s2='';
+ if(M&&S.fem>0){var h=M[0]*(S.fem/10)+M[1];if(S.age>30)h-=0.06*(S.age-30);st=h.toFixed(1)+' cm ± '+M[2];var inch=h/2.54;s2=Math.floor(inch/12)+' ft '+(inch%12).toFixed(1)+' in'+(S.age>30?T(' · แก้ค่าอายุแล้ว',' · age-corrected'):'')}
+ $('st').textContent=st;$('st2').textContent=s2;S.out.st=st;
+ var d=SB[S.sbSex][S.sbPh-1];
+ $('ag').textContent=d[2]+' – '+d[3]+T(' ปี',' yrs');
+ $('ag2').textContent=T('ค่าเฉลี่ย ','Mean ')+d[0]+' ± '+d[1]+' · '+SBF[S.sbPh-1][lang==='th'?0:1];
+ S.out.age=T('ระยะ ','Phase ')+['I','II','III','IV','V','VI'][S.sbPh-1]+': '+d[2]+'–'+d[3]+T(' ปี',' yrs');
+}
+function tc(){
+ var m=MECH[S.mech||'bft'];$('mdesc').textContent=T(m[1][0],m[1][1]);
+ var e=$('te').value,f=$('tf').value,h=$('th').value,p=$('tp').value,r=[],res;
+ if(h==='c'||e==='r'){res=T('Antemortem (ก่อนตาย)','Antemortem');r.push(T('มีการซ่อมแซมหรือปรับรูปของกระดูก แสดงว่าร่างกายยังมีชีวิตอยู่ระยะหนึ่งหลังบาดเจ็บ','Healing or remodelling means the person survived for some time after the injury.'))}
+ else if(e==='s'&&f==='f'){res=T('Perimortem (ช่วงใกล้ตาย)','Perimortem');r.push(T('ขอบสีเดียวกับผิวรอบข้างและผิวรอยแตกแบบกระดูกสด สอดคล้องกับกระดูกที่ยังมีความยืดหยุ่น','Matching edge stain and fresh-bone surface fit bone that was still elastic.'));if(p==='y')r.push(T('การเสียรูปแบบพลาสติกสนับสนุนข้อสรุปนี้','Plastic deformation supports this.'));r.push(T('หมายเหตุ: บอกไม่ได้ว่าเกิดก่อนตายไม่นาน หรือหลังตายขณะกระดูกยังสด','Note: this cannot separate injury just before death from damage soon after, while bone was still fresh.'))}
+ else if(e==='l'&&f==='d'){res=T('Postmortem (หลังตาย)','Postmortem');r.push(T('ขอบไม่ติดคราบและผิวรอยแตกแบบกระดูกแห้ง แสดงว่าแตกหลังกระดูกสัมผัสสิ่งแวดล้อมมาแล้ว','Unstained edge with dry-bone surface means the break came after the bone had been exposed.'))}
+ else{res=T('สรุปไม่ได้ (หลักฐานขัดกัน)','Indeterminate (conflicting evidence)');r.push(T('ลักษณะที่เลือกไม่สอดคล้องกัน ควรตรวจซ้ำ ใช้กล้องขยาย และบันทึกเป็นข้อจำกัด','The selected features disagree. Re-examine under magnification and report it as a limitation.'))}
+ $('tt').textContent=res;$('tw').innerHTML=r.map(function(x){return '<li>'+x+'</li>'}).join('');
+ S.out.tm=res;S.out.mech=T(m[0][0],m[0][1]);S.out.wx=T('ระยะ ','Stage ')+(S.wx||0);
+}
+function rep(){
+ $('rd').textContent=new Date().toISOString().slice(0,10);
+ var o=S.out;
+ var R=[[T('เพศ (ประเมิน)','Sex (estimate)'),o.sex],[T('ส่วนสูง','Stature'),o.st],[T('อายุขณะเสียชีวิต','Age at death'),o.age],[T('กลไกบาดแผล','Mechanism'),o.mech],[T('ช่วงเวลาบาดแผล','Injury timing'),o.tm],[T('การผุกร่อน','Weathering'),o.wx],[T('ผู้วิเคราะห์','Analyst'),S.an||'—']];
+ $('rb').innerHTML=R.map(function(x){return '<div class="row"><span>'+x[0]+'</span><span>'+(x[1]||'—')+'</span></div>'}).join('');
+}
+
+var AT={},INFO={
+skull:[['กะโหลกศีรษะ','Cranium'],['ให้คะแนน 5 ลักษณะ (1–5): nuchal crest, mastoid process, supraorbital margin, glabella, mental eminence ความแม่นยำรวมต่ำกว่าเชิงกราน และต่างกันตามประชากร','Five traits scored 1–5: nuchal crest, mastoid process, supraorbital margin, glabella, mental eminence. Overall accuracy is lower than the pelvis and varies by population.'],[1],1],
+pelvis:[['กระดูกเชิงกราน','Pelvis'],['ใช้ประเมินเพศ: greater sciatic notch (1–5) และลักษณะ Phenice 3 อย่าง (ventral arc, subpubic concavity, ischiopubic ramus) ส่วน pubic symphysis ใช้ประเมินอายุด้วย Suchey-Brooks','Sex: greater sciatic notch (1–5) and three Phenice traits (ventral arc, subpubic concavity, ischiopubic ramus). The pubic symphysis gives age by Suchey-Brooks.'],[2,4,7],1],
+femur:[['กระดูกต้นขา (femur)','Femur'],['วัดความยาวสูงสุดเพื่อประเมินส่วนสูงด้วยสมการ Trotter & Gleser','Maximum length feeds the Trotter & Gleser stature equations.'],[3,8],1],
+tibia:[['ขาท่อนล่างและเท้า','Tibia, fibula, foot'],['tibia ใช้ประเมินส่วนสูงได้เช่นกัน แต่ต้องใช้สมการของ tibia เอง (หน้านี้คำนวณจาก femur อย่างเดียว)','Tibia also estimates stature but needs its own equations (this tool uses femur only).'],[3],0],
+humerus:[['กระดูกต้นแขนและสะบัก','Humerus and scapula'],['มีสมการส่วนสูงเฉพาะกระดูกต้นแขน และการเชื่อมของปลายกระดูกใช้ประเมินอายุในวัยเด็กถึงวัยรุ่น','Humerus has its own stature equations; epiphyseal fusion indicates age in juveniles and young adults.'],[3],0],
+forearm:[['กระดูกปลายแขนและมือ','Radius, ulna, hand'],['radius และ ulna ใช้ในสมการส่วนสูงได้ และมักพบรอยป้องกันตัว (defensive injury) ที่ ulna','Radius and ulna feed stature equations; defensive injuries are often seen on the ulna.'],[3],0],
+spine:[['กระดูกสันหลัง','Vertebral column'],['การงอกของขอบกระดูก (osteophyte) สัมพันธ์กับอายุ แต่ใช้เดี่ยว ๆ ไม่แม่นพอ','Marginal osteophytes correlate with age but are weak indicators alone.'],[],0],
+ribs:[['ซี่โครง กระดูกอก และไหปลาร้า','Ribs, sternum, clavicle'],['รูปร่างปลายซี่โครงด้านอก (sternal rib end) ใช้ประเมินอายุได้','Morphology of the sternal rib end indicates age.'],[9],0]};
+function AV(y){var o=AT.root.rotation,t=2*Math.PI;o.y=((o.y%t)+t)%t;if(o.y>Math.PI)o.y-=t;AT.ty=y;AT.auto=false}
+function initAtlas(){
+ var cv=$('cv');
+ if(AT.cv&&AT.cv!==cv){cancelAnimationFrame(AT.raf);AT.r.dispose();AT={}}
+ if(AT.r){AT.fit();return}
+ if(typeof THREE==='undefined'){cv.outerHTML='<p class="warn">'+T('โหลด three.js ไม่ได้ ตรวจการเชื่อมต่ออินเทอร์เน็ต','three.js did not load. Check your connection.')+'</p>';return}
+ var K=THREE,r=new K.WebGLRenderer({canvas:cv,antialias:true,alpha:true}),sc=new K.Scene(),cam=new K.PerspectiveCamera(35,1,.1,100),root=new K.Group(),parts={},black=new K.Color(0);
+ var acc=new K.Color(getComputedStyle(document.documentElement).getPropertyValue('--ac').trim()||'#b4524a');
+ AT.cv=cv;AT.root=root;AT.r=r;AT.auto=true;AT.ty=null;
+ cam.position.set(0,1.8,30);cam.lookAt(0,1.8,0);
+ sc.add(new K.AmbientLight(0xffffff,.6));var dl=new K.DirectionalLight(0xffffff,.85);dl.position.set(6,10,14);sc.add(dl);sc.add(root);
+ function M(g,k,p,rot,s){var m=new K.Mesh(g,new K.MeshStandardMaterial({color:0xcfc6ae,roughness:.85}));m.position.set(p[0],p[1],p[2]);if(rot){m.rotation.order='YXZ';m.rotation.set(rot[0],rot[1],rot[2])}if(s)m.scale.set(s[0],s[1],s[2]);m.userData.k=k;(parts[k]=parts[k]||[]).push(m);root.add(m);return m}
+ function L(k,x,y0,y1,rd,z){z=z||0;M(new K.CylinderGeometry(rd*.8,rd*.8,Math.abs(y1-y0),12),k,[x,(y0+y1)/2,z]);M(new K.SphereGeometry(rd*1.5,12,10),k,[x,y0,z]);M(new K.SphereGeometry(rd*1.4,12,10),k,[x,y1,z])}
+ // skull
+ M(new K.SphereGeometry(1.5,24,18),'skull',[0,9.3,0],null,[1,1.05,1.15]);
+ M(new K.BoxGeometry(1.7,1.3,1.1),'skull',[0,8.2,.95]);
+ M(new K.TorusGeometry(1.0,.17,8,20,Math.PI),'skull',[0,7.65,.1],[Math.PI/2,0,0],[1,1,.9]);
+ [-1,1].forEach(function(s){var e=new K.Mesh(new K.SphereGeometry(.36,12,10),new K.MeshStandardMaterial({color:0x1a1815}));e.position.set(s*.6,8.85,1.5);root.add(e);
+  M(new K.SphereGeometry(.28,10,8),'skull',[s*1.42,8.6,-.1]);
+  // pelvis
+  M(new K.SphereGeometry(1.25,16,12),'pelvis',[s*1.55,3.2,.05],[0,s*.6,0],[1,1.05,.32]);
+  M(new K.TorusGeometry(.55,.12,8,16),'pelvis',[s*.95,1.35,.7],[0,s*.4,0]);
+  // limbs
+  L('femur',s*1.15,2.0,-2.4,.2);M(new K.SphereGeometry(.38,12,10),'femur',[s*.85,2.2,.1]);M(new K.SphereGeometry(.25,10,8),'femur',[s*1.1,-2.55,.3]);
+  L('tibia',s*1.1,-2.7,-6.6,.17);L('tibia',s*1.45,-2.9,-6.5,.1);M(new K.BoxGeometry(.7,.3,1.5),'tibia',[s*1.1,-6.95,.5]);
+  L('humerus',s*2.7,7.3,4.4,.17);M(new K.SphereGeometry(1,12,10),'humerus',[s*1.8,6.6,-.7],null,[.9,1.1,.12]);
+  L('forearm',s*2.8,4.4,1.6,.12);L('forearm',s*3.0,4.4,1.5,.1,.1);M(new K.BoxGeometry(.5,.7,.2),'forearm',[s*2.9,1.2,.05]);
+  M(new K.CylinderGeometry(.07,.07,2.3,8),'ribs',[s*1.3,7.6,.8],[0,0,Math.PI/2+s*.1]);
+ });
+ M(new K.ConeGeometry(.85,2,4),'pelvis',[0,2.6,-.4],[Math.PI,0,0],[1,1,.55]);
+ M(new K.BoxGeometry(.3,.5,.2),'pelvis',[0,1.2,.95]);
+ for(var i=0;i<24;i++){var y=8-i*.25;M(new K.CylinderGeometry(.22+i*.012,.22+i*.012,.18,10),'spine',[0,y,-.35*Math.sin(i/23*5)])}
+ for(var j=0;j<10;j++){var R=1.15+Math.sin(j/9*Math.PI)*.5;M(new K.TorusGeometry(R,.055,6,24,Math.PI+1.2),'ribs',[0,7.2-j*.38,.3*R+.1],[Math.PI/2,.6,0],[1.15,.8,1])}
+ M(new K.BoxGeometry(.35,2.6,.12),'ribs',[0,6.0,1.55]);
+ function sel(k){for(var q in parts)parts[q].forEach(function(m){m.material.emissive.copy(q===k?acc:black);m.material.emissiveIntensity=.55});
+  if(!k){$('ai').innerHTML='<div class="sub" style="margin:0">'+T('ยังไม่ได้เลือกกระดูก','No bone selected')+'</div>';return}
+  var i=INFO[k];$('ai').innerHTML='<div class="big">'+T(i[0][0],i[0][1])+'</div><p class="sub">'+T(i[1][0],i[1][1])+' '+i[2].map(function(n){return c(n)}).join('')+'</p>'+(i[3]?'<button class="btn" onclick="go(\'profile\')">'+T('ไปหน้าโปรไฟล์ชีวภาพ','Open biological profile')+'</button>':'')}
+ AT.fit=function(){var w=cv.clientWidth,h=cv.clientHeight;if(!w||!h)return;r.setPixelRatio(Math.min(devicePixelRatio,2));r.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix()};
+ var ray=new K.Raycaster(),mv=new K.Vector2();
+ cv.addEventListener('pointerdown',function(e){AT.d={x:e.clientX,y:e.clientY};AT.moved=0;AT.ty=null;cv.setPointerCapture(e.pointerId)});
+ cv.addEventListener('pointermove',function(e){if(!AT.d)return;var dx=e.clientX-AT.d.x,dy=e.clientY-AT.d.y;AT.moved+=Math.abs(dx)+Math.abs(dy);AT.d={x:e.clientX,y:e.clientY};root.rotation.y+=dx*.01;root.rotation.x=Math.max(-.6,Math.min(.6,root.rotation.x+dy*.005))});
+ cv.addEventListener('pointerup',function(e){if(AT.moved<6){var b=cv.getBoundingClientRect();mv.set((e.clientX-b.left)/b.width*2-1,-(e.clientY-b.top)/b.height*2+1);ray.setFromCamera(mv,cam);var h=ray.intersectObjects(root.children.filter(function(o){return o.userData.k}))[0];sel(h?h.object.userData.k:null)}AT.d=null});
+ cv.addEventListener('wheel',function(e){e.preventDefault();cam.position.z=Math.max(16,Math.min(42,cam.position.z+e.deltaY*.02))},{passive:false});
+ window.addEventListener('resize',function(){AT.fit()});
+ AT.fit();
+ (function loop(){AT.raf=requestAnimationFrame(loop);if(!cv.offsetParent)return;
+  if(AT.ty!==null){root.rotation.y+=(AT.ty-root.rotation.y)*.12;root.rotation.x*=.9}else if(AT.auto&&!AT.d)root.rotation.y+=.006;
+  r.render(sc,cam)})();
+}
+S.tg='WM';S.fem=0;S.age=0;S.mech='bft';S.wx=0;
+build();
+</script>
 </body>
 </html>
